@@ -4,8 +4,10 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 const { timeline } = vi.hoisted(() => ({ timeline: vi.fn(() => vi.fn()) }));
 vi.mock("@/components/portfolio/three/ScrollTimeline", () => ({ createScrollTimeline: timeline }));
-vi.mock("next/dynamic", () => ({ default: () => () => <div data-testid="device-renderer" /> }));
+vi.mock("next/dynamic", () => ({ default: () => ({ active }: { active: boolean }) => <div data-testid="device-renderer" data-active={active} /> }));
 import ProductStory from "@/components/portfolio/ProductStory";
+import StageVisuals from "@/components/portfolio/StageVisuals";
+import { createSceneState } from "@/components/portfolio/three/layers";
 
 beforeEach(() => {
   timeline.mockClear();
@@ -41,4 +43,23 @@ it("keeps every scene selectable when motion is paused", async () => {
   expect(document.querySelector('.scene-build')?.getAttribute('data-current')).toBe('true');
   expect(screen.queryByTestId('device-renderer')).toBeNull();
   expect(timeline).not.toHaveBeenCalled();
+});
+
+it("keeps the same device image while switching between build and launch", () => {
+  const props = { state: createSceneState(), active: true, compact: false, reduced: false, ready: true };
+  const { container, rerender } = render(<StageVisuals {...props} phase={1} />);
+  expect(container.querySelector('[data-testid="device-renderer"]')).toBeNull();
+
+  rerender(<StageVisuals {...props} phase={2} />);
+  const renderer = container.querySelector('[data-testid="device-renderer"]');
+  expect(renderer?.getAttribute('data-active')).toBe('true');
+
+  rerender(<StageVisuals {...props} phase={3} />);
+  expect(container.querySelector('.scene-build [data-testid="device-renderer"]')).toBe(renderer);
+  expect(container.querySelector('.scene-build .device-fallback')).toBeNull();
+  expect(renderer?.getAttribute('data-active')).toBe('false');
+
+  rerender(<StageVisuals {...props} phase={2} />);
+  expect(container.querySelector('.scene-build [data-testid="device-renderer"]')).toBe(renderer);
+  expect(renderer?.getAttribute('data-active')).toBe('true');
 });

@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import type { SceneState } from "./three/layers";
 import StaticProduct from "./three/StaticProduct";
 
@@ -62,6 +62,11 @@ function Publication() {
   </div>;
 }
 export default function StageVisuals({ phase, state, active, compact, reduced, ready }: {phase:number;state:SceneState;active:boolean;compact:boolean;reduced:boolean;ready:boolean}) {
+  const building = phase === 2;
+  const [hasShownDevices, setHasShownDevices] = useState(false);
+  // Keep the same canvas through the exit fade. Hidden scenes stop rendering.
+  if (building && ready && !reduced && !hasShownDevices) setHasShownDevices(true);
+
   useEffect(() => {
     if (!ready) return;
     const atlas = new window.Image(); atlas.decoding = "async"; atlas.src = "/hero/design-team.webp";
@@ -69,9 +74,9 @@ export default function StageVisuals({ phase, state, active, compact, reduced, r
   return <div className="hero-stage-scenes" data-running={active && !reduced} aria-hidden="true">
     <div className="hero-stage-scene scene-goal" data-current={phase===0}><GoalSketch/></div>
     <div className="hero-stage-scene scene-design" data-current={phase===1}><DesignWorkshop/></div>
-    <div className="hero-stage-scene scene-build" data-current={phase===2}>
+    <div className="hero-stage-scene scene-build" data-current={building}>
       <div className="build-scene-label"><span>JEDEN PROJEKT. KAŻDY EKRAN.</span><strong>Sprawdź, jak działa.</strong></div>
-      {phase===2 && ready && !reduced ? <Devices state={state} active={active} compact={compact} reduced={reduced}/> : <StaticProduct/>}
+      {hasShownDevices && !reduced ? <Devices state={state} active={active && building} compact={compact} reduced={reduced}/> : <StaticProduct/>}
       <div className="device-platforms"><span>Komputer</span><span>Tablet</span><span>Telefon</span></div>
     </div>
     <div className="hero-stage-scene scene-launch" data-current={phase===3}><Publication/></div>
