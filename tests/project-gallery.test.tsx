@@ -16,6 +16,11 @@ const project = { id: "test", title: "Projekt testowy", short_description: "Opis
 afterEach(cleanup);
 
 describe("galeria w oknie projektu", () => {
+  it("keeps only the internal case study link when the record has external links", () => {
+    render(<ProjectModal project={{ ...project, project_url: "https://example.com", repository_url: "https://github.com/example/project" }} onClose={vi.fn()} />);
+    expect(screen.getAllByRole("link").map(link => link.getAttribute("href"))).toEqual(["/projekty/test"]);
+  });
+
   it("otwiera drugie zdjęcie, przechodzi w obie strony i wraca do miniatury", async () => {
     const close = vi.fn();
     render(<ProjectModal project={project} onClose={close} />);

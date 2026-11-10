@@ -1,10 +1,12 @@
 import { createClient } from "@libsql/client";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 // Publication is deliberately separate from shipping the screenshot assets.
 const apply = process.argv.includes("--apply");
 const local = process.argv.includes("--local-preview");
-const records = JSON.parse(await readFile(new URL("../content/portfolio-projects.json", import.meta.url), "utf8"));
+const manifest = process.argv.find(arg => arg.startsWith("--manifest="))?.slice("--manifest=".length);
+const records = JSON.parse(await readFile(manifest ? resolve(manifest) : new URL("../content/portfolio-projects.json", import.meta.url), "utf8"));
 if (!local && (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN)) throw new Error("Brak konfiguracji bazy.");
 if (!local && apply) {
   for (const record of records) for (const image of record.images) {

@@ -4,7 +4,7 @@ import {execFileSync} from 'node:child_process';
 const projects=JSON.parse(await readFile('.debug/hyperframes-projects/projects.json','utf8'));
 const previous=JSON.parse(await readFile('src/lib/project-previews.json','utf8'));
 const redirects=new Map(JSON.parse(await readFile('src/lib/project-preview-redirects.json','utf8')).map(r=>[r.source,r.destination]));
-const manifest={};
+const manifest=process.argv.includes('--partial') ? {...previous} : {};
 for(const project of projects){
  const output=`public/project-previews/${project.id}`;
  const temp=`.debug/hyperframes-projects/${project.id}/optimized.mp4`;

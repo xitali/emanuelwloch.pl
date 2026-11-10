@@ -2,13 +2,22 @@ import {createClient} from '@libsql/client';
 import {mkdir,readFile,writeFile,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-const db=createClient({url:process.env.TURSO_DATABASE_URL,authToken:process.env.TURSO_AUTH_TOKEN});
-const result=await db.execute('SELECT id,title,images FROM projects');
+const manifestArg=process.argv.find(arg=>arg.startsWith('--manifest='))?.slice('--manifest='.length);
+let rows;
+if(manifestArg){
+ const previous=JSON.parse(await readFile('src/lib/project-previews.json','utf8'));
+ const reviewed=JSON.parse(await readFile(manifestArg,'utf8'));
+ rows=reviewed.filter(row=>row.images[0]!==previous[row.id]?.source);
+}else{
+ const db=createClient({url:process.env.TURSO_DATABASE_URL,authToken:process.env.TURSO_AUTH_TOKEN});
+ try{rows=(await db.execute('SELECT id,title,images FROM projects')).rows;}
+ finally{db.close();}
+}
 const composition=await readFile('tools/project-previews/index.html','utf8');
 const projects=[];
-for(const row of result.rows){
+for(const row of rows){
  const id=String(row.id);if(!/^[a-f0-9-]{36}$/.test(id))throw new Error('Invalid project ID');
- const images=JSON.parse(row.images || '[]');
+ const images=Array.isArray(row.images) ? row.images : JSON.parse(row.images || '[]');
  const source=images[0];
  if(!source)throw new Error(`Project screen missing: ${row.title}`);
  let input;
@@ -32,4 +41,3 @@ for(const row of result.rows){
 await mkdir('public/project-previews',{recursive:true});
 await writeFile('.debug/hyperframes-projects/projects.json',JSON.stringify(projects,null,2));
 console.log(projects.map(({id,title})=>({id,title})));
-db.close();

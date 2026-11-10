@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check, Code2, ExternalLink, Gauge, Layers3, Quote, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Gauge, Layers3, Quote, Target } from "lucide-react";
 import { getProjectById, getProjects } from "@/lib/turso";
 import {
   getProjectIdFromSegment,
@@ -112,7 +112,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         about: [project.project_type, project.category, ...project.technologies].filter(Boolean),
         author: { "@id": `${SITE_URL}/#emanuel-wloch` },
         publisher: { "@id": `${SITE_URL}/#emanuel-wloch` },
-        sameAs: [project.project_url, project.repository_url].filter(Boolean),
       },
       {
         "@type": "WebPage",
@@ -215,7 +214,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {project.images.length > 1 && <section className="px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="gallery-heading"><div className="mx-auto max-w-[1280px]"><h2 id="gallery-heading" className="text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Widoki projektu</h2><div className="mt-9 grid gap-4 md:grid-cols-2">{project.images.slice(1).map((image, index) => <div key={`${image}-${index}`} className="relative aspect-video overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] dark:border-[var(--p-border)]"><Image src={image} alt={`Widok ${index + 2} projektu ${project.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" /></div>)}</div></div></section>}
 
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8"><div className="mx-auto max-w-[1280px] rounded-[var(--p-radius)] bg-[var(--p-surface)] p-8 text-white sm:p-10 lg:flex lg:items-end lg:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Podobny cel?</p><h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Porozmawiajmy o Twojej firmie.</h2><div className="mt-5 flex flex-wrap gap-4 text-xs text-[var(--p-muted)]"><Link href="/uslugi" className="hover:text-[var(--p-accent)]">Zobacz usługi</Link>{project.project_url && <a data-live-project href={project.project_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-[var(--p-accent)]">Działający projekt <ExternalLink className="size-3" /></a>}{project.repository_url && <a href={project.repository_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-[var(--p-accent)]">Repozytorium <Code2 className="size-3" /></a>}</div></div><Link href={`/?projekt=${project.id}#kontakt`} className="portfolio-button mt-8 shrink-0 lg:mt-0">Omów swój projekt <ArrowRight className="size-4" /></Link></div></section>
+          <section className="px-4 py-20 sm:px-6 lg:px-8"><div className="mx-auto max-w-[1280px] rounded-[var(--p-radius)] bg-[var(--p-surface)] p-8 text-white sm:p-10 lg:flex lg:items-end lg:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Podobny cel?</p><h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Porozmawiajmy o Twojej firmie.</h2><div className="mt-5 text-xs text-[var(--p-muted)]"><Link href="/uslugi" className="hover:text-[var(--p-accent)]">Zobacz usługi</Link></div></div><Link href={`/?projekt=${project.id}#kontakt`} className="portfolio-button mt-8 shrink-0 lg:mt-0">Omów swój projekt <ArrowRight className="size-4" /></Link></div></section>
         </article>
       </main>
     </PublicPageShell>

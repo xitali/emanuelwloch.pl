@@ -73,8 +73,6 @@ export const getProjects = unstable_cache(
         image_alts: safeParseJsonArray(row.image_alts),
         preview_video: row.preview_video ? String(row.preview_video) : undefined,
         preview_poster: row.preview_poster ? String(row.preview_poster) : undefined,
-        project_url: row.project_url ? String(row.project_url) : undefined,
-        repository_url: row.repository_url ? String(row.repository_url) : undefined,
         category: row.category ? String(row.category) : undefined,
         project_type: row.project_type ? String(row.project_type) : undefined,
         featured: row.featured === "1" || row.featured === 1,
@@ -102,7 +100,7 @@ export const getProjects = unstable_cache(
       return [];
     }
   },
-  ["projects-list", "content-review-v3-2026-11-07", projectDatabaseKey],
+  ["projects-list", "public-catalog-v4", projectDatabaseKey],
   { revalidate: 60, tags: ["projects"] }
 );
 

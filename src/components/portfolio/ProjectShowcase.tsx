@@ -19,7 +19,6 @@ export function ProjectCard({ project, index, onOpen, highlighted = false }: { p
     {project.project_status === "in-development" && <p className="portfolio-kicker project-release-label">WERSJA TESTOWA / W ROZWOJU</p>}
     <div className="showcase-caption"><div><p className="portfolio-kicker">{String(index + 1).padStart(2, "0")} / {projectLabel(project.project_type || project.category)}</p><h3><Link href={getProjectPath(project)}>{project.title}</Link></h3><p>{project.short_description}</p></div><Link className="showcase-arrow" href={getProjectPath(project)} aria-label={`Opis realizacji: ${project.title}`}><ArrowUpRight /></Link></div>
     {highlighted ? <><dl className="project-outcome">{project.main_challenge && <div><dt>Wyzwanie</dt><dd>{project.main_challenge}</dd></div>}{project.project_result && <div><dt>Rezultat</dt><dd>{project.project_result}</dd></div>}</dl><Link className="portfolio-text-link" href={getProjectPath(project)}>Opis realizacji <ArrowUpRight size={16} /></Link></> : <div className="portfolio-tags">{project.technologies.slice(0, 5).map((tech, i) => <span key={`${tech}-${i}`}>{tech}</span>)}</div>}
-  {project.project_url && <a data-live-project href={project.project_url} className="portfolio-text-link" target="_blank" rel="noopener noreferrer">{project.project_status === "in-development" ? "Zobacz wersję testową" : "Zobacz na żywo"} <ArrowUpRight size={16} /></a>}
     </div>
   </article>;
 }

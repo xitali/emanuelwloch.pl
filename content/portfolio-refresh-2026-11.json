@@ -1,0 +1,370 @@
+[
+  {
+    "id": "2c00a565-5ac0-4735-a0e5-47f1a4d806c7",
+    "slug": "fundacja-serce-mototrasy-strona-internetowa-organizacji-charytatywnej",
+    "title": "Fundacja Serce Mototrasy - Strona internetowa organizacji charytatywnej",
+    "category": "web",
+    "short_description": "Strona fundacji motocyklistów z Jarosławia. Wyjaśnia, komu fundacja pomaga, co robi i jak dołączyć do jej działań.",
+    "detailed_description": "Na stronie głównej odwiedzający poznaje fundację i znajduje drogę do wsparcia. Osobne podstrony zbierają informacje o akcjach, wolontariacie i inicjatywie Garaż Mototrasy. Działania fundacji można przedstawić tekstem, zdjęciami i materiałem wideo.",
+    "main_challenge": "Jak ułatwić osobie, która pierwszy raz słyszy o fundacji, zrozumienie jej misji i znalezienie odpowiedniego sposobu pomocy?",
+    "innovation": "Informacje o działaniach, wolontariacie i kontakcie mają własne miejsca w nawigacji.",
+    "project_result": "Lokalnie otworzyłem stronę główną i przeszedłem z menu do opisu działań. Galeria pokazuje oba ekrany.",
+    "key_features": [
+      "Strona główna z misją fundacji",
+      "Podstrony działań i wsparcia",
+      "Materiały fotograficzne i wideo",
+      "Czytelne dane kontaktowe"
+    ],
+    "images": [
+      "/projects/fundacja-serce-mototrasy-strona-internetowa-organizacji-charytatywnej/2026-11-fundacja-glowna.webp",
+      "/projects/fundacja-serce-mototrasy-strona-internetowa-organizacji-charytatywnej/2026-11-fundacja-dzialania.webp"
+    ],
+    "image_alts": [
+      "Strona główna Fundacji Serce Mototrasy z logo i przyciskiem wsparcia.",
+      "Podstrona Wspieramy z opisem działalności fundacji."
+    ]
+  },
+  {
+    "id": "1dea78de-4c25-4b7c-8519-48212fe42b9a",
+    "slug": "bcc-bogdan-constructions-company",
+    "title": "BCC - Bogdan Constructions Company",
+    "category": "web",
+    "short_description": "Testowa strona firmy budowlanej. Zbiera ofertę usług, przykładowe realizacje i etapy współpracy przed wyceną.",
+    "detailed_description": "Na stronie można przejść od ogólnej oferty do usług, takich jak domy jednorodzinne, remonty i wykończenia. Dalej odwiedzający widzi galerię przykładowych projektów i opis kolejnych etapów współpracy. Galeria pochodzi z wersji demonstracyjnej.",
+    "main_challenge": "Jak pomóc klientowi szybko sprawdzić zakres usług i zobaczyć przykłady, zanim zapyta o wycenę?",
+    "innovation": "Sekcje oferty, realizacji i procesu są dostępne z jednego menu.",
+    "project_result": "W lokalnej wersji testowej działają strona główna i przejście do galerii. Wysyłka zapytań wymaga osobnej weryfikacji.",
+    "key_features": [
+      "Przegląd usług budowlanych",
+      "Galeria przykładowych realizacji",
+      "Opis etapów współpracy",
+      "Nawigacja po sekcjach strony"
+    ],
+    "images": [
+      "/projects/bcc-bogdan-constructions-company/2026-11-bcc-glowna.webp",
+      "/projects/bcc-bogdan-constructions-company/2026-11-bcc-realizacje.webp"
+    ],
+    "image_alts": [
+      "BCC — strona główna z wprowadzeniem do oferty budowlanej.",
+      "BCC — galeria przykładowych projektów z trzema kartami budynków."
+    ]
+  },
+  {
+    "id": "5187fe58-43e9-46a8-aba5-7016acfbc55a",
+    "slug": "emanuel-wloch-full-stack-software-engineer-edge-platform",
+    "title": "Strona ofertowa i lekki CMS — Emanuel Włoch",
+    "category": "web",
+    "short_description": "Strona ofertowa z katalogiem realizacji, formularzem kontaktowym i lekkim panelem do edycji treści.",
+    "detailed_description": "Na stronie głównej odwiedzający wybiera, czy potrzebuje strony, sklepu czy aplikacji. Każda usługa ma własny opis, a katalog realizacji pozwala filtrować projekty i oglądać ich galerie. Osobny panel służy do zarządzania projektami, ofertą i wiadomościami.",
+    "main_challenge": "Jak pomóc klientowi wybrać usługę, zobaczyć podobny projekt i przejść do kontaktu bez szukania informacji po całej witrynie?",
+    "innovation": "Formularz może przejąć kontekst usługi lub realizacji, od której klient zaczął rozmowę.",
+    "project_result": "Działająca strona ofertowa z wewnętrznymi opisami realizacji. Zrzuty pokazują pierwszy ekran i katalog z filtrami.",
+    "key_features": [
+      "Trzy ścieżki usług",
+      "Katalog realizacji z filtrami",
+      "Galerie wielozdjęciowe",
+      "Formularz z kontekstem usługi lub projektu",
+      "Panel edycji treści i obsługi wiadomości"
+    ],
+    "images": [
+      "/projects/emanuel-wloch-full-stack-software-engineer-edge-platform/2026-11-cms-oferta.webp",
+      "/projects/emanuel-wloch-full-stack-software-engineer-edge-platform/2026-11-cms-katalog.webp"
+    ],
+    "image_alts": [
+      "Strona ofertowa Emanuela Włocha z przyciskami kontaktu i ilustracją etapu Cel.",
+      "Katalog realizacji z filtrami według typu projektu."
+    ]
+  },
+  {
+    "id": "fe49066a-9990-453d-b368-8f72df1e414a",
+    "slug": "zielona-baza-restauracja-weganska-w-rzeszowie",
+    "title": "Zielona Baza - Restauracja Wegańska w Rzeszowie",
+    "category": "web",
+    "short_description": "Strona restauracji wegańskiej z kartą dań, wyszukiwaniem w menu oraz informacjami dla gości.",
+    "detailed_description": "Gość może sprawdzić dania według kategorii i skorzystać z wyszukiwarki. Na stronie są też zdjęcia, informacje o restauracji i kontakt. Opis dotyczy realizacji archiwalnej, której widok menu był dostępny podczas przeglądu.",
+    "main_challenge": "Jak przedstawić pełne menu w sposób wygodny także dla osoby, która sprawdza je w drodze na telefonie?",
+    "innovation": "Karta dań jest podzielona na kategorie i ma wyszukiwarkę.",
+    "project_result": "Otworzyłem aktualnie dostępny widok restauracji i przeszedłem do menu. Galeria pokazuje kartę dań z kategoriami, nazwami i cenami.",
+    "key_features": [
+      "Karta dań z kategoriami",
+      "Wyszukiwarka w menu",
+      "Galeria zdjęć",
+      "Informacje o restauracji i kontakt"
+    ],
+    "images": [
+      "/projects/fe49066a-9990-453d-b368-8f72df1e414a_0.jpg",
+      "/projects/zielona-baza-restauracja-weganska-w-rzeszowie/2026-11-zielona-menu.webp"
+    ],
+    "image_alts": [
+      "Archiwalny ekran realizacji „Zielona Baza - Restauracja Wegańska w Rzeszowie”.",
+      "Zielona Baza — karta dań z wyszukiwarką i sekcją sezonowych specjałów."
+    ]
+  },
+  {
+    "id": "5fa80c09-f256-4dc9-a94e-6a08ae809345",
+    "slug": "rzeszow-tatuaz-iluminatia-tattoo",
+    "title": "Rzeszów Tatuaż – Iluminatia Tattoo",
+    "category": "web",
+    "short_description": "Strona studia tatuażu i piercingu, na której klient poznaje zespół, ogląda prace i wybiera sposób kontaktu.",
+    "detailed_description": "Witryna rozdziela tatuaż i piercing, żeby ułatwić znalezienie odpowiedniej oferty. Zespół ma osobną sekcję, a galerie pomagają porównać style i zobaczyć prace przed umówieniem wizyty. Opis dotyczy archiwalnej realizacji.",
+    "main_challenge": "Jak pokazać charakter studia i różne style artystów, a jednocześnie ułatwić klientowi znalezienie praktycznych informacji?",
+    "innovation": "Osobne części witryny prowadzą do zespołu, tatuażu, piercingu i kontaktu.",
+    "project_result": "Sprawdziłem stronę główną i sekcję zespołu. W opublikowanej opinii klientka wyróżnia wygodne przeglądanie galerii i formularz kontaktowy.",
+    "key_features": [
+      "Prezentacja zespołu studia",
+      "Galerie prac",
+      "Osobna oferta piercingu",
+      "FAQ i ścieżka do kontaktu"
+    ],
+    "images": [
+      "/projects/rzeszow-tatuaz-iluminatia-tattoo/2026-11-tattoo-glowna.webp",
+      "/projects/rzeszow-tatuaz-iluminatia-tattoo/2026-11-tattoo-zespol.webp"
+    ],
+    "image_alts": [
+      "Iluminatia Tattoo — ciemna strona główna z sygnaturą graficzną studia.",
+      "Iluminatia Tattoo — wprowadzenie do sekcji poświęconej zespołowi."
+    ]
+  },
+  {
+    "id": "3bc5ed9c-c7c8-4532-adec-326f78389f0e",
+    "slug": "dmuchance-afryka-strona-wynajmu-dmuchancow",
+    "title": "Dmuchańce Afryka - Strona Wynajmu Dmuchańców",
+    "category": "web",
+    "short_description": "Testowa strona wynajmu atrakcji dla dzieci. Pokazuje dmuchańce na zdjęciach, opisuje ofertę i podaje warunki wynajmu.",
+    "detailed_description": "Strona Dmuchana Dżungla prezentuje atrakcję w aranżacji safari. Osobna galeria pozwala zobaczyć ją z kilku stron, a sekcja cennika rozróżnia dni robocze i weekendy. Kontakt jest dostępny z menu.",
+    "main_challenge": "Jak pokazać rodzicowi albo organizatorowi wydarzenia, jak wygląda atrakcja, ile zajmuje miejsca i gdzie zapytać o wynajem?",
+    "innovation": "Zdjęcia w galerii pokazują skalę i kształt atrakcji, a warunki są dostępne w osobnej sekcji.",
+    "project_result": "Lokalnie sprawdziłem stronę główną i przejście do wielozdjęciowej galerii. Prezentacja ma status wersji testowej.",
+    "key_features": [
+      "Zdjęcia atrakcji w otoczeniu",
+      "Galeria z różnymi ujęciami",
+      "Wymiary i warunki wynajmu",
+      "Cennik i kontakt"
+    ],
+    "images": [
+      "/projects/dmuchance-afryka-strona-wynajmu-dmuchancow/2026-11-dmuchance-glowna.webp",
+      "/projects/dmuchance-afryka-strona-wynajmu-dmuchancow/2026-11-dmuchance-galeria.webp"
+    ],
+    "image_alts": [
+      "Dmuchana Dżungla — ekran główny ze zdjęciem atrakcji i hasłem Afrykańska Przygoda.",
+      "Dmuchana Dżungla — widok galerii przedstawiający atrakcję z kilku perspektyw."
+    ]
+  },
+  {
+    "id": "09e837ed-2206-49b7-9b81-21c6222a18f5",
+    "slug": "vip-transfery-platforma-premium-transport-solutions",
+    "title": "VIP Transfery – Platforma Premium Transport Solutions",
+    "category": "web",
+    "short_description": "Strona ofertowa przewozów premium. Pokazuje dostępne usługi, samochód i drogę do zamówienia przejazdu.",
+    "detailed_description": "Odwiedzający zaczyna od wyboru usługi transportowej, a na osobnej podstronie może obejrzeć pojazd i sprawdzić jego wyposażenie. Główne przyciski prowadzą do danych potrzebnych do zgłoszenia przejazdu.",
+    "main_challenge": "Jak pokazać standard transportu zdjęciami i jednocześnie ułatwić szybkie znalezienie odpowiedniej usługi?",
+    "innovation": "Pojazd i jego wyposażenie mają własny ekran, dostępny bezpośrednio z głównej nawigacji.",
+    "project_result": "Na lokalnej kopii sprawdziłem ekran startowy i podstronę pojazdu. W opublikowanej opinii klient wskazuje, że łatwiej było przejść do rezerwacji.",
+    "key_features": [
+      "Oferta przewozów VIP i transferów",
+      "Osobna podstrona pojazdu",
+      "Galeria zdjęć samochodu i wnętrza",
+      "Wejście do zamówienia przejazdu"
+    ],
+    "images": [
+      "/projects/vip-transfery-platforma-premium-transport-solutions/2026-11-vip-glowna.webp",
+      "/projects/vip-transfery-platforma-premium-transport-solutions/2026-11-vip-pojazd.webp"
+    ],
+    "image_alts": [
+      "VIP Transfery — strona główna z fotografią BMW i wejściem do zamówienia transferu.",
+      "VIP Transfery — podstrona pojazdu z opisem i fotografią BMW 7."
+    ]
+  },
+  {
+    "id": "ecca3780-0d01-489a-a240-a19e632c3a65",
+    "slug": "mototrasa-tour-aplikacja-wypozyczalni-motocykli",
+    "title": "Mototrasa Tour - Aplikacja Wypożyczalni Motocykli",
+    "category": "web",
+    "short_description": "Aplikacja wypożyczalni motocykli z kartami pojazdów, cenami i przejściem do szczegółów najmu.",
+    "detailed_description": "Oferta rozdziela motocykle i dodatki. Na kartach pojazdów widać model, stawkę i najważniejsze parametry. Przycisk szczegółów prowadzi do dalszej części ścieżki rezerwacyjnej.",
+    "main_challenge": "Jak umożliwić porównanie motocykli i kosztów najmu przed przejściem do rezerwacji?",
+    "innovation": "Karty pokazują parametry i cenę obok siebie, więc można porównać ofertę przed otwarciem szczegółów.",
+    "project_result": "Frontend uruchomiłem lokalnie. Karty motocykli sprawdziłem w dostępnej wersji aplikacji. Galeria zachowuje wcześniejszy ekran i pokazuje obecny układ oferty. Część zdjęć motocykli w obecnym widoku się nie ładuje. Nie składano rezerwacji.",
+    "key_features": [
+      "Karty motocykli i dodatków",
+      "Ceny i parametry najmu",
+      "Wejście do szczegółów i rezerwacji",
+      "Sekcje informacji i kontaktu"
+    ],
+    "images": [
+      "/projects/ecca3780-0d01-489a-a240-a19e632c3a65_0.jpg",
+      "/projects/mototrasa-tour-aplikacja-wypozyczalni-motocykli/2026-11-mototrasa-oferta.webp"
+    ],
+    "image_alts": [
+      "Archiwalny ekran realizacji „Mototrasa Tour - Aplikacja Wypożyczalni Motocykli”.",
+      "Mototrasa Tour — porównanie trzech kart motocykli z cenami i parametrami. W miejscu zdjęć są pola zastępcze."
+    ]
+  },
+  {
+    "id": "2fc573cd-754a-47f8-bc7e-eabdbd6f5236",
+    "slug": "solid-print",
+    "title": "Solid Print — platforma pracowni druku 3D",
+    "category": "web",
+    "short_description": "Testowa platforma pracowni druku 3D. Prowadzi od własnego pliku, pomysłu lub produktu do formularza wyceny.",
+    "detailed_description": "Pracownia pokazuje możliwości druku i projektowania 3D, a animacja na stronie głównej objaśnia nakładanie warstw. Formularz wyceny dopasowuje początek ścieżki do tego, co klient już ma. Przy wyborze własnego modelu pokazuje pole na plik i podsumowanie zapytania.",
+    "main_challenge": "Jak ułatwić rozpoczęcie rozmowy o druku 3D zarówno osobie z gotowym modelem, jak i klientowi, który ma tylko pomysł?",
+    "innovation": "Jeden formularz ma osobne punkty wejścia dla pliku, pomysłu i gotowego produktu.",
+    "project_result": "Sprawdziłem stronę główną i otwarcie formularza w działającej wersji testowej. Nie wysyłałem formularza ani plików.",
+    "key_features": [
+      "Wycena z trzech punktów startowych",
+      "Podsumowanie zapytania",
+      "Animacja druku warstwowego",
+      "Opis usług i materiałów",
+      "Katalog gotowych projektów"
+    ],
+    "images": [
+      "/projects/solid-print/strona-glowna.webp",
+      "/projects/solid-print/2026-11-solid-wycena.webp"
+    ],
+    "image_alts": [
+      "Aktualna strona testowa Solid Print: oferta projektowania i druku 3D oraz symulacja druku warstwowego",
+      "Solid Print — otwarty formularz wyceny z wyborem ścieżki, polem na model i podsumowaniem."
+    ]
+  },
+  {
+    "id": "69cb521c-5569-4b8c-9fa6-381431b0893e",
+    "slug": "sklep-internetowy-demo",
+    "title": "Sklep internetowy — demo z panelem zarządzania",
+    "category": "e-commerce",
+    "short_description": "Demonstracyjny sklep z filtrowaniem i wyszukiwaniem produktów oraz osobnym panelem do zarządzania katalogiem.",
+    "detailed_description": "Interfejs sklepu pokazuje drzewo kategorii, wyszukiwarkę, filtry i karty produktów. Panel administracyjny ma osobne widoki do edycji katalogu. Zrzuty pochodzą z lokalnej bazy demonstracyjnej, a produkty, ceny i część zdjęć są przykładowe.",
+    "main_challenge": "Jak połączyć wygodne przeglądanie szerokiego katalogu z czytelną edycją produktów?",
+    "innovation": "Klient i administrator korzystają z tego samego modelu katalogu przez dwa dopasowane widoki.",
+    "project_result": "Uruchomiłem sklep na osobnej bazie demonstracyjnej i otworzyłem katalog z filtrami. Galeria zawiera też wcześniej zweryfikowany panel produktów. Płatności są symulowane. Koszyk gościa i integracje produkcyjne wymagają dalszej weryfikacji.",
+    "key_features": [
+      "Drzewo kategorii",
+      "Wyszukiwarka i filtry produktów",
+      "Podgląd karty produktu",
+      "Panel zarządzania katalogiem"
+    ],
+    "images": [
+      "/projects/sklep-internetowy-demo/katalog.webp",
+      "/projects/sklep-internetowy-demo/panel-produktow.webp",
+      "/projects/sklep-internetowy-demo/2026-11-sklep-katalog.webp"
+    ],
+    "image_alts": [
+      "Katalog sklepu demo: wyszukiwanie, kategorie, filtry i produkty ze zdjęciami zastępczymi",
+      "Panel administratora sklepu na danych demo: lista produktów, ceny i stany magazynowe",
+      "Sklep demonstracyjny — lista produktów z kategoriami, wyszukiwarką i filtrem ceny."
+    ]
+  },
+  {
+    "id": "0b8029af-ea10-4e54-9db9-942ae2858595",
+    "slug": "coco-aplikacja-tv",
+    "title": "COCO — aplikacja telewizyjna dla Samsung Smart TV",
+    "category": "apps",
+    "short_description": "Autorska aplikacja telewizyjna dla Samsung Smart TV. Łączy wybór kanałów i ramówkę w interfejsie obsługiwanym pilotem.",
+    "detailed_description": "Po otwarciu listy kanałów użytkownik widzi informacje o wybranej stacji, bieżącą audycję i następny program. Projekt ma osobny ekran ramówki, ulubione i mapę sterowania. Zrzuty wykonano w przeglądarce, na przykładowych kanałach i audycjach.",
+    "main_challenge": "Jak pomóc użytkownikowi sprawdzić ramówkę i zmienić kanał za pomocą strzałek pilota?",
+    "innovation": "Podgląd bieżącej i kolejnej audycji pojawia się obok zaznaczonego kanału.",
+    "project_result": "W bieżącym trybie demonstracyjnym uruchomiłem listę kanałów i sprawdziłem nawigację klawiaturą. Galeria zachowuje także ekran instrukcji pilota. Ta sesja nie obejmowała odtwarzania na fizycznym telewizorze.",
+    "key_features": [
+      "Lista kanałów z podglądem audycji",
+      "Oddzielny ekran programu TV",
+      "Nawigacja strzałkami",
+      "Tryb demonstracyjny",
+      "Mapa przycisków pilota"
+    ],
+    "images": [
+      "/projects/coco-aplikacja-tv/kanaly-demo.webp",
+      "/projects/coco-aplikacja-tv/sterowanie.webp",
+      "/projects/coco-aplikacja-tv/2026-11-coco-kanaly.webp"
+    ],
+    "image_alts": [
+      "COCO w trybie demo: lista sześciu przykładowych kanałów oraz bieżący i następny program",
+      "COCO: ekran opisujący sterowanie pilotem Samsung podczas oglądania",
+      "COCO w trybie demo — lista kanałów oraz aktualna i następna audycja zaznaczonej stacji."
+    ]
+  },
+  {
+    "id": "d9bdb777-ea0c-4ea8-a1e2-7c334ca60eb6",
+    "slug": "lapki-w-ciapki-sklep-zoologiczny",
+    "title": "Łapki w Ciapki — katalog sklepu zoologicznego",
+    "category": "e-commerce",
+    "project_type": "e-commerce",
+    "project_status": "in-development",
+    "sort_order": 30,
+    "is_responsive": 1,
+    "short_description": "Katalog lokalnego sklepu zoologicznego. Pozwala przeglądać karmy i akcesoria, wyszukiwać produkty i zawężać ofertę filtrami.",
+    "detailed_description": "Strona pokazuje ofertę sklepu zoologicznego z Jarosławia. Przejście ze strony głównej otwiera katalog z wyszukiwarką, sortowaniem, filtrem marek oraz kartami produktów. Lokalne uruchomienie korzystało z przykładowego katalogu dołączonego do aplikacji.",
+    "main_challenge": "Jak pomóc właścicielowi zwierzęcia znaleźć odpowiedni produkt, gdy oferta obejmuje wiele marek i typów asortymentu?",
+    "innovation": "Klient może połączyć wyszukiwanie z filtrem marki i sortowaniem na jednym ekranie.",
+    "project_result": "Uruchomiłem witrynę, przeszedłem ze strony głównej do katalogu i sprawdziłem, że wyszukiwanie zawęża wyniki. Płatności i obsługa zamówień nie były sprawdzane.",
+    "key_features": [
+      "Przejście ze strony głównej do katalogu",
+      "Wyszukiwarka produktów",
+      "Sortowanie i filtrowanie marek",
+      "Karty produktów z fotografiami"
+    ],
+    "technologies": [
+      "React",
+      "JavaScript",
+      "Vite",
+      "Tailwind CSS"
+    ],
+    "frontend_technologies": [
+      "React",
+      "Tailwind CSS"
+    ],
+    "design_style": "Jasny interfejs z ilustracjami zwierząt i różowo-pomarańczowymi akcentami",
+    "target_audience": "Właściciele zwierząt szukający karm i akcesoriów w lokalnym sklepie",
+    "images": [
+      "/projects/lapki-w-ciapki-sklep-zoologiczny/2026-11-lapki-glowna.webp",
+      "/projects/lapki-w-ciapki-sklep-zoologiczny/2026-11-lapki-katalog.webp"
+    ],
+    "image_alts": [
+      "Łapki w Ciapki — strona główna sklepu z wejściem do katalogu i zdjęciami zwierząt.",
+      "Łapki w Ciapki — działający widok katalogu z wyszukiwaniem, filtrami i kartami produktów."
+    ]
+  },
+  {
+    "id": "c93939ab-72cc-4d88-ab83-7d2d2a28fb46",
+    "slug": "wardogs-companion",
+    "title": "WARDOGS Companion — panel danych dla Windows",
+    "category": "apps",
+    "project_type": "desktop-app",
+    "project_status": "active",
+    "sort_order": 55,
+    "is_responsive": 0,
+    "short_description": "Nieoficjalna aplikacja Windows, która zamienia historię pomiarów z gry WARDOGS w czytelne wykresy, bilanse dni i zestawienia postępu.",
+    "detailed_description": "Na ekranie przeglądu aplikacja zestawia stan postaci, zmiany w wybranym dniu i postęp poszczególnych ról. Analiza dni porównuje saldo, doświadczenie i liczbę pomiarów w kolejnych dniach. Zrzuty pochodzą z uruchomionego interfejsu WPF na fikcyjnym profilu. W tym podglądzie aplikacja pracowała bez połączenia ze źródłem danych.",
+    "main_challenge": "Jak przedstawić zmiany i braki w danych tak, żeby użytkownik wiedział, z których pomiarów wynika bilans?",
+    "innovation": "Wykresowi i tabeli towarzyszą zakres obserwacji, liczba pomiarów i informacja o przerwach.",
+    "project_result": "Uruchomiłem bieżący interfejs Windows na odizolowanej bazie demonstracyjnej i sprawdziłem przegląd profilu oraz porównanie siedmiu dni.",
+    "key_features": [
+      "Wykres i bilans wybranego dnia",
+      "Postęp ról",
+      "Porównanie dni w tabeli",
+      "Historia pomiarów przechowywana lokalnie"
+    ],
+    "technologies": [
+      "C#",
+      ".NET",
+      "WPF",
+      "SQLite"
+    ],
+    "frontend_technologies": [
+      "WPF",
+      "XAML"
+    ],
+    "backend_technologies": [
+      "C#",
+      "SQLite"
+    ],
+    "design_style": "Ciemny pulpit danych z miętowym akcentem",
+    "target_audience": "Osoby grające w WARDOGS, które chcą porównywać postępy na Windows",
+    "images": [
+      "/projects/wardogs-companion/2026-11-wardogs-przeglad.webp",
+      "/projects/wardogs-companion/2026-11-wardogs-analiza.webp"
+    ],
+    "image_alts": [
+      "WARDOGS Companion — przegląd fikcyjnego profilu z wykresem salda i postępem ról.",
+      "WARDOGS Companion — tabela wyników za siedem dni z liczbą pomiarów i zakresem danych."
+    ]
+  }
+]
