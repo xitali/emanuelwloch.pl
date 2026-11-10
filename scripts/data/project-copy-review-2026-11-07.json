@@ -84,7 +84,18 @@
     "changes": {
       "project_result": "Strona z ofertą restauracji i menu aktualizowanym przez bazę danych. Opis dotyczy wykonanej realizacji archiwalnej.",
       "performance_metrics": [],
-      "success_metrics": []
+      "success_metrics": [],
+      "technologies": [
+        "HTML5",
+        "CSS3 (Custom Properties)",
+        "Vanilla JavaScript ES6+",
+        "PHP",
+        "MySQL"
+      ],
+      "backend_technologies": [
+        "PHP",
+        "MySQL"
+      ]
     }
   },
   {

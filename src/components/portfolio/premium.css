@@ -251,6 +251,8 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 /* delikatny przesuw światła po najechaniu — pseudo-element przycisku, więc nie koliduje ze spotlightem karty */
 .project-media-trigger::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; transform: translateX(-130%) skewX(-16deg); background: linear-gradient(90deg, transparent, #ffffff16, transparent); transition: transform 1.3s var(--ease-out); }
 .project-media-trigger:hover::before { transform: translateX(130%) skewX(-16deg); }
+.motion-paused .project-media, .motion-paused .project-media :is(img, video), .motion-paused .project-media-open { transform: none !important; }
+.motion-paused .project-media-trigger::before { display: none; }
 .project-media-control, .project-media-open { z-index: 3; backdrop-filter: blur(10px); border-radius: 12px; }
 .showcase-caption { align-items: flex-end; }
 .showcase-caption .portfolio-kicker { margin-bottom: 4px; }
@@ -279,14 +281,14 @@ html, body { background: #0b0d0f; }
   .project-media-trigger::before { display: none; }
 }
 
-/* —— Karta wyróżniona: podgląd w naturalnym rozmiarze obok opisu (źródło 960 px, bez rozciągania) —— */
+/* —— Karta wyróżniona: podgląd w naturalnym rozmiarze obok opisu (źródło 1280 px, bez rozciągania) —— */
 .showcase-info { display: block; min-width: 0; }
 .showcase-info > .project-release-label { margin-bottom: 10px; }
 .service-price-note { margin-top: 32px; }
 .service-steps { margin-top: 58px; }
 @media (min-width: 1024px) {
   .showcase-featured { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(320px, 1fr); column-gap: clamp(36px, 4.5vw, 84px); align-items: start; }
-  .showcase-featured > .project-media, .showcase-featured > .showcase-type-visual { max-width: 1000px; }
+  .showcase-featured > .project-media, .showcase-featured > .showcase-type-visual { max-width: 1200px; }
   .showcase-featured .showcase-caption { margin-top: 0; flex-direction: column; gap: 18px; }
   .showcase-featured .showcase-caption h3 { font-size: clamp(30px, 3vw, 46px); }
   .showcase-featured .showcase-arrow { align-self: flex-start; }

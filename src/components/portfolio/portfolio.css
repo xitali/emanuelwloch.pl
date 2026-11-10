@@ -154,8 +154,8 @@ details[open] .detail-plus { transform: rotate(45deg); }
 }
 @media (max-width: 1050px) {
   .portfolio-nav nav { gap: 18px; }
-  .portfolio-wordmark small { display: none; }
-  .portfolio-wordmark > span { display: none; }
+  .portfolio-wordmark { gap: 10px; }
+  .portfolio-wordmark small { font-size: 13px; }
   .product-hero-copy h1 { font-size: 6.9vw; }
   .product-hero-copy { width: 53%; }
   .product-visual { left: 48%; right: -2%; }

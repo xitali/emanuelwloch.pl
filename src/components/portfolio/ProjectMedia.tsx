@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Pause, Play, Plus } from "lucide-react";
+import { useMotionPaused } from "@/lib/motion/preference";
 import previewManifest from "../../lib/project-previews.json";
 
 const subscribeMotion = (callback: () => void) => {
@@ -25,9 +26,10 @@ export default function ProjectMedia({ projectId, image, title, fallbackImage, o
   const [posterFailed, setPosterFailed] = useState(false);
   const [source, setSource] = useState(image);
   const reduced = useSyncExternalStore(subscribeMotion, getReducedMotion, serverReducedMotion);
+  const [motionPaused] = useMotionPaused();
   const entry = previews[projectId];
   const preview = previewVideo && previewPoster ? { source: image, video: previewVideo, poster: previewPoster } : entry?.source === image ? entry : undefined;
-  const enabled = Boolean(preview && !reduced && !failed);
+  const enabled = Boolean(preview && !reduced && !motionPaused && !failed);
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.15 });
     if (root.current) observer.observe(root.current);

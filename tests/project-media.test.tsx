@@ -3,6 +3,7 @@ import React from "react";
 import {afterEach,beforeEach,describe,expect,it,vi} from "vitest";
 import {act,cleanup,fireEvent,render,screen} from "@testing-library/react";
 import ProjectMedia from "../src/components/portfolio/ProjectMedia";
+import { setMotionPaused } from "../src/lib/motion/preference";
 import previews from "../src/lib/project-previews.json";
 vi.mock("next/image",()=>({default:({src,alt}:{src:string;alt:string})=>React.createElement("img",{src,alt})}));
 let reduced=false;
@@ -16,7 +17,7 @@ beforeEach(()=>{
  vi.spyOn(HTMLMediaElement.prototype,"play").mockResolvedValue();
  vi.spyOn(HTMLMediaElement.prototype,"pause").mockImplementation(()=>{});
 });
-afterEach(()=>{cleanup();vi.restoreAllMocks();vi.unstubAllGlobals();});
+afterEach(()=>{cleanup();setMotionPaused(false);vi.restoreAllMocks();vi.unstubAllGlobals();});
 describe("project preview playback",()=>{
  it("does not load video when reduced motion is requested",()=>{
   reduced=true;const {container}=render(<ProjectMedia {...props}/>);
@@ -40,5 +41,17 @@ describe("project preview playback",()=>{
   act(()=>visibility([{isIntersecting:true}]));
   expect(container.querySelector("video")).toBeNull();
   expect(screen.getByAltText("Podgląd projektu Test projektu").getAttribute("src")).toBe("/projects/new-screen.png");
+ });
+ it("shows the poster while site motion is paused and restores the preview when resumed", () => {
+  const { container } = render(<ProjectMedia {...props} />);
+  act(() => visibility([{ isIntersecting: true }]));
+  expect(container.querySelector("video")).not.toBeNull();
+
+  act(() => setMotionPaused(true));
+  expect(container.querySelector("video")).toBeNull();
+  expect(screen.getByAltText("Podgląd projektu Test projektu").getAttribute("src")).toBe(preview.poster);
+
+  act(() => setMotionPaused(false));
+  expect(container.querySelector("video")).not.toBeNull();
  });
 });

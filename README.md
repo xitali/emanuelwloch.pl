@@ -62,3 +62,9 @@ Panel `/admin` pozostaje instalowalną aplikacją PWA jako rozwiązanie awaryjne
 ## Bezpieczeństwo
 
 Zasady zgłaszania problemów opisuje [SECURITY.md](./SECURITY.md).
+
+## Dokumentacja przeglądów
+
+- [Plan odświeżenia](docs/PLAN_PREMIUM_REDESIGN.md)
+- [Przegląd projektu](docs/project_review.md)
+- [Lista wdrożeniowa](docs/DEPLOYMENT_CHECKLIST.md)

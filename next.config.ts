@@ -1,3 +1,4 @@
+import previewRedirects from "./src/lib/project-preview-redirects.json";
 import type { NextConfig } from "next";
 
 const scriptSource =
@@ -30,6 +31,7 @@ const nextConfig: NextConfig = {
         destination: "https://kamera-brama.tailcc6301.ts.net/",
         permanent: false,
       },
+      ...previewRedirects.map(rule => ({ ...rule, permanent: true })),
       { source: "/opengraph-image.jpg", destination: "/og/strony-i-aplikacje-9dac8276.jpg", permanent: true },
     ];
   },
