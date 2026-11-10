@@ -110,6 +110,8 @@
     "main_challenge": "Jak pokazać charakter studia i różne style artystów, a jednocześnie ułatwić klientowi znalezienie praktycznych informacji?",
     "innovation": "Osobne części witryny prowadzą do zespołu, tatuażu, piercingu i kontaktu.",
     "project_result": "Sprawdziłem stronę główną i sekcję zespołu. W opublikowanej opinii klientka wyróżnia wygodne przeglądanie galerii i formularz kontaktowy.",
+    "performance_metrics": [],
+    "technical_metrics": [],
     "key_features": [
       "Prezentacja zespołu studia",
       "Galerie prac",
@@ -135,6 +137,7 @@
     "main_challenge": "Jak pokazać rodzicowi albo organizatorowi wydarzenia, jak wygląda atrakcja, ile zajmuje miejsca i gdzie zapytać o wynajem?",
     "innovation": "Zdjęcia w galerii pokazują skalę i kształt atrakcji, a warunki są dostępne w osobnej sekcji.",
     "project_result": "Lokalnie sprawdziłem stronę główną i przejście do wielozdjęciowej galerii. Prezentacja ma status wersji testowej.",
+    "accessibility_features": "Menu prowadzi do galerii, cennika i kontaktu. Pełny audyt dostępności nie był częścią przeglądu.",
     "key_features": [
       "Zdjęcia atrakcji w otoczeniu",
       "Galeria z różnymi ujęciami",
@@ -160,6 +163,7 @@
     "main_challenge": "Jak pokazać standard transportu zdjęciami i jednocześnie ułatwić szybkie znalezienie odpowiedniej usługi?",
     "innovation": "Pojazd i jego wyposażenie mają własny ekran, dostępny bezpośrednio z głównej nawigacji.",
     "project_result": "Na lokalnej kopii sprawdziłem ekran startowy i podstronę pojazdu. W opublikowanej opinii klient wskazuje, że łatwiej było przejść do rezerwacji.",
+    "accessibility_features": "Nawigacja oddziela ofertę, pojazd i kontakt. Pełny audyt dostępności nie był częścią przeglądu.",
     "key_features": [
       "Oferta przewozów VIP i transferów",
       "Osobna podstrona pojazdu",
