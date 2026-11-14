@@ -18,8 +18,9 @@
 .svc-areas li { display: flex; align-items: center; gap: 6px; }
 .svc-areas .ew-icon { color: var(--p-accent); }
 .svc-hero-visual { position: relative; aspect-ratio: 16 / 11.5; container-type: inline-size; }
-.svc-hero-visual .stage-frame--front { width: 84%; }
-.svc-hero-visual .stage-frame--back { width: 64%; }
+.svc-hero-visual--mockup { aspect-ratio: 16 / 9.5; }
+.svc-hero-visual--mockup::before { content: ""; position: absolute; inset: 20% 4% -4%; border-radius: 50%; background: radial-gradient(closest-side, #acd1e81c, transparent 72%); }
+.svc-hero-mockup { object-fit: contain; filter: drop-shadow(0 34px 40px #000b); }
 
 /* —— W skrócie —— */
 .svc-answer { padding: 72px 0; background: var(--p-surface); border-bottom: 1px solid var(--p-border); }

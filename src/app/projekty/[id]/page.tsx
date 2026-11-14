@@ -1,5 +1,6 @@
 import { projectLabel } from "@/lib/project-labels";
 import ProjectMedia from "@/components/portfolio/ProjectMedia";
+import { projectMockup } from "@/lib/project-mockups";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -134,6 +135,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ["Status", STATUS[project.project_status || "active"] ?? "Gotowa realizacja"],
   ].filter((fact): fact is [string, string] => Boolean(fact[1]));
   const metrics = [...(project.performance_metrics ?? []), ...(project.technical_metrics ?? [])];
+  // With a 3D mockup in the header, every real screenshot goes to the gallery; otherwise the first is already shown.
+  const gallery = project.images.map((image, index) => ({ image, index })).slice(projectMockup(project) ? 0 : 1);
 
   return (
     <PublicPageShell>
@@ -155,7 +158,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </header>
 
           {project.images[0] && <section className="portfolio-container project-hero-media" aria-label={`Podgląd: ${project.title}`}>
-            <ProjectMedia alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} title={project.title} priority />
+            <ProjectMedia mockup={projectMockup(project)} alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} title={project.title} priority />
           </section>}
 
           <section className="portfolio-container" aria-label="Projekt w skrócie">
@@ -184,10 +187,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </section>}
           </section>
 
-          {project.images.length > 1 && <section className="svc-band" aria-labelledby="gallery-heading">
+          {(project.images.length > 1 || projectMockup(project)) && <section className="svc-band" aria-labelledby="gallery-heading">
             <div className="portfolio-container">
               <h2 id="gallery-heading">Widoki projektu</h2>
-              <div className="project-gallery">{project.images.slice(1).map((image, index) => <figure key={`${image}-${index}`}><div className="project-gallery-shot"><Image src={image} alt={project.image_alts?.[index + 1] || `Widok ${index + 2} projektu ${project.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" /></div>{project.image_alts?.[index + 1] && <figcaption>{project.image_alts[index + 1]}</figcaption>}</figure>)}</div>
+              <div className="project-gallery">{gallery.map(({ image, index }) => <figure key={`${image}-${index}`}><div className="project-gallery-shot"><Image src={image} alt={project.image_alts?.[index] || `Widok ${index + 1} projektu ${project.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" /></div>{project.image_alts?.[index] && <figcaption>{project.image_alts[index]}</figcaption>}</figure>)}</div>
             </div>
           </section>}
 

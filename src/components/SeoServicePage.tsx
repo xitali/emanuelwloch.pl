@@ -1,5 +1,4 @@
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
-import ScreenFrame from "@/components/portfolio/ScreenFrame";
 import { IconArrowUpRight, IconCheck, IconPin } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -8,6 +7,7 @@ import type { ServicePageData } from "@/lib/service-pages";
 import { getProjectPath, serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
 import { relatedProjectsFor, serviceShowcase } from "@/lib/service-showcase";
 import { projectLabel } from "@/lib/project-labels";
+import { projectMockup } from "@/lib/project-mockups";
 import { getProjects } from "@/lib/turso";
 
 export function createServiceMetadata(data: ServicePageData): Metadata {
@@ -109,9 +109,8 @@ export default async function SeoServicePage({ data }: { data: ServicePageData }
                   </div>
                   <ul className="svc-areas" aria-label="Obszar działania">{data.areas.map((area) => <li key={area}><IconPin size={14} />{area}</li>)}</ul>
                 </div>
-                {showcase && <div className="svc-hero-visual" aria-hidden="true">
-                  <ScreenFrame frame={showcase.back} className="stage-frame--back" sizes="(max-width: 1023px) 70vw, 32vw" />
-                  <ScreenFrame frame={showcase.front} className="stage-frame--front" eager sizes="(max-width: 1023px) 86vw, 40vw" />
+                {showcase && <div className="svc-hero-visual svc-hero-visual--mockup" data-reveal>
+                  <Image src={`/mockups/usluga-${data.slug}.webp`} alt={`${showcase.front.label} i ${showcase.back.label} na laptopie i monitorze`} fill priority sizes="(max-width: 1023px) 92vw, 48vw" className="svc-hero-mockup" />
                 </div>}
               </div>
             </div>
@@ -135,7 +134,7 @@ export default async function SeoServicePage({ data }: { data: ServicePageData }
             <header className="svc-heading"><h2 id="examples-heading">Podobne realizacje</h2><Link href={catalogHref} className="portfolio-text-link">Wszystkie z tej kategorii <IconArrowUpRight size={15} /></Link></header>
             <ul className="svc-work-grid" data-stagger>
               {projects.map((project) => {
-                const image = project.images.find((src) => src.startsWith("/projects/")) ?? project.preview_poster ?? project.images[0];
+                const image = projectMockup(project) ?? project.images.find((src) => src.startsWith("/projects/")) ?? project.preview_poster ?? project.images[0];
                 return <li key={project.id}><Link href={getProjectPath(project)} className="svc-work-card">
                   <span className="svc-work-thumb">{image && <Image src={image} alt="" fill sizes="(max-width: 767px) 92vw, 30vw" />}</span>
                   <span className="svc-work-meta">{projectLabel(project.project_type || project.category)}{project.project_status === "in-development" ? " · wersja testowa" : ""}</span>

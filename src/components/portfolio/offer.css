@@ -38,6 +38,13 @@
 .showcase-meta > span { padding: 4px 9px; border: 1px solid #ffffff1f; border-radius: 4px; }
 .showcase-meta > .showcase-status { border-color: #e6c88a55; color: #e6d3a6; }
 
+/* —— Makiety 3D realizacji: jedno studio, jeden kąt, prawdziwe ekrany —— */
+.project-media--mockup { background: radial-gradient(ellipse 70% 45% at 50% 92%, #acd1e81f, transparent 70%), radial-gradient(ellipse 60% 60% at 70% 20%, #ffffff0a, transparent 70%), linear-gradient(180deg, #151a1e, #0d1013); transform-style: preserve-3d; }
+.project-media--mockup .project-mockup { object-fit: contain; padding: 7% 7% 5%; filter: drop-shadow(0 28px 34px #000a); transition: transform 1.2s var(--ease-out), filter .8s; }
+.showcase-card:hover .project-media--mockup .project-mockup { transform: translate3d(0, -6px, 0) scale(1.035); filter: drop-shadow(0 40px 44px #000c) saturate(1.06); }
+.svc-work-thumb:has(img[src*="/mockups/"]) { background: radial-gradient(ellipse 70% 45% at 50% 92%, #acd1e81f, transparent 70%), linear-gradient(180deg, #151a1e, #0d1013); }
+.svc-work-thumb img[src*="/mockups/"] { object-fit: contain; padding: 6%; filter: drop-shadow(0 18px 24px #0009); }
+
 /* —— Zaplecze: panel i dane, które klient dostaje razem z produktem —— */
 .backoffice { padding-block: 110px; scroll-margin-top: 90px; }
 .backoffice-layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 88px); align-items: start; margin-top: 56px; }

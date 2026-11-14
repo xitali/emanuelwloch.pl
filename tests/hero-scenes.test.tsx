@@ -30,7 +30,7 @@ it("lets a mobile visitor switch between four kinds of product without a scroll 
     expect(document.querySelector(`.scene-${scene}`)?.getAttribute("data-current")).toBe("true");
     expect(document.querySelectorAll(".hero-stage-scene[data-current=true]")).toHaveLength(1);
   }
-  expect(document.querySelector(".scene-program .stage-frame--window")).toBeTruthy();
+  expect(document.querySelector(".scene-program img")?.getAttribute("src")).toContain("hero-program");
   expect(timeline).not.toHaveBeenCalled();
 });
 
@@ -44,5 +44,5 @@ it("keeps every kind selectable and still when motion is paused", async () => {
 });
 
 it("shows only real screenshots that exist in the project", () => {
-  for (const kind of stageKinds) for (const frame of [kind.front, kind.back]) expect(existsSync(resolve("public", frame.src.slice(1)))).toBe(true);
+  for (const kind of stageKinds) for (const src of [kind.laptop, kind.monitor, kind.still]) expect(existsSync(resolve("public", src.slice(1)))).toBe(true);
 });

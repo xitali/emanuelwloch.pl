@@ -1,7 +1,9 @@
-import type { Frame } from "@/components/portfolio/ScreenFrame";
 import type { Project } from "@/types";
 import { projectMatchesCategory } from "./project-filter";
 import { projectGroup } from "./project-highlights";
+
+/** A real screenshot used on a service page; `kind` describes the device it was taken from. */
+export type Frame = { src: string; label: string; kind: "browser" | "window" };
 
 export type RelatedFilter = "web" | "e-commerce" | "aplikacje" | "apps" | "data" | "nextjs" | "jaroslaw" | "rzeszow";
 

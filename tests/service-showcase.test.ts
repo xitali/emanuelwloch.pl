@@ -5,6 +5,8 @@ import { servicePages } from "../src/lib/service-pages";
 import { servicePaths } from "../src/lib/service-paths";
 import { relatedProjectsFor, serviceShowcase } from "../src/lib/service-showcase";
 import type { Project } from "../src/types";
+import { projectMockup } from "../src/lib/project-mockups";
+import mockupManifest from "../src/lib/mockup-manifest.json";
 
 const make = (id: string, extra: Partial<Project>) => ({ id, title: id, short_description: "", technologies: [], images: [], category: "web", project_status: "active", ...extra }) as Project;
 
@@ -46,5 +48,18 @@ describe("realizacje dobrane do usługi", () => {
 
   it("na stronie lokalnej uzupełnia wybór innymi stronami firmowymi", () => {
     expect(relatedProjectsFor(projects, "rzeszow").map(p => p.id)).toEqual(["rzeszow", "strona"]);
+  });
+});
+
+describe("makiety 3D", () => {
+  it("każda podstrona usługi ma wyrenderowaną makietę", () => {
+    for (const page of servicePages) expect(existsSync(resolve("public", "mockups", `usluga-${page.slug}.webp`))).toBe(true);
+  });
+
+  it("manifest wskazuje tylko istniejące makiety realizacji", () => {
+    expect(mockupManifest.length).toBeGreaterThan(0);
+    for (const file of mockupManifest) expect(existsSync(resolve("public", "mockups", file))).toBe(true);
+    expect(projectMockup({ slug: "solid-print" })).toBe("/mockups/solid-print.webp");
+    expect(projectMockup({ slug: "nie-ma-takiego-projektu" })).toBeUndefined();
   });
 });

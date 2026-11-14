@@ -14,8 +14,10 @@ const getReducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").ma
 const serverReducedMotion = () => true;
 const previews: Record<string, { source: string; video: string; poster: string }> = previewManifest;
 
-export default function ProjectMedia({ projectId, image, title, fallbackImage, onOpen, priority = false, alt, previewVideo, previewPoster }: {
+export default function ProjectMedia({ projectId, image, title, fallbackImage, onOpen, priority = false, alt, previewVideo, previewPoster, mockup }: {
   alt?: string; previewVideo?: string; previewPoster?: string;
+  /** Rendered 3D mockup of the project; replaces the flat screenshot and its screen recording. */
+  mockup?: string;
   projectId: string; image: string; title: string; fallbackImage?: string; onOpen?: () => void; priority?: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
@@ -29,7 +31,7 @@ export default function ProjectMedia({ projectId, image, title, fallbackImage, o
   const [motionPaused] = useMotionPaused();
   const entry = previews[projectId];
   const preview = previewVideo && previewPoster ? { source: image, video: previewVideo, poster: previewPoster } : entry?.source === image ? entry : undefined;
-  const enabled = Boolean(preview && !reduced && !motionPaused && !failed);
+  const enabled = Boolean(preview && !mockup && !reduced && !motionPaused && !failed);
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.15 });
     if (root.current) observer.observe(root.current);
@@ -47,11 +49,11 @@ export default function ProjectMedia({ projectId, image, title, fallbackImage, o
     return () => { document.removeEventListener("visibilitychange", update); element.pause(); };
   }, [visible, paused, enabled]);
   const visual = <>
-    <Image src={preview && !posterFailed ? preview.poster : source} alt={alt || `Podgląd projektu ${title}`} fill priority={priority} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 90vw, 65vw" className="object-contain" onError={() => { if (preview && !posterFailed) { setPosterFailed(true); return; } if (fallbackImage && source !== fallbackImage) setSource(fallbackImage); }} />
+    {mockup ? <Image src={mockup} alt={alt || `Projekt ${title} na laptopie i monitorze`} fill priority={priority} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 90vw, 65vw" className="project-mockup" /> : <Image src={preview && !posterFailed ? preview.poster : source} alt={alt || `Podgląd projektu ${title}`} fill priority={priority} sizes="(max-width: 767px) 92vw, (max-width: 1023px) 90vw, 65vw" className="object-contain" onError={() => { if (preview && !posterFailed) { setPosterFailed(true); return; } if (fallbackImage && source !== fallbackImage) setSource(fallbackImage); }} />}
     {enabled && visible && <video ref={video} src={preview!.video} poster={preview!.poster} muted loop playsInline preload="none" aria-hidden="true" onError={() => setFailed(true)} />}
     {onOpen && <span className="project-media-open"><Plus size={18} /></span>}
   </>;
-  return <div ref={root} className="project-media" data-spotlight>
+  return <div ref={root} className={`project-media${mockup ? " project-media--mockup" : ""}`} data-spotlight data-tilt={mockup ? "" : undefined}>
     {onOpen ? <button type="button" className="project-media-trigger" onClick={onOpen} aria-label={`Podgląd projektu: ${title}`}>{visual}</button> : visual}
     {enabled && <button type="button" className="project-media-control" onClick={() => setPaused(value => !value)} aria-label={`${paused ? "Odtwórz" : "Zatrzymaj"} animację: ${title}`} aria-pressed={paused}>{paused ? <Play size={15} /> : <Pause size={15} />}</button>}
   </div>;
