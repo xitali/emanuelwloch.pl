@@ -8,7 +8,7 @@ import { heroKinds } from "@/lib/hero-kinds";
 const HeroCanvas = dynamic(() => import("./three/HeroCanvas"), { ssr: false });
 
 export const stageKinds = heroKinds;
-const screens = stageKinds.map(({ laptop, monitor }) => ({ laptop, monitor }));
+const screens = stageKinds.map(({ laptop, monitor, chrome }) => ({ laptop, monitor, chrome }));
 
 let webglSupport: boolean | undefined;
 const detectWebgl = () => {

@@ -2,21 +2,23 @@
 import { Component, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-import { MathUtils, type Group, type Texture } from "three";
+import { MathUtils, Vector3, type Group, type Texture } from "three";
 import DeskComposition from "./DeskComposition";
 import Studio from "./Studio";
 import { coverFit, prepareScreenTexture, type ScreenMaterialType } from "./ScreenMaterial";
-import { LAPTOP_SCREEN, MONITOR_SCREEN } from "./Devices";
+import { LAPTOP_SCREEN, MONITOR_SCREEN, pageAspect } from "./Devices";
+import type { ChromeKind } from "./chrome";
 
-export interface HeroKindScreens { laptop: string; monitor: string }
+export interface HeroKindScreens { laptop: string; monitor: string; chrome: ChromeKind }
 
 /** Per-kind pose: a slow turn of the whole desk so each change of product reads as a new shot. */
 const POSES = [
-  { turn: -0.04, lift: 0 },
-  { turn: 0.1, lift: 0.06 },
-  { turn: -0.14, lift: 0.03 },
-  { turn: 0.05, lift: 0.08 },
-];
+  { turn: -0.04, lift: 0, monitor: -0.28, camera: [3.4, 3.4, 8.6] },
+  { turn: 0.1, lift: 0.06, monitor: -0.36, camera: [2.6, 3.0, 8.9] },
+  { turn: -0.14, lift: 0.03, monitor: -0.2, camera: [3.9, 3.7, 8.3] },
+  { turn: 0.05, lift: 0.08, monitor: -0.32, camera: [3.0, 2.9, 8.7] },
+] as const;
+const LOOK_AT = new Vector3(0.4, 1.3, -0.35);
 const LID_OPEN = -0.28;
 const LID_CLOSED = -Math.PI / 2 - 0.02;
 
@@ -75,12 +77,28 @@ function Desk({ kinds, phase, onReady }: { kinds: HeroKindScreens[]; phase: numb
       root.current.position.y = Math.sin(state.clock.elapsedTime * 0.6) * 0.04 + (1 - eased) * -0.6;
     }
     if (lid.current) lid.current.rotation.x = MathUtils.lerp(LID_CLOSED, LID_OPEN, MathUtils.smoothstep(intro.current, 0.15, 1));
-    if (monitor.current) monitor.current.position.y = MathUtils.damp(monitor.current.position.y, pose.lift, 4, delta);
-    stepWipe(laptopScreen.current, laptopWipe.current, laptopTextures, target.current, LAPTOP_SCREEN.width / LAPTOP_SCREEN.height, delta);
-    stepWipe(monitorScreen.current, monitorWipe.current, monitorTextures, target.current, MONITOR_SCREEN.width / MONITOR_SCREEN.height, delta);
+    if (monitor.current) {
+      monitor.current.position.y = MathUtils.damp(monitor.current.position.y, pose.lift, 4, delta);
+      monitor.current.rotation.y = MathUtils.damp(monitor.current.rotation.y, pose.monitor, 3, delta);
+    }
+    // A short dolly to a new angle for every kind of product.
+    const camera = state.camera;
+    camera.position.set(
+      MathUtils.damp(camera.position.x, pose.camera[0], 1.8, delta),
+      MathUtils.damp(camera.position.y, pose.camera[1], 1.8, delta),
+      MathUtils.damp(camera.position.z, pose.camera[2], 1.8, delta),
+    );
+    camera.lookAt(LOOK_AT);
+    // Screens power on once the lid is nearly open.
+    const power = MathUtils.smoothstep(intro.current, 0.55, 1);
+    if (laptopScreen.current) laptopScreen.current.uPower = power;
+    if (monitorScreen.current) monitorScreen.current.uPower = Math.min(1, power * 1.2);
+    const chrome = kinds[target.current]?.chrome ?? "browser";
+    stepWipe(laptopScreen.current, laptopWipe.current, laptopTextures, target.current, pageAspect(LAPTOP_SCREEN.width, LAPTOP_SCREEN.height, chrome), delta);
+    stepWipe(monitorScreen.current, monitorWipe.current, monitorTextures, target.current, pageAspect(MONITOR_SCREEN.width, MONITOR_SCREEN.height, chrome), delta);
   });
 
-  return <DeskComposition screens={{ laptopA: laptopTextures[first], monitorA: monitorTextures[first] }} rootRef={root} lidRef={lid} monitorRef={monitor} laptopScreenRef={laptopScreen} monitorScreenRef={monitorScreen} />;
+  return <DeskComposition chrome={kinds[phase]?.chrome ?? "browser"} screens={{ laptopA: laptopTextures[first], monitorA: monitorTextures[first] }} rootRef={root} lidRef={lid} monitorRef={monitor} laptopScreenRef={laptopScreen} monitorScreenRef={monitorScreen} />;
 }
 
 class SceneBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {

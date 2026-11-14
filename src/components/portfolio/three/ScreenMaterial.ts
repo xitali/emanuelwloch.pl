@@ -59,21 +59,21 @@ export const ScreenMaterialImpl = shaderMaterial(
 export const ScreenMaterial = extend(ScreenMaterialImpl);
 export type ScreenMaterialType = InstanceType<typeof ScreenMaterialImpl>;
 
-/** Cover-fit a texture into a screen, anchored to the top like a scrolled page. */
-export function coverFit(texture: Texture, screenAspect: number) {
+/**
+ * Fit a screenshot to the full width of its screen area, anchored to the top like a page in a
+ * browser. Nothing is cut from the sides and nothing is stretched; a taller area shows less of
+ * the page bottom, a shorter page continues with its last row.
+ */
+export function coverFit(texture: Texture, areaAspect: number) {
   const image = texture.image as { width?: number; height?: number } | undefined;
   const textureAspect = image?.width && image?.height ? image.width / image.height : 16 / 9;
-  const repeat = new Vector2(1, 1);
-  const offset = new Vector2(0, 0);
-  if (textureAspect > screenAspect) {
-    repeat.x = screenAspect / textureAspect;
-    offset.x = (1 - repeat.x) / 2;
-  } else {
-    repeat.y = textureAspect / screenAspect;
+  const repeat = new Vector2(1, textureAspect / areaAspect);
+  const offset = new Vector2(0, 1 - repeat.y);
+  if (repeat.y > 1) {
+    // A banner-like image shorter than the screen: fill the height and centre it instead of smearing the last row.
+    repeat.set(areaAspect / textureAspect, 1);
+    offset.set((1 - repeat.x) / 2, 0);
   }
-  // Screenshots carry browser/dev chrome in the bottom few percent; keep the top of the page.
-  repeat.y *= 0.94;
-  offset.y = 1 - repeat.y;
   return { repeat, offset };
 }
 

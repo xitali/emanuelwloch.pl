@@ -1,12 +1,14 @@
 "use client";
-import { forwardRef, useMemo } from "react";
+import { forwardRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { RoundedBox } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
-import type { Group, Texture } from "three";
+import { Matrix4, Quaternion, Vector3, type Group, type InstancedMesh, type Texture } from "three";
 import { coverFit, ScreenMaterial, ScreenMaterialImpl, type ScreenMaterialType } from "./ScreenMaterial";
+import { CHROME_HEIGHT, chromeTexture, type ChromeKind } from "./chrome";
 
-/* Shared dimensions (scene units ≈ decimetres): a 16:10 laptop panel and a 16:9 monitor. */
-export const LAPTOP_SCREEN = { width: 3.04, height: 1.9 };
+/* Shared dimensions (scene units ≈ decimetres). Both panels are 16:9, like the screenshots. */
+export const LAPTOP_SCREEN = { width: 3.04, height: 1.71 };
 export const MONITOR_SCREEN = { width: 4.16, height: 2.34 };
 
 const ALUMINIUM = { color: "#cdd2d6", metalness: 0.62, roughness: 0.36, envMapIntensity: 1.4 };
@@ -14,9 +16,9 @@ const GRAPHITE = { color: "#2c3237", metalness: 0.85, roughness: 0.34, envMapInt
 const BEZEL = { color: "#060708", metalness: 0.1, roughness: 0.45 };
 const KEY = { color: "#1b1f22", metalness: 0.15, roughness: 0.6 };
 
-/** 6 rows of keys, with a wide space bar, laid out on the deck. */
+/** 6 rows of keys with a wide space bar, drawn as one instanced mesh (one draw call). */
 function Keyboard({ width }: { width: number }) {
-  const keys = useMemo(() => {
+  const { keys, depth } = useMemo(() => {
     const list: Array<{ x: number; z: number; w: number }> = [];
     const columns = 14, gap = 0.028;
     const key = (width - 0.34 - gap * (columns - 1)) / columns;
@@ -30,13 +32,22 @@ function Keyboard({ width }: { width: number }) {
       }
       for (let c = 0; c < columns; c++) list.push({ x: -(width - 0.34) / 2 + key / 2 + c * (key + gap), z, w: key });
     }
-    return { list, depth: key * 0.78 };
+    return { keys: list, depth: key * 0.78 };
   }, [width]);
-  return <group position={[0, 0.112, 0]}>
-    {keys.list.map((k, i) => <RoundedBox key={i} args={[k.w, 0.02, keys.depth]} radius={0.008} smoothness={2} position={[k.x, 0.006, k.z]}>
-      <meshStandardMaterial {...KEY} />
-    </RoundedBox>)}
-  </group>;
+  const geometry = useMemo(() => new RoundedBoxGeometry(1, 0.02, depth, 2, 0.008), [depth]);
+  const mesh = useRef<InstancedMesh>(null);
+  useLayoutEffect(() => {
+    if (!mesh.current) return;
+    const matrix = new Matrix4();
+    const rotation = new Quaternion();
+    // The shared geometry is 1 unit wide; each instance scales it to its key width.
+    keys.forEach((k, i) => mesh.current!.setMatrixAt(i, matrix.compose(new Vector3(k.x, 0.006, k.z), rotation, new Vector3(k.w, 1, 1))));
+    mesh.current.instanceMatrix.needsUpdate = true;
+  }, [keys]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return <instancedMesh ref={mesh} args={[geometry, undefined, keys.length]} position={[0, 0.112, 0]}>
+    <meshStandardMaterial {...KEY} />
+  </instancedMesh>;
 }
 
 export interface ScreenProps {
@@ -44,16 +55,29 @@ export interface ScreenProps {
   height: number;
   textureA: Texture;
   textureB?: Texture;
+  /** Browser toolbar or Windows title bar above the page. */
+  chrome?: ChromeKind;
   materialRef?: React.Ref<ScreenMaterialType>;
 }
 
-/** The lit panel plus a thin glossy cover that picks up studio reflections. */
-export function Screen({ width, height, textureA, textureB, materialRef }: ScreenProps) {
-  const fitA = useMemo(() => coverFit(textureA, width / height), [textureA, width, height]);
-  const fitB = useMemo(() => coverFit(textureB ?? textureA, width / height), [textureA, textureB, width, height]);
+/** Aspect of the page area under the chrome; screenshots are fitted into it. */
+export const pageAspect = (width: number, height: number, chrome: ChromeKind = "browser") => width / (height * (1 - CHROME_HEIGHT[chrome]));
+
+/** The lit panel (chrome bar + page) plus a thin glossy cover that picks up studio reflections. */
+export function Screen({ width, height, textureA, textureB, chrome = "browser", materialRef }: ScreenProps) {
+  const bar = height * CHROME_HEIGHT[chrome];
+  const page = height - bar;
+  const aspect = pageAspect(width, height, chrome);
+  const fitA = useMemo(() => coverFit(textureA, aspect), [textureA, aspect]);
+  const fitB = useMemo(() => coverFit(textureB ?? textureA, aspect), [textureA, textureB, aspect]);
+  const chromeMap = useMemo(() => chromeTexture(chrome), [chrome]);
   return <group>
-    <mesh>
-      <planeGeometry args={[width, height]} />
+    <mesh position={[0, height / 2 - bar / 2, 0]}>
+      <planeGeometry args={[width, bar]} />
+      <meshBasicMaterial map={chromeMap} toneMapped={false} />
+    </mesh>
+    <mesh position={[0, -bar / 2, 0]}>
+      <planeGeometry args={[width, page]} />
       <ScreenMaterial ref={materialRef} key={ScreenMaterialImpl.key} uMapA={textureA} uMapB={textureB ?? textureA} uRepeatA={fitA.repeat} uOffsetA={fitA.offset} uRepeatB={fitB.repeat} uOffsetB={fitB.offset} toneMapped={false} />
     </mesh>
     <mesh position={[0, 0, 0.004]}>

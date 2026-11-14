@@ -5,8 +5,9 @@ import { useTexture } from "@react-three/drei";
 import DeskComposition from "./DeskComposition";
 import Studio from "./Studio";
 import { prepareScreenTexture } from "./ScreenMaterial";
+import type { ChromeKind } from "./chrome";
 
-export interface MockupJob { laptop: string; monitor: string; out: string }
+export interface MockupJob { laptop: string; monitor: string; out: string; chrome: ChromeKind }
 
 /** Development-only renderer: draws each job's two screens on the desk and saves a still. */
 function Desk({ job, onReady }: { job: MockupJob; onReady: () => void }) {
@@ -20,7 +21,7 @@ function Desk({ job, onReady }: { job: MockupJob; onReady: () => void }) {
     id = window.setTimeout(tick, 40);
     return () => window.clearTimeout(id);
   }, [advance, onReady]);
-  return <DeskComposition screens={{ laptopA: laptopTexture, monitorA: monitorTexture }} />;
+  return <DeskComposition chrome={job.chrome} screens={{ laptopA: laptopTexture, monitorA: monitorTexture }} />;
 }
 
 export default function MockupStage({ jobs }: { jobs: MockupJob[] }) {
