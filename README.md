@@ -36,6 +36,34 @@ Portfolio i lekki CMS Emanuela Włocha. Produkcja działa pod
 
 Nie wpisuj wartości tych zmiennych do kodu ani do zgłoszeń GitHub.
 
+## Poczta Resend
+
+Formularz zapisuje zapytanie w panelu i próbuje wysłać przez Resend dwa
+e-maile: powiadomienie do właściciela oraz potwierdzenie do klienta. Odpowiedź
+na powiadomienie trafi do klienta; odpowiedź na potwierdzenie trafi na
+`LEAD_NOTIFY_TO`. To musi być istniejąca skrzynka odbierająca pocztę — samo
+Resend nie tworzy zwykłej skrzynki do obsługi korespondencji.
+
+1. Dodaj domenę w Resend i ustaw wskazane tam rekordy DNS; poczekaj na jej weryfikację.
+2. Utwórz klucz API Resend z uprawnieniem wysyłania.
+3. W ustawieniach środowiska projektu Vercel ustaw `RESEND_API_KEY`,
+   `EMAIL_FROM` (np. `Emanuel Włoch <kontakt@twoja-zweryfikowana-domena.pl>`),
+   `LEAD_NOTIFY_TO` (istniejący adres odbiorczy) i losowy `CRON_SECRET`.
+   Nie umieszczaj klucza w repozytorium ani po stronie przeglądarki.
+4. Wdróż ponownie aplikację i wyślij testowy formularz; sprawdź oba adresy
+   i statusy wiadomości w Resend. Konfiguracja zmiennych nie potwierdza dostarczenia.
+
+Nieudane wysyłki pozostają w kolejce. Wysyłka jest ponawiana po kolejnym
+zapytaniu, ręcznie w panelu lub przez produkcyjny Vercel Cron raz dziennie
+(do pięciu zapytań na uruchomienie). Po ośmiu nieudanych próbach użyj przycisku
+w panelu po poprawieniu konfiguracji. Cron wymaga `CRON_SECRET`.
+Resend przechowuje klucze idempotencji przez ograniczony czas, więc w razie
+długiej awarii nie można całkowicie wykluczyć duplikatów.
+
+Ta integracja nie obejmuje odbierania wiadomości przychodzących, treściowych
+automatycznych odpowiedzi, planowania przypomnień ani kampanii promocyjnych.
+Wymagają one osobnego zaprojektowania, w tym zasad subskrypcji i rezygnacji.
+
 ## Kontrola jakości
 
 `npm run check` uruchamia lint, kontrolę typów, testy i build produkcyjny.
