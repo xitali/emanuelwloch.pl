@@ -25,6 +25,6 @@ export default function AdminLoginPage() {
         <form onSubmit={handleSubmit}><label htmlFor="admin-password">Twoje hasło</label><input id="admin-password" type="password" name="password" autoComplete="current-password" required placeholder="Wpisz hasło" disabled={loading}/><button type="submit" disabled={loading} className="admin-primary">{loading ? "Logowanie…" : "Otwórz panel"}<ArrowUpRight size={18}/></button></form>
         <p className="admin-login-hint">Nie pamiętasz hasła? Uruchom na swoim komputerze narzędzie „Reset-hasla-admina” w folderze projektu.</p>
       </section>
-    </div><footer className="admin-login-footer">EMANUEL WŁOCH <span>STRONY DLA FIRM · APLIKACJE WEBOWE</span></footer>
+    </div><footer className="admin-login-footer">EMANUEL WŁOCH <span>STRONY · APLIKACJE · PROGRAMY DLA FIRM</span></footer>
   </main>;
 }

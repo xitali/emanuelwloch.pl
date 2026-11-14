@@ -37,6 +37,14 @@ describe("filtrowanie projektów", () => {
     expect(projectMatchesCategory(mobileProject, "web")).toBe(false);
   });
 
+  it("oddziela aplikacje internetowe od stron firmowych", () => {
+    const webApp = { ...project, category: "web", project_type: "web-app" };
+    expect(projectMatchesCategory(webApp, "aplikacje")).toBe(true);
+    expect(projectMatchesCategory(webApp, "web")).toBe(false);
+    expect(projectMatchesCategory({ ...project, category: "web", project_type: "landing-page" }, "web")).toBe(true);
+    expect(projectMatchesCategory(project, "aplikacje")).toBe(false);
+  });
+
   it("zwraca wszystkie projekty dla filtra all", () => {
     expect(projectMatchesCategory(project, "all")).toBe(true);
   });

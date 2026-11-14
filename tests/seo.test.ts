@@ -52,7 +52,8 @@ describe("SEO URL helpers", () => {
 
 describe("SEO service landing pages", () => {
   it("uses unique paths and titles for every search intent", () => {
-    expect(servicePages).toHaveLength(6);
+    expect(servicePages).toHaveLength(8);
+    expect(servicePages.map((page) => page.path)).toEqual(expect.arrayContaining(["/bazy-danych-i-panele", "/programy-na-windows"]));
     expect(new Set(servicePages.map((page) => page.path)).size).toBe(servicePages.length);
     expect(new Set(servicePages.map((page) => page.metaTitle)).size).toBe(servicePages.length);
   });
@@ -77,10 +78,11 @@ describe("SEO service landing pages", () => {
 });
 
 describe("AEO guide pages", () => {
-  it("provides three distinct expert answers", () => {
-    expect(guidePages).toHaveLength(3);
-    expect(new Set(guidePages.map((guide) => guide.path)).size).toBe(3);
-    expect(new Set(guidePages.map((guide) => guide.metaTitle)).size).toBe(3);
+  it("provides five distinct expert answers with an update date", () => {
+    expect(guidePages).toHaveLength(5);
+    expect(new Set(guidePages.map((guide) => guide.path)).size).toBe(5);
+    expect(new Set(guidePages.map((guide) => guide.metaTitle)).size).toBe(5);
+    for (const guide of guidePages) expect(guide.updated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   it("keeps every guide substantial and answer-first", () => {

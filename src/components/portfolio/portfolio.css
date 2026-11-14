@@ -51,24 +51,11 @@
 .product-crosshair { position: absolute; top: 25%; right: 19%; color: #788993; font-weight: 200; }
 .product-stage-footer { position: absolute; left: var(--p-space); right: var(--p-space); bottom: 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--p-border); padding-top: 22px; font-family: var(--font-geist-mono),monospace; font-size: 12px; letter-spacing: .12em; color: #929ca2; }
 .product-stage-footer a { display: flex; align-items: center; gap: 14px; min-height: 24px; }
-.story-meter { width: 80px; height: 2px; background: #ffffff24; }
-.story-meter i { display: block; height: 2px; background: var(--p-accent); transform-origin: left; transform: scaleX(var(--story-progress)); }
 .motion-toggle { font-size: 12px; color: #b6c5ce; min-height: 32px; cursor: pointer; }
 .product-story.is-reduced { height: auto; }
 .product-story.is-reduced .product-stage { position: relative; height: 850px; }
 .product-story.is-reduced .product-hero-copy { opacity: 1 !important; visibility: visible !important; }
-.product-story.is-reduced .product-story-copy, .product-story.is-reduced .product-finale, .product-story.is-reduced .story-meter { display: none; }
 .product-story.is-reduced .product-annotation { display: none; }
-.product-story-copy { position: absolute; left: var(--p-space); top: max(110px, 15vh); z-index: 2; width: 34%; visibility: hidden; }
-.product-story-copy h2 { margin: 18px 0; font-size: clamp(35px, 4.2vw, 65px); }
-.product-story-copy > p:not(.portfolio-kicker) { color: var(--p-muted); font-size: 16px; line-height: 1.8; }
-.product-story-copy ol { margin-top: 25px; width: min(100%, 350px); }
-.product-story-copy li { display: flex; gap: 17px; padding: 9px 0; border-bottom: 1px solid #ffffff12; }
-.product-story-copy li > span { font-family: var(--font-geist-mono),monospace; font-size: 12px; color: #8fabc0; padding-top: 3px; }
-.product-story-copy strong { font-size: 14px; font-weight: 450; }
-.product-story-copy small { display: block; font-size: 12px; color: #a0a7ab; margin-top: 1px; }
-.product-finale { position: absolute; top: 36%; left: var(--p-space); visibility: hidden; z-index: 2; }
-.product-finale h2 { margin: 20px 0; }
 .portfolio-stack { display: grid; grid-template-columns: 1fr 1fr; gap: 10%; padding-block: 105px 140px; border-bottom: 1px solid var(--p-border); }
 .portfolio-stack h2 { margin-block: 26px; }
 .portfolio-stack > div > p:last-child { color: var(--p-muted); font-size: 16px; line-height: 1.85; }
@@ -148,9 +135,6 @@ details[open] .detail-plus { transform: rotate(45deg); }
 .static-product strong { display: block; margin-block: 28px; font-size: clamp(23px,4vw,50px); font-weight: 400; line-height: 1.05; letter-spacing: -.05em; }
 @media (min-width: 768px) and (max-height: 800px) {
   .product-hero-copy h1 { font-size: clamp(52px,5.8vw,90px); margin-block: 20px; }
-  .product-story-copy h2 { font-size: 39px; margin-block: 12px; }
-  .product-story-copy ol { margin-top: 14px; }
-  .product-story-copy li { padding-block: 6px; }
 }
 @media (max-width: 1050px) {
   .portfolio-nav nav { gap: 18px; }
@@ -192,15 +176,6 @@ details[open] .detail-plus { transform: rotate(45deg); }
   .product-crosshair { right: 15%; top: 21%; }
   .product-stage-footer { bottom: 18px; padding-top: 14px; font-size: 12px; }
   .product-stage-grid { inset: 68px 22px 45px; }
-  .product-story-copy { top: 100px; translate: none; width: calc(100% - 44px); }
-  .product-story-copy h2 { font-size: 36px; margin-block: 10px; }
-  .product-story-copy > p:not(.portfolio-kicker) { font-size: 14px; }
-  .product-story-copy ol { display: grid; grid-template-columns: 1fr 1fr; gap: 0 15px; width: 100%; margin-top: 12px; }
-  .product-story-copy li { gap: 9px; padding-block: 5px; }
-  .product-story-copy strong { font-size: 12px; }
-  .product-story-copy small { font-size: 12px; line-height: 1.5; }
-  .product-finale { top: 18%; }
-  .product-finale h2 { font-size: 49px; }
   .portfolio-stack { grid-template-columns: 1fr; gap: 38px; padding-block: 70px; }
   .portfolio-home h2 { font-size: clamp(36px,9vw,55px); }
   .portfolio-stack h2 { margin-block: 18px; }
@@ -225,7 +200,6 @@ details[open] .detail-plus { transform: rotate(45deg); }
   .product-story { height: auto; }
   .product-stage { position: relative; height: 850px; }
   .product-hero-copy { opacity: 1 !important; visibility: visible !important; }
-  .product-story-copy, .product-finale, .story-meter { display: none; }
   .showcase-visual { transform: none !important; }
   .product-annotation { display: none; }
 }

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check, Gauge, Layers3, Quote, Target } from "lucide-react";
+import { IconArrowUpRight, IconCheck, IconQuote } from "@/components/portfolio/icons";
 import { getProjectById, getProjects } from "@/lib/turso";
 import {
   getProjectIdFromSegment,
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const description = compactDescription(project.short_description);
 
   return {
-    title: `${project.title} — case study`,
+    title: `${project.title} — realizacja`,
     description,
     alternates: { canonical: path },
     openGraph: {
-      title: `${project.title} — case study`,
+      title: `${project.title} — realizacja`,
       description,
       url: `${SITE_URL}${path}`,
-      siteName: "Emanuel Włoch – Web Development",
+      siteName: "Emanuel Włoch — strony, aplikacje i programy",
       locale: "pl_PL",
       type: "article",
       publishedTime: project.created_at,
@@ -58,25 +58,18 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} — case study`,
+      title: `${project.title} — realizacja`,
       description,
       images: image ? [image] : undefined,
     },
   };
 }
 
-function BulletList({ items }: { items: string[] }) {
-  return (
-    <ul className="grid gap-3 sm:grid-cols-2">
-      {items.map((item) => (
-        <li key={item} className="flex items-start gap-3 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-4 text-sm leading-6 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]">
-          <Check className="mt-0.5 size-4 shrink-0 text-[var(--p-accent)] dark:text-[var(--p-accent)]" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
+function Checklist({ items }: { items: string[] }) {
+  return <ul className="svc-checklist">{items.map((item) => <li key={item}><IconCheck size={18} /><span>{item}</span></li>)}</ul>;
 }
+
+const STATUS: Record<string, string> = { active: "Gotowa realizacja", completed: "Gotowa realizacja", "in-development": "Wersja testowa", archived: "Projekt archiwalny" };
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id: segment } = await params;
@@ -117,7 +110,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         "@type": "WebPage",
         "@id": `${projectUrl}#webpage`,
         url: projectUrl,
-        name: `${project.title} — case study`,
+        name: `${project.title} — realizacja`,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         breadcrumb: { "@id": `${projectUrl}#breadcrumb` },
       },
@@ -133,88 +126,91 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ],
   };
 
+  const kind = projectLabel(project.project_type || project.category);
+  const facts = [
+    ["Rodzaj", kind],
+    ["Dla kogo", project.target_audience],
+    ["Gdzie działa", project.hosting_platform],
+    ["Status", STATUS[project.project_status || "active"] ?? "Gotowa realizacja"],
+  ].filter((fact): fact is [string, string] => Boolean(fact[1]));
+  const metrics = [...(project.performance_metrics ?? []), ...(project.technical_metrics ?? [])];
+
   return (
     <PublicPageShell>
-      <main id="main-content" className="portfolio-subpage">
+      <main id="main-content" className="portfolio-subpage svc-page">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }} />
         <article>
-          <header className="border-b border-[var(--p-border)] bg-[var(--p-surface)] px-4 pb-16 pt-32 text-white sm:px-6 lg:px-8 lg:pb-20 lg:pt-40">
-            <div className="mx-auto max-w-[1280px]">
-              <nav aria-label="Okruszki" className="text-xs text-[var(--p-muted)]">
-                <Link href="/" className="hover:text-[var(--p-accent)]">Strona główna</Link> / <Link href="/realizacje" className="hover:text-[var(--p-accent)]">Projekty</Link> / <span aria-current="page">{project.title}</span>
-              </nav>
-              <Link href="/realizacje" className="mt-9 inline-flex items-center gap-2 text-sm text-[var(--p-accent)]"><ArrowLeft className="size-4" /> Wszystkie projekty</Link>
-              <div className="mt-8 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-20">
-                <div>
-                  {project.project_status === "in-development" && <p className="portfolio-kicker">Wersja testowa / projekt w rozwoju</p>}
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Realizacja · {projectLabel(project.project_type || project.category)}</p>
-                  <h1 className="mt-5 text-[clamp(2.8rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.055em]">{project.title}</h1>
+          <header className="svc-hero">
+            <div className="portfolio-container">
+              <nav aria-label="Okruszki" className="svc-crumbs"><ol><li><Link href="/">Strona główna</Link></li><li><Link href="/realizacje">Realizacje</Link></li><li aria-current="page">{project.title}</li></ol></nav>
+              <div className="guide-hero-copy">
+                <h1>{project.title}</h1>
+                <p className="svc-lead">{project.short_description}</p>
+                <div className="portfolio-actions">
+                  <Link href={`/?projekt=${project.id}#kontakt`} className="portfolio-button">Omów podobny projekt <IconArrowUpRight size={17} /></Link>
+                  {project.project_url && <a href={project.project_url} target="_blank" rel="noopener noreferrer" className="portfolio-text-link">Otwórz {project.project_status === "in-development" ? "wersję testową" : "stronę"} <IconArrowUpRight size={15} /></a>}
                 </div>
-                <p className="text-base leading-8 text-[var(--p-muted)] sm:text-lg">{project.short_description}</p>
-              </div>
-              <div className="mt-9 flex flex-wrap gap-2">
-                {project.technologies.slice(0, 8).map((technology) => <span key={technology} className="portfolio-tag">{technology}</span>)}
               </div>
             </div>
           </header>
 
-          {project.images[0] && (
-            <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-14" aria-label={`Główny podgląd projektu ${project.title}`}>
-              <div className="mx-auto max-w-[1280px]"><ProjectMedia alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} title={project.title} priority /></div>
-            </section>
-          )}
-
-          <section className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24" aria-labelledby="summary-heading">
-            <div className="mx-auto max-w-[1280px]">
-              <h2 id="summary-heading" className="sr-only">Projekt w skrócie</h2>
-              <div className="grid gap-px overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] md:grid-cols-3">
-                {[
-                  ["Odbiorcy", project.target_audience || "Użytkownicy końcowi i klienci marki"],
-                  ["Zakres", projectLabel(project.project_type || project.category)],
-                  ["Wdrożenie", project.hosting_platform || projectLabel(project.project_status, "Środowisko produkcyjne")],
-                ].map(([label, value]) => <div key={label} className="bg-[var(--p-surface)] p-6 dark:bg-[var(--p-surface)]"><div className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--p-muted)] dark:text-[var(--p-muted)]">{label}</div><p className="mt-3 text-sm font-medium">{value}</p></div>)}
-              </div>
-            </div>
-          </section>
-
-          <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8 lg:py-24">
-            <div className="mx-auto grid max-w-[1280px] gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">01 · Kontekst</p><h2 className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Problem i cel projektu</h2></div>
-              <div className="space-y-9">
-                <p className="whitespace-pre-line text-base leading-8 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-lg">{project.detailed_description || project.short_description}</p>
-                {project.main_challenge && <div className="rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]"><div className="flex items-center gap-2 text-sm font-semibold"><Target className="size-4 text-[var(--p-accent)] dark:text-[var(--p-accent)]" /> Główne wyzwanie</div><p className="mt-4 whitespace-pre-line text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)]">{project.main_challenge}</p></div>}
-              </div>
-            </div>
-          </section>
-
-          <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24" aria-labelledby="solution-heading">
-            <div className="mx-auto max-w-[1280px]">
-              <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">02 · Realizacja</p><h2 id="solution-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Rozwiązanie</h2></div><div>{project.innovation && <p className="mb-8 whitespace-pre-line text-base leading-8 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-lg">{project.innovation}</p>}{project.key_features && project.key_features.length > 0 && <BulletList items={project.key_features} />}</div></div>
-            </div>
-          </section>
-
-          <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8 lg:py-24" aria-labelledby="architecture-heading">
-            <div className="mx-auto max-w-[1280px]">
-              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]"><Layers3 className="size-3.5" /> 03 · Architektura</div>
-              <h2 id="architecture-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Technologie dobrane do celu</h2>
-              {techGroups.length > 0 ? <div className="mt-10 grid gap-4 md:grid-cols-3">{techGroups.map((group) => <section key={group.label} className="rounded-[var(--p-radius)] border border-[var(--p-border)] p-6 dark:border-[var(--p-border)]"><h3 className="text-sm font-semibold">{group.label}</h3><div className="mt-5 flex flex-wrap gap-2">{group.items.map((item) => <span key={item} className="portfolio-tag">{item}</span>)}</div></section>)}</div> : <div className="mt-8 flex flex-wrap gap-2">{project.technologies.map((item) => <span key={item} className="portfolio-tag">{item}</span>)}</div>}
-            </div>
-          </section>
-
-          {((project.performance_metrics?.length ?? 0) > 0 || (project.technical_metrics?.length ?? 0) > 0 || project.accessibility_features) && (
-            <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24" aria-labelledby="quality-heading">
-              <div className="mx-auto max-w-[1280px]"><div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]"><Gauge className="size-3.5" /> 04 · Jakość techniczna</div><h2 id="quality-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Wydajność, SEO i dostępność</h2><div className="mt-10 grid gap-4 lg:grid-cols-2">{project.performance_metrics && project.performance_metrics.length > 0 && <BulletList items={project.performance_metrics} />}{project.technical_metrics && project.technical_metrics.length > 0 && <BulletList items={project.technical_metrics} />}{project.accessibility_features && <p className="rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 text-sm leading-7 text-[var(--p-muted)] dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] dark:text-[var(--p-muted)] lg:col-span-2">{project.accessibility_features}</p>}</div></div>
-            </section>
-          )}
-
-          {project.project_result && <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8 lg:py-24" aria-labelledby="result-heading">
-            <div className="mx-auto grid max-w-[1280px] gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">05 · Efekt</p><h2 id="result-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Rezultat</h2></div><div><p className="whitespace-pre-line text-base leading-8 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-lg">{project.project_result}</p>{project.success_metrics && project.success_metrics.length > 0 && <div className="mt-8"><BulletList items={project.success_metrics} /></div>}{project.user_feedback?.[0] && <blockquote className="mt-8 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]"><Quote className="size-5 text-[var(--p-accent)] dark:text-[var(--p-accent)]" /><p className="mt-4 whitespace-pre-line text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)]">{project.user_feedback[0]}</p></blockquote>}</div></div>
+          {project.images[0] && <section className="portfolio-container project-hero-media" aria-label={`Podgląd: ${project.title}`}>
+            <ProjectMedia alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} title={project.title} priority />
           </section>}
 
-          {project.images.length > 1 && <section className="px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="gallery-heading"><div className="mx-auto max-w-[1280px]"><h2 id="gallery-heading" className="text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Widoki projektu</h2><div className="mt-9 grid gap-4 md:grid-cols-2">{project.images.slice(1).map((image, index) => <div key={`${image}-${index}`} className="relative aspect-video overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] dark:border-[var(--p-border)]"><Image src={image} alt={project.image_alts?.[index + 1] || `Widok ${index + 2} projektu ${project.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" /></div>)}</div></div></section>}
+          <section className="portfolio-container" aria-label="Projekt w skrócie">
+            <dl className="project-facts">{facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+          </section>
 
+          <section className="svc-section portfolio-container guide-body" aria-label="Opis realizacji">
+            <section className="guide-section" aria-labelledby="problem-heading">
+              <h2 id="problem-heading">Problem i cel</h2>
+              <div>
+                {project.main_challenge && <p className="project-challenge">{project.main_challenge}</p>}
+                <p className="project-description">{project.detailed_description || project.short_description}</p>
+              </div>
+            </section>
+            {(project.innovation || (project.key_features?.length ?? 0) > 0) && <section className="guide-section" aria-labelledby="solution-heading">
+              <h2 id="solution-heading">Rozwiązanie</h2>
+              <div>{project.innovation && <p>{project.innovation}</p>}{project.key_features && project.key_features.length > 0 && <Checklist items={project.key_features} />}</div>
+            </section>}
+            {project.project_result && <section className="guide-section" aria-labelledby="result-heading">
+              <h2 id="result-heading">Efekt</h2>
+              <div>
+                <p>{project.project_result}</p>
+                {project.success_metrics && project.success_metrics.length > 0 && <Checklist items={project.success_metrics} />}
+                {project.user_feedback?.[0] && <blockquote className="project-quote"><IconQuote size={20} /><p>{project.user_feedback[0]}</p></blockquote>}
+              </div>
+            </section>}
+          </section>
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8"><div className="mx-auto max-w-[1280px] rounded-[var(--p-radius)] bg-[var(--p-surface)] p-8 text-white sm:p-10 lg:flex lg:items-end lg:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Podobny cel?</p><h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Porozmawiajmy o Twojej firmie.</h2><div className="mt-5 text-xs text-[var(--p-muted)]"><Link href="/uslugi" className="hover:text-[var(--p-accent)]">Zobacz usługi</Link></div></div><Link href={`/?projekt=${project.id}#kontakt`} className="portfolio-button mt-8 shrink-0 lg:mt-0">Omów swój projekt <ArrowRight className="size-4" /></Link></div></section>
+          {project.images.length > 1 && <section className="svc-band" aria-labelledby="gallery-heading">
+            <div className="portfolio-container">
+              <h2 id="gallery-heading">Widoki projektu</h2>
+              <div className="project-gallery">{project.images.slice(1).map((image, index) => <figure key={`${image}-${index}`}><div className="project-gallery-shot"><Image src={image} alt={project.image_alts?.[index + 1] || `Widok ${index + 2} projektu ${project.title}`} fill sizes="(max-width: 768px) 100vw, 50vw" /></div>{project.image_alts?.[index + 1] && <figcaption>{project.image_alts[index + 1]}</figcaption>}</figure>)}</div>
+            </div>
+          </section>}
+
+          <section className="svc-section portfolio-container guide-body" aria-label="Technologia i jakość">
+            <section className="guide-section" aria-labelledby="tech-heading">
+              <h2 id="tech-heading">Technologia</h2>
+              <div>
+                {techGroups.length > 0 ? <dl className="project-tech">{techGroups.map((group) => <div key={group.label}><dt>{group.label}</dt><dd className="portfolio-tags">{group.items.map((item) => <span key={item}>{item}</span>)}</dd></div>)}</dl> : <div className="portfolio-tags">{project.technologies.map((item) => <span key={item}>{item}</span>)}</div>}
+              </div>
+            </section>
+            {(metrics.length > 0 || project.accessibility_features) && <section className="guide-section" aria-labelledby="quality-heading">
+              <h2 id="quality-heading">Jakość i sprawdzenie</h2>
+              <div>{metrics.length > 0 && <Checklist items={metrics} />}{project.accessibility_features && <p className="project-a11y">{project.accessibility_features}</p>}</div>
+            </section>}
+          </section>
+
+          <section className="svc-close portfolio-container" aria-labelledby="close-heading">
+            <div className="svc-close-card">
+              <Image src="/emanuel_wloch.jpg" alt="" width={88} height={88} className="svc-close-photo" />
+              <div><h2 id="close-heading">Potrzebujesz czegoś podobnego?</h2><p>Opisz swoją firmę i to, co chcesz usprawnić. Odpowiem osobiście.</p><nav aria-label="Dalej" className="svc-related"><Link href="/realizacje">Wszystkie realizacje</Link><Link href="/uslugi">Oferta</Link></nav></div>
+              <Link href={`/?projekt=${project.id}#kontakt`} className="portfolio-button">Omów swój projekt <IconArrowUpRight size={17} /></Link>
+            </div>
+          </section>
         </article>
       </main>
     </PublicPageShell>

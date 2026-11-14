@@ -12,6 +12,8 @@ export interface GuidePageData {
   sections: Array<{ title: string; paragraphs: string[]; points?: string[] }>;
   faq: FaqItem[];
   related: Array<{ href: string; label: string }>;
+  /** ISO date of the last content update. */
+  updated: string;
 }
 
 export const guidePages: GuidePageData[] = [
@@ -57,6 +59,7 @@ export const guidePages: GuidePageData[] = [
       { href: "/poradniki/ile-trwa-tworzenie-strony-internetowej", label: "Ile trwa realizacja?" },
       { href: "/#kontakt", label: "Poproś o wycenę" },
     ],
+    updated: "2026-08-01",
   },
   {
     slug: "nextjs-czy-wordpress",
@@ -86,6 +89,7 @@ export const guidePages: GuidePageData[] = [
       { href: "/tworzenie-stron-internetowych", label: "Tworzenie stron" },
       { href: "/poradniki/ile-kosztuje-strona-internetowa-2026", label: "Koszt strony w 2026" },
     ],
+    updated: "2026-08-01",
   },
   {
     slug: "ile-trwa-tworzenie-strony-internetowej",
@@ -115,6 +119,95 @@ export const guidePages: GuidePageData[] = [
       { href: "/poradniki/ile-kosztuje-strona-internetowa-2026", label: "Ile kosztuje strona?" },
       { href: "/#kontakt", label: "Zapytaj o termin" },
     ],
+    updated: "2026-08-01",
+  },
+  {
+    slug: "arkusz-czy-wlasna-aplikacja",
+    path: "/poradniki/arkusz-czy-wlasna-aplikacja",
+    metaTitle: "Arkusz Excel czy własna aplikacja? Kiedy zmienić narzędzie",
+    metaDescription: "Sprawdź, po czym poznać, że arkusz przestaje wystarczać firmie, co daje własna baza danych z panelem i jak przejść na nią bez utraty danych.",
+    eyebrow: "Dane firmy pod kontrolą",
+    title: "Arkusz czy własna aplikacja — kiedy warto zmienić narzędzie?",
+    lead: "Arkusz to świetny start: jest pod ręką, nic nie kosztuje i każdy umie go otworzyć. Problemy zaczynają się, gdy korzysta z niego kilka osób, danych przybywa, a jedna pomyłka psuje raport na cały miesiąc.",
+    directAnswer: "Arkusz wystarczy, gdy dane wpisuje jedna osoba, rekordów jest niewiele, a pomyłka nie ma poważnych skutków. Własna aplikacja z bazą danych ma sens, gdy te same informacje przepisujesz w kilka miejsc, kilka osób edytuje plik jednocześnie, potrzebujesz różnych uprawnień albo tracisz czas na szukanie i ręczne liczenie. Nie trzeba zmieniać wszystkiego naraz: zwykle zaczyna się od jednej listy, na przykład zamówień lub klientów.",
+    sections: [
+      {
+        title: "Sygnały, że arkusz przestaje wystarczać",
+        paragraphs: ["Najczęściej nie chodzi o samą liczbę wierszy, tylko o sposób pracy. Gdy kilka osób ma własne kopie pliku, nikt nie wie, która wersja jest aktualna. Gdy dane trafiają do arkusza z maili i formularzy, ktoś musi je ręcznie przepisywać.", "Warto przyjrzeć się, ile czasu tygodniowo zajmuje utrzymanie arkusza i ile kosztuje pomyłka: zgubione zamówienie, zła cena w ofercie albo podwójna rezerwacja."],
+        points: ["kilka wersji tego samego pliku", "przepisywanie danych z maili i formularzy", "brak kontroli, kto co zmienił", "formuły, których nikt poza autorem nie rozumie", "raporty liczone ręcznie co tydzień lub miesiąc", "dane klientów dostępne dla każdego, kto ma plik"],
+      },
+      {
+        title: "Co daje baza danych z panelem",
+        paragraphs: ["Baza danych przechowuje informacje w uporządkowanej strukturze: każdy klient, zamówienie czy produkt ma swoje pola i powiązania. Panel to ekran, na którym te dane przeglądasz, wyszukujesz i zmieniasz bez znajomości programowania.", "Do tego dochodzą role użytkowników, historia zmian, walidacja danych przy wpisywaniu oraz eksport do arkusza, gdy chcesz coś przeanalizować po swojemu."],
+      },
+      {
+        title: "Gotowe narzędzie czy aplikacja na zamówienie?",
+        paragraphs: ["Jeśli Twój proces jest typowy, gotowy system (CRM, program magazynowy, system rezerwacji) może wystarczyć i będzie tańszy na start. Warto go sprawdzić przed zamówieniem własnej aplikacji.", "Aplikacja na zamówienie ma sens, gdy gotowe narzędzia wymuszają zmianę sposobu pracy, płacisz za wiele funkcji, z których nie korzystasz, albo potrzebujesz połączenia kilku procesów w jednym miejscu."],
+      },
+      {
+        title: "Jak przejść z arkusza bez utraty danych",
+        paragraphs: ["Najpierw porządkuje się istniejące dane: usuwa duplikaty, ujednolica formaty dat i nazw, ustala, które kolumny są potrzebne. Potem powstaje struktura bazy i import z pliku.", "Przez krótki czas warto prowadzić oba narzędzia równolegle i porównać wyniki. Dopiero gdy panel sprawdzi się w codziennej pracy, arkusz staje się kopią do analiz, a nie głównym źródłem danych."],
+        points: ["porządkowanie i ujednolicenie danych", "projekt struktury bazy", "import z arkusza i sprawdzenie wyników", "krótki okres pracy równoległej", "eksport do arkusza na potrzeby analiz"],
+      },
+    ],
+    faq: [
+      { question: "Czy muszę całkowicie zrezygnować z Excela?", answer: "Nie. Panel może eksportować dane do arkusza, więc możesz dalej robić w nim analizy. Zmienia się tylko to, gdzie dane są wpisywane i przechowywane." },
+      { question: "Ile danych to za dużo dla arkusza?", answer: "Nie ma jednej granicy. O zmianie częściej decyduje liczba osób pracujących na pliku, liczba powiązanych arkuszy i koszt pomyłek niż sama liczba wierszy." },
+      { question: "Czy mogę zacząć od jednej funkcji?", answer: "Tak. Najczęściej zaczyna się od jednej listy, na przykład zamówień, klientów albo zgłoszeń. Kolejne elementy dodaje się, gdy pierwsza część sprawdzi się w codziennej pracy." },
+      { question: "Czy aplikacja będzie działać na telefonie?", answer: "Aplikacja w przeglądarce może działać na komputerze, tablecie i telefonie. Ekrany projektuje się pod zadania, które naprawdę wykonujesz w terenie." },
+      { question: "Kto będzie miał dostęp do danych?", answer: "Ustalasz to Ty. Każda osoba dostaje konto z rolą, która określa, co może przeglądać, a co zmieniać." },
+      { question: "Co, jeśli dane w arkuszu są nieuporządkowane?", answer: "To normalne. Porządkowanie danych jest częścią przejścia na bazę i warto je wykonać przed importem, żeby nowy system nie przejął starych błędów." },
+    ],
+    related: [
+      { href: "/bazy-danych-i-panele", label: "Bazy danych i panele" },
+      { href: "/tworzenie-aplikacji-webowych", label: "Aplikacje webowe" },
+      { href: "/#kontakt", label: "Opisz swoje dane" },
+    ],
+    updated: "2026-11-14",
+  },
+  {
+    slug: "program-na-windows-czy-aplikacja-webowa",
+    path: "/poradniki/program-na-windows-czy-aplikacja-webowa",
+    metaTitle: "Program na Windows czy aplikacja w przeglądarce? Jak wybrać",
+    metaDescription: "Porównanie programu na Windows i aplikacji webowej: dostęp z wielu miejsc, praca bez internetu, dane na miejscu, aktualizacje i koszty utrzymania.",
+    eyebrow: "Wybór rodzaju aplikacji",
+    title: "Program na Windows czy aplikacja w przeglądarce?",
+    lead: "Oba rozwiązania mogą robić to samo: przechowywać dane, liczyć, generować raporty. Różnią się tym, gdzie działają, kto ma do nich dostęp i jak się je aktualizuje.",
+    directAnswer: "Aplikacja w przeglądarce sprawdzi się, gdy z danych korzysta kilka osób w różnych miejscach, potrzebny jest dostęp z telefonu albo dane mają być wspólne dla całego zespołu. Program na Windows lepiej pasuje, gdy dane mają zostać na komputerze w firmie, praca musi być możliwa bez internetu albo program łączy się z plikami i urządzeniami na miejscu. Często da się połączyć oba podejścia: program pracuje lokalnie i synchronizuje wybrane dane z bazą w chmurze.",
+    sections: [
+      {
+        title: "Kiedy wybrać aplikację w przeglądarce",
+        paragraphs: ["Aplikację webową otwierasz w przeglądarce na dowolnym urządzeniu. Nie trzeba jej instalować, a nowa wersja jest dostępna dla wszystkich od razu po wdrożeniu.", "To dobry wybór dla zespołu, który pracuje w różnych miejscach, dla klientów, którzy mają coś zamówić lub zarezerwować, oraz wszędzie tam, gdzie dane muszą być wspólne i aktualne."],
+        points: ["kilka osób w różnych miejscach", "dostęp z telefonu i tabletu", "klienci korzystają z aplikacji samodzielnie", "jedna wspólna baza danych", "aktualizacje bez instalowania"],
+      },
+      {
+        title: "Kiedy wybrać program na Windows",
+        paragraphs: ["Program instalowany na komputerze działa niezależnie od połączenia z internetem i może przechowywać dane lokalnie. Ma też łatwiejszy dostęp do plików na dysku i urządzeń podłączonych do komputera.", "Sprawdza się przy stanowiskach pracy w firmie, analizie dużych plików, pracy w miejscach bez stabilnego internetu i tam, gdzie dane nie powinny opuszczać budynku."],
+        points: ["praca bez internetu", "dane zostają na komputerze", "dostęp do plików i urządzeń", "jedno stanowisko lub kilka komputerów w firmie", "przetwarzanie dużych plików na miejscu"],
+      },
+      {
+        title: "Aktualizacje i utrzymanie",
+        paragraphs: ["Aplikację webową aktualizuje się w jednym miejscu, na serwerze. Wymaga za to hostingu i bazy w chmurze, co oznacza stały, zwykle niewielki koszt miesięczny.", "Program na Windows nie potrzebuje serwera, ale każdą nową wersję trzeba zainstalować na komputerach. Można to uprościć instalatorem albo automatycznym sprawdzaniem aktualizacji."],
+      },
+      {
+        title: "Rozwiązanie mieszane",
+        paragraphs: ["Nie zawsze trzeba wybierać. Program na Windows może pracować lokalnie, a wybrane dane, na przykład raporty lub zamówienia, wysyłać do bazy w chmurze, z której korzysta aplikacja w przeglądarce.", "Takie połączenie zwiększa zakres projektu, dlatego warto zacząć od jednej części i dodać drugą, gdy pierwsza sprawdzi się w praktyce."],
+      },
+    ],
+    faq: [
+      { question: "Co jest tańsze: program czy aplikacja webowa?", answer: "To zależy od zakresu, a nie od rodzaju. Aplikacja webowa ma stały koszt hostingu, program na Windows koszt dystrybucji aktualizacji. Przy podobnych funkcjach koszt wykonania bywa zbliżony." },
+      { question: "Czy program na Windows może działać na Macu?", answer: "Program napisany pod Windows nie uruchomi się bezpośrednio na macOS. Jeśli w firmie są różne systemy, zwykle lepszym wyborem jest aplikacja w przeglądarce." },
+      { question: "Czy aplikacja webowa działa bez internetu?", answer: "W ograniczonym zakresie. Można przygotować tryb offline dla wybranych ekranów, ale pełna praca bez połączenia jest naturalną zaletą programu instalowanego na komputerze." },
+      { question: "Gdzie są bezpieczniejsze dane?", answer: "Bezpieczeństwo zależy od wykonania i utrzymania. Dane lokalne trzeba chronić kopiami zapasowymi i dostępem do komputera, dane w chmurze — kontrolą uprawnień, szyfrowaniem połączenia i kopiami po stronie serwera." },
+      { question: "W jakiej technologii piszesz programy na Windows?", answer: "Najczęściej w C# i .NET z interfejsem WPF i lokalną bazą SQLite. Aplikacje webowe buduję w Next.js, React i TypeScript." },
+      { question: "Czy można później przenieść program do przeglądarki?", answer: "Tak, ale zwykle oznacza to przebudowę interfejsu. Dobrze zaprojektowana struktura danych i logika ułatwiają takie przejście." },
+    ],
+    related: [
+      { href: "/programy-na-windows", label: "Programy na Windows" },
+      { href: "/tworzenie-aplikacji-webowych", label: "Aplikacje webowe" },
+      { href: "/poradniki/arkusz-czy-wlasna-aplikacja", label: "Arkusz czy aplikacja?" },
+    ],
+    updated: "2026-11-14",
   },
 ];
 

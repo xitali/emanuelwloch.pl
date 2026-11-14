@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { selectProjectHighlights } from "../src/lib/project-highlights";
+import { orderCatalogProjects, selectProjectHighlights } from "../src/lib/project-highlights";
 import { contactSchema } from "../src/lib/validation";
 import { messageWithSource } from "../src/lib/contact-sources";
 import type { Project } from "../src/types";
@@ -18,6 +18,21 @@ describe("kolejność dowodów wykonania", () => {
     const projects = [{ id: "test", featured: true, project_status: "in-development" }, { id: "live", featured: true, project_status: "active" }] as Project[];
     expect(selectProjectHighlights(projects).map(p => p.id)).toEqual(["live", "test"]);
     expect(projects[0].id).toBe("test");
+  });
+});
+
+describe("zakres pokazanych realizacji", () => {
+  const make = (id: string, category: string, project_type: string, featured = false) => ({ id, category, project_type, featured, project_status: "active" }) as Project;
+  const projects = [make("site-1", "web", "landing-page", true), make("site-2", "web", "web", true), make("shop", "e-commerce", "e-commerce"), make("tv", "apps", "tv-app"), make("site-3", "web", "web")];
+
+  it("pokazuje na głównej stronę, aplikację lub sklep oraz program", () => {
+    expect(selectProjectHighlights(projects).map(p => p.id)).toEqual(["site-1", "shop", "tv"]);
+  });
+
+  it("przeplata rodzaje w katalogu bez gubienia projektów", () => {
+    const ordered = orderCatalogProjects(projects).map(p => p.id);
+    expect(ordered).toEqual(["site-1", "shop", "tv", "site-2", "site-3"]);
+    expect(ordered).toHaveLength(projects.length);
   });
 });
 

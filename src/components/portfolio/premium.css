@@ -109,14 +109,6 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 .portfolio-tags > span:hover { border-color: #acd1e866; color: var(--p-accent); transform: translateY(-2px); }
 
 /* —— Pas technologii (marquee) —— */
-.tech-marquee { position: relative; overflow: hidden; border-block: 1px solid var(--p-line); padding-block: 22px; background: linear-gradient(180deg, #ffffff05, transparent); -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-.tech-marquee-track { display: flex; width: max-content; animation: ew-marquee 48s linear infinite; }
-.tech-marquee:hover .tech-marquee-track { animation-play-state: paused; }
-.tech-marquee ul { display: flex; align-items: center; gap: 44px; padding-right: 44px; }
-.tech-marquee li { display: flex; align-items: center; gap: 44px; font: 12px var(--font-geist-mono), monospace; letter-spacing: .14em; text-transform: uppercase; color: #8d989f; white-space: nowrap; transition: color .4s; }
-.tech-marquee li:hover { color: var(--p-accent); }
-.tech-marquee li::after { content: ""; width: 6px; height: 6px; transform: rotate(45deg); border: 1px solid #acd1e870; }
-@keyframes ew-marquee { to { transform: translateX(-50%); } }
 
 /* —— Sekcje —— */
 .stack-details details { transition: background .5s; }
@@ -128,8 +120,6 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 .stack-details details[open]::details-content { block-size: auto; }
 .service-more::details-content { block-size: 0; overflow: hidden; transition: block-size .7s var(--ease-out), content-visibility .7s allow-discrete; }
 .service-more[open]::details-content { block-size: auto; }
-.product-story-copy li { align-items: center; }
-.product-story-copy li > .ew-icon { color: var(--p-accent); }
 .service-steps { position: relative; --line: 0; counter-reset: step; }
 .service-steps::before { content: ""; position: absolute; top: -14px; inset-inline: 0; height: 1px; background: linear-gradient(90deg, var(--p-accent), #acd1e820); transform: scaleX(var(--line)); transform-origin: left; }
 .service-steps li { position: relative; }
@@ -175,17 +165,13 @@ html.motion-paused *, html.motion-paused *::before, html.motion-paused *::after 
 @media (max-width: 1023px) {
   .portfolio-home::after { display: none; }
   .service-steps::before, .service-steps li::before { display: none; }
-  .tech-marquee { padding-block: 16px; }
-  .tech-marquee-track { animation-duration: 36s; }
   .contact-form { padding: 24px 20px; border-radius: 16px; }
   .portfolio-nav { background: #0b0d0fe8; }
 }
 
 /* —— Ograniczony ruch: pełna treść, zero ruchu dekoracyjnego —— */
 @media (prefers-reduced-motion: reduce) {
-  .tech-marquee-track, .product-stage::before, .ew-mark-cursor, .status-dot,
   .portfolio-home h2 > span, .product-hero-copy h1 > span { animation: none !important; }
-  .tech-marquee { overflow-x: auto; -webkit-mask: none; mask: none; }
   .scroll-progress { display: none; }
   .portfolio-button::after { display: none; }
   [data-spotlight]::before, [data-spotlight]::after { display: none; }
@@ -267,7 +253,6 @@ html, body { background: #0b0d0f; }
 .portfolio-home, .portfolio-site { --p-muted: #a0a7ab; }
 .portfolio-home h2 > span, .product-hero-copy h1 > span { -webkit-text-fill-color: transparent; }
 .contact-form { background: linear-gradient(165deg, #ffffff0a, transparent 35%), #11161a; }
-.tech-marquee li { color: #9aa5ab; }
 
 /* —— Małe ekrany —— */
 @media (max-width: 760px) {

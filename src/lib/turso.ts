@@ -251,6 +251,13 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
   }
 }
 
+export async function updateContactMessageStatus(id: string, status: string) {
+  await turso.execute({
+    sql: "UPDATE contact_messages SET status = ? WHERE id = ?",
+    args: [status, id],
+  });
+}
+
 export async function deleteContactMessage(id: string) {
   await turso.execute({
     sql: "DELETE FROM contact_messages WHERE id = ?",

@@ -1,5 +1,9 @@
 import type { Project } from "@/types";
 
+/** Catalog filters in the order a client thinks about the work. Mobile apps are not offered. */
+export const catalogCategories = [["all", "Wszystkie"], ["web", "Strony firmowe"], ["e-commerce", "Sklepy"], ["aplikacje", "Aplikacje i panele"], ["apps", "Programy na Windows i TV"]] as const;
+export const catalogCategoryIds: string[] = catalogCategories.map(([id]) => id);
+
 export function projectMatchesCategory(
   project: Project,
   selectedCategory: string,
@@ -18,12 +22,14 @@ export function projectMatchesCategory(
     ),
   );
   const isApp = projectCategories.some((value) => ["apps", "tv-app", "desktop-app"].includes(value));
+  const isWebApp = !isEcommerce && !isMobile && !isApp && projectCategories.includes("web-app");
 
   if (selectedCategory === "e-commerce") return isEcommerce;
   if (selectedCategory === "mobile") return isMobile;
   if (selectedCategory === "apps") return isApp;
+  if (selectedCategory === "aplikacje") return isWebApp;
   if (selectedCategory === "web") {
-    return !isEcommerce && !isMobile && !isApp;
+    return !isEcommerce && !isMobile && !isApp && !isWebApp;
   }
 
   return projectCategories.some((value) => value.includes(selectedCategory));

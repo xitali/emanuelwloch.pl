@@ -2,8 +2,8 @@ import ConversionTracker from "@/components/ConversionTracker";
 import type { Metadata } from "next";
 import { createPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = {
-  ...createPageMetadata({ path: "/", title: "Emanuel Włoch — strony internetowe i aplikacje dla firm", description: "Potrzebujesz strony, sklepu lub aplikacji dla swojej firmy? Porozmawiaj z Emanuelem Włochem o projekcie — od ustalenia celu po wdrożenie." }),
-  title: { absolute: "Emanuel Włoch — strony internetowe i aplikacje dla firm" },
+  ...createPageMetadata({ path: "/", title: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm", description: "Strony firmowe, sklepy internetowe, aplikacje z bazą danych i panelem oraz programy na Windows. Jeden wykonawca od projektu po wdrożenie — Jarosław i cała Polska." }),
+  title: { absolute: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm" },
 };
 import {
   getProjects,
@@ -23,6 +23,7 @@ import VisitTracker from "@/components/VisitTracker";
 import HomeStructuredData from "@/components/HomeStructuredData";
 import MotionLayer from "@/components/portfolio/motion/MotionLayer";
 import DeliveryProcess from "@/components/portfolio/DeliveryProcess";
+import Backoffice from "@/components/portfolio/Backoffice";
 
 // High performance revalidation tag caching
 export const revalidate = 60;
@@ -47,6 +48,7 @@ export default async function HomePage() {
         <ProductStory testimonial={testimonials[0]} />
         <ServicePaths services={services} />
         <ProjectsSection initialProjects={projects} />
+        <Backoffice />
         <DeliveryProcess />
         <TestimonialsSection testimonials={testimonials} />
         <AboutSection />

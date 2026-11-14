@@ -1,6 +1,6 @@
 # Emanuel Włoch — portfolio i usługi web development
 
-> Oficjalna strona Emanuela Włocha, full-stack developera z Jarosławia w województwie podkarpackim. Projektuje i wdraża strony internetowe, sklepy oraz aplikacje webowe dla klientów z Polski. Rzeszów jest obsługiwanym rynkiem, a nie miejscem zamieszkania.
+> Oficjalna strona Emanuela Włocha, full-stack developera z Jarosławia w województwie podkarpackim. Projektuje i wdraża strony internetowe, sklepy, aplikacje webowe z bazą danych i panelem oraz programy na Windows dla firm z Polski. Rzeszów jest obsługiwanym rynkiem, a nie miejscem zamieszkania.
 
 ## Najważniejsze strony
 
@@ -9,16 +9,20 @@
 - [Tworzenie stron internetowych](https://emanuelwloch.pl/tworzenie-stron-internetowych): strony firmowe i landing pages.
 - [Tworzenie aplikacji webowych](https://emanuelwloch.pl/tworzenie-aplikacji-webowych): panele, konta, bazy danych i API.
 - [Sklepy internetowe](https://emanuelwloch.pl/sklepy-internetowe): katalog, koszyk, płatności i panel.
+- [Bazy danych i panele](https://emanuelwloch.pl/bazy-danych-i-panele): dane firmy w jednej bazie z panelem, rolami, importem i eksportem.
+- [Programy na Windows](https://emanuelwloch.pl/programy-na-windows): aplikacje desktopowe w C# i .NET z lokalną bazą danych.
 - [Next.js developer](https://emanuelwloch.pl/nextjs-developer): nowe aplikacje, audyty, migracje i wydajność.
 - [Strony internetowe Jarosław](https://emanuelwloch.pl/tworzenie-stron-internetowych-jaroslaw): lokalna oferta dla Jarosławia i Podkarpacia.
 - [Strony internetowe Rzeszów](https://emanuelwloch.pl/tworzenie-stron-internetowych-rzeszow): zdalna oferta dla firm z rynku rzeszowskiego.
-- [Poradniki](https://emanuelwloch.pl/poradniki): autorskie odpowiedzi dotyczące kosztów, terminów i wyboru technologii.
+- [Poradniki](https://emanuelwloch.pl/poradniki): autorskie odpowiedzi dotyczące kosztów, terminów i wyboru rozwiązania: strona, aplikacja, baza danych czy program.
 
 ## Poradniki
 
 - [Ile kosztuje strona internetowa w 2026 roku?](https://emanuelwloch.pl/poradniki/ile-kosztuje-strona-internetowa-2026)
 - [Next.js czy WordPress — co wybrać?](https://emanuelwloch.pl/poradniki/nextjs-czy-wordpress)
 - [Ile trwa stworzenie strony internetowej?](https://emanuelwloch.pl/poradniki/ile-trwa-tworzenie-strony-internetowej)
+- [Arkusz czy własna aplikacja — kiedy warto zmienić narzędzie?](https://emanuelwloch.pl/poradniki/arkusz-czy-wlasna-aplikacja)
+- [Program na Windows czy aplikacja w przeglądarce?](https://emanuelwloch.pl/poradniki/program-na-windows-czy-aplikacja-webowa)
 
 ## Wybrane case studies
 

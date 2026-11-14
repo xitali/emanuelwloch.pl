@@ -1,24 +1,20 @@
 import { createPageMetadata } from "@/lib/seo";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
+import { IconArrowUpRight, IconPin } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Code2, Globe2, MapPin, ShoppingCart } from "lucide-react";
 import { serializeJsonLd, SITE_URL } from "@/lib/seo";
 import { servicePages } from "@/lib/service-pages";
+import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Strony, sklepy i aplikacje — oferta dla Twojej firmy",
-  description: "Wybierz rozwiązanie dla swojej firmy: strona internetowa, sklep lub aplikacja. Poznaj zakres, proces współpracy i orientacyjne ceny netto.",
+  title: "Strony, sklepy, aplikacje i programy — oferta dla firm",
+  description: "Wybierz, czego potrzebuje Twoja firma: strona, sklep, aplikacja webowa, baza danych z panelem albo program na Windows. Zakres, proces i orientacyjne ceny netto.",
   path: "/uslugi",
 });
 
-const primaryPages = servicePages.filter(
-  (page) => !page.slug.endsWith("jaroslaw") && !page.slug.endsWith("rzeszow"),
-);
-const localPages = servicePages.filter(
-  (page) => page.slug.endsWith("jaroslaw") || page.slug.endsWith("rzeszow"),
-);
-const icons = [Globe2, Code2, ShoppingCart, Code2] as const;
+const localPages = servicePages.filter((page) => page.slug.endsWith("jaroslaw") || page.slug.endsWith("rzeszow"));
 
 export default function ServicesPage() {
   const structuredData = {
@@ -28,7 +24,7 @@ export default function ServicesPage() {
         "@type": "CollectionPage",
         "@id": `${SITE_URL}/uslugi#webpage`,
         url: `${SITE_URL}/uslugi`,
-        name: "Usługi web development Emanuela Włocha",
+        name: "Usługi Emanuela Włocha: strony, sklepy, aplikacje i programy",
         description: metadata.description,
         inLanguage: "pl-PL",
         isPartOf: { "@id": `${SITE_URL}/#website` },
@@ -36,12 +32,7 @@ export default function ServicesPage() {
       },
       {
         "@type": "ItemList",
-        itemListElement: servicePages.map((page, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: page.shortName,
-          url: `${SITE_URL}${page.path}`,
-        })),
+        itemListElement: servicePages.map((page, index) => ({ "@type": "ListItem", position: index + 1, name: page.shortName, url: `${SITE_URL}${page.path}` })),
       },
       {
         "@type": "BreadcrumbList",
@@ -55,69 +46,55 @@ export default function ServicesPage() {
 
   return (
     <PublicPageShell>
-      <main id="main-content" className="portfolio-subpage">
+      <main id="main-content" className="portfolio-subpage svc-page">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }} />
-
-        <header className="border-b border-[var(--p-border)] bg-[var(--p-surface)] px-4 pb-20 pt-36 text-white sm:px-6 lg:px-8 lg:pb-24 lg:pt-44">
-          <div className="mx-auto max-w-[1280px]">
-            <nav aria-label="Okruszki" className="text-xs text-[var(--p-muted)]">
-              <Link href="/" className="hover:text-[var(--p-accent)]">Strona główna</Link> / <span aria-current="page">Usługi</span>
-            </nav>
-            <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--p-accent)]">Pełna oferta</p>
-                <h1 className="mt-5 max-w-4xl text-[clamp(3rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.055em]">Strony, sklepy i aplikacje webowe</h1>
+        <article>
+          <header className="svc-hero">
+            <div className="portfolio-container">
+              <nav aria-label="Okruszki" className="svc-crumbs"><ol><li><Link href="/">Strona główna</Link></li><li aria-current="page">Usługi</li></ol></nav>
+              <div className="svc-hero-grid">
+                <div className="svc-hero-copy">
+                  <h1>Czego potrzebuje Twoja firma?</h1>
+                  <p className="svc-lead">Nie musisz wiedzieć, czy to ma być strona, aplikacja czy program. Znajdź poniżej sytuację podobną do swojej — zobaczysz, co dostaniesz, jak będziemy pracować i od czego zależy cena.</p>
+                </div>
               </div>
-              <p className="max-w-xl text-base leading-relaxed text-[var(--p-muted)] sm:text-lg">
-                Czego potrzebujesz: strony, sklepu czy własnej aplikacji? Wybierz poniżej, żeby zobaczyć, co otrzymasz, jak będziemy pracować i od czego zależy cena.
-              </p>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24" aria-labelledby="core-services">
-          <div className="mx-auto max-w-[1280px]">
-            <h2 id="core-services" className="text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Co mogę dla Ciebie zrobić?</h2>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {primaryPages.map((page, index) => {
-                const Icon = icons[index] ?? Code2;
-                return (
-                  <Link key={page.path} href={page.path} className="group min-h-72 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-7 transition-transform hover:-translate-y-1 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:p-8">
-                    <div className="flex items-center justify-between">
-                      <span className="grid size-11 place-items-center rounded-[var(--p-radius)] bg-[var(--p-surface)] text-[var(--p-accent)] dark:bg-[var(--p-surface)] dark:text-[var(--p-accent)]"><Icon className="size-5" /></span>
-                      <ArrowRight className="size-5 text-[var(--p-muted)] transition-transform group-hover:translate-x-1 dark:text-[var(--p-muted)]" />
-                    </div>
-                    <h2 className="mt-12 text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">{page.shortName}</h2>
-                    <p className="mt-4 text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)]">{page.metaDescription}</p>
-                  </Link>
-                );
-              })}
+          <section className="svc-section portfolio-container" aria-labelledby="core-services">
+            <h2 id="core-services" className="sr-only">Rodzaje projektów</h2>
+            <ol className="service-path-list">{servicePaths.map((path) => <li key={path.href} className="service-path-row">
+              <Link className="service-path-thumb" href={path.href} tabIndex={-1} aria-hidden="true"><Image src={path.image} alt="" fill sizes="(max-width: 767px) 92vw, 280px" /><span>{path.imageLabel}</span></Link>
+              <div className="service-path-main"><h3><Link href={path.href}>{path.title}</Link></h3><p className="service-path-problem">{path.problem}</p></div>
+              <div className="service-path-scope"><p>{path.scope}</p><p className="service-path-price">{formatPriceFrom(path.priceFrom)}</p></div>
+              <div className="service-path-actions"><Link className="portfolio-button portfolio-button--secondary" href={path.href}>Zakres i pytania <IconArrowUpRight size={16} /></Link></div>
+            </li>)}</ol>
+            <p className="service-price-note">Ceny „od” to punkt startowy najprostszego zakresu, podany netto. Przed rozpoczęciem dostaniesz zakres prac i dokładną wycenę. <Link href="/#szczegoly-uslug">Policz orientacyjną wycenę</Link>.</p>
+          </section>
+
+          <section className="svc-band" aria-labelledby="more-services">
+            <div className="portfolio-container svc-band-grid">
+              <div>
+                <h2 id="more-services">Masz już stronę lub aplikację?</h2>
+                <p className="svc-band-lead">Rozwinę ją, przyspieszę albo przeniosę na nowszą technologię. Sprawdzę też kod przed większą inwestycją.</p>
+                <div className="portfolio-actions"><Link href="/nextjs-developer" className="portfolio-text-link">Rozwój i audyty aplikacji Next.js <IconArrowUpRight size={15} /></Link></div>
+              </div>
+              <aside className="svc-fit" aria-labelledby="local-services">
+                <h3 id="local-services">Jarosław, Rzeszów i cała Polska</h3>
+                <ul>{localPages.map((page) => <li key={page.path}><Link href={page.path}>{page.shortName}</Link></li>)}</ul>
+                <p className="svc-fit-note"><IconPin size={14} /> Działam z Jarosławia. Cały projekt możemy przeprowadzić zdalnie.</p>
+              </aside>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8" aria-labelledby="local-services">
-          <div className="mx-auto max-w-[1280px]">
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]"><MapPin className="size-3.5" /> Podkarpackie i współpraca zdalna</div>
-            <h2 id="local-services" className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Oferta lokalna</h2>
-            <p className="mt-5 max-w-3xl text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-base">Prowadzisz firmę w Jarosławiu, Rzeszowie lub innym miejscu w Polsce? Możemy przejść przez cały projekt zdalnie — od pierwszej rozmowy po uruchomienie Twojej strony.</p>
-            <div className="mt-9 grid gap-4 md:grid-cols-2">
-              {localPages.map((page) => (
-                <Link key={page.path} href={page.path} className="group flex items-center justify-between gap-5 rounded-[var(--p-radius)] border border-[var(--p-border)] p-6 hover:border-[var(--p-border)] dark:border-[var(--p-border)] dark:hover:border-[var(--p-border)]">
-                  <div><h3 className="font-semibold">{page.shortName}</h3><p className="mt-2 text-sm text-[var(--p-muted)] dark:text-[var(--p-muted)]">{page.lead}</p></div>
-                  <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-1" />
-                </Link>
-              ))}
+          <section className="svc-close portfolio-container svc-section" aria-labelledby="close-heading">
+            <div className="svc-close-card">
+              <Image src="/emanuel_wloch.jpg" alt="" width={88} height={88} className="svc-close-photo" />
+              <div><h2 id="close-heading">Nie wiesz, co wybrać?</h2><p>Opisz problem kilkoma zdaniami. Podpowiem, jakie rozwiązanie ma sens i ile może kosztować.</p></div>
+              <Link href="/#kontakt" className="portfolio-button">Opisz problem <IconArrowUpRight size={17} /></Link>
             </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-20 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[1280px] rounded-[var(--p-radius)] bg-[var(--p-surface)] p-8 text-white sm:p-10 lg:flex lg:items-end lg:justify-between">
-            <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Nie wiesz, co wybrać?</p><h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">Opisz problem, a dobiorę zakres.</h2></div>
-            <Link href="/#kontakt" className="portfolio-button mt-8 lg:mt-0">Omów projekt <ArrowRight className="size-4" /></Link>
-          </div>
-        </section>
+          </section>
+        </article>
       </main>
     </PublicPageShell>
   );

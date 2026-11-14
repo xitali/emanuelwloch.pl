@@ -1,39 +1,14 @@
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
+import ScreenFrame from "@/components/portfolio/ScreenFrame";
+import { IconArrowUpRight, IconCheck, IconPin } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Check,
-  ChevronDown,
-  Clock3,
-  Code2,
-  MapPin,
-  Search,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
 import type { ServicePageData } from "@/lib/service-pages";
-import { serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
-
-const featuredCaseStudies = [
-  {
-    href: "/projekty/vip-transfery-platforma-premium-transport-solutions-09e837ed-2206-49b7-9b81-21c6222a18f5",
-    title: "VIP Transfery",
-    description: "Next.js, SEO lokalne i prezentacja usług premium.",
-  },
-  {
-    href: "/projekty/rzeszow-tatuaz-iluminatia-tattoo-5fa80c09-f256-4dc9-a94e-6a08ae809345",
-    title: "Iluminatia Tattoo",
-    description: "Strona lokalnego studia, galeria i mierzenie kontaktów.",
-  },
-  {
-    href: "/projekty/dmuchance-afryka-strona-wynajmu-dmuchancow-3bc5ed9c-c7c8-4532-adec-326f78389f0e",
-    title: "Dmuchańce Afryka",
-    description: "Wersja testowa strony z ofertą wynajmu i galerią.",
-  },
-] as const;
-
-const benefitIcons = [Search, ShieldCheck, Code2, Clock3] as const;
+import { getProjectPath, serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
+import { relatedProjectsFor, serviceShowcase } from "@/lib/service-showcase";
+import { projectLabel } from "@/lib/project-labels";
+import { getProjects } from "@/lib/turso";
 
 export function createServiceMetadata(data: ServicePageData): Metadata {
   const url = `${SITE_URL}${data.path}`;
@@ -46,17 +21,10 @@ export function createServiceMetadata(data: ServicePageData): Metadata {
       title: `${data.metaTitle} | Emanuel Włoch`,
       description: data.metaDescription,
       url,
-      siteName: "Emanuel Włoch — strony i aplikacje",
+      siteName: "Emanuel Włoch — strony, aplikacje i programy",
       locale: "pl_PL",
       type: "website",
-      images: [
-        {
-          url: SOCIAL_IMAGE_URL,
-          width: 1200,
-          height: 630,
-          alt: `${data.shortName} — Emanuel Włoch`,
-        },
-      ],
+      images: [{ url: SOCIAL_IMAGE_URL, width: 1200, height: 630, alt: `${data.shortName} — Emanuel Włoch` }],
     },
     twitter: {
       card: "summary_large_image",
@@ -69,7 +37,6 @@ export function createServiceMetadata(data: ServicePageData): Metadata {
 
 function createStructuredData(data: ServicePageData) {
   const pageUrl = `${SITE_URL}${data.path}`;
-  const pageId = `${pageUrl}#webpage`;
   const serviceId = `${pageUrl}#service`;
 
   return {
@@ -77,7 +44,7 @@ function createStructuredData(data: ServicePageData) {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": pageId,
+        "@id": `${pageUrl}#webpage`,
         url: pageUrl,
         name: data.metaTitle,
         description: data.metaDescription,
@@ -95,265 +62,125 @@ function createStructuredData(data: ServicePageData) {
         description: data.directAnswer,
         url: pageUrl,
         areaServed: data.areas,
-        provider: {
-          "@type": "Person",
-          "@id": `${SITE_URL}/#emanuel-wloch`,
-          name: "Emanuel Włoch",
-          url: SITE_URL,
-        },
+        provider: { "@type": "Person", "@id": `${SITE_URL}/#emanuel-wloch`, name: "Emanuel Włoch", url: SITE_URL },
       },
       {
         "@type": "FAQPage",
         "@id": `${pageUrl}#faq`,
-        mainEntity: data.faq.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.answer,
-          },
-        })),
+        mainEntity: data.faq.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })),
       },
       {
         "@type": "BreadcrumbList",
         "@id": `${pageUrl}#breadcrumb`,
         itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Strona główna",
-            item: SITE_URL,
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Usługi",
-            item: `${SITE_URL}/uslugi`,
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: data.shortName,
-            item: pageUrl,
-          },
+          { "@type": "ListItem", position: 1, name: "Strona główna", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: "Usługi", item: `${SITE_URL}/uslugi` },
+          { "@type": "ListItem", position: 3, name: data.shortName, item: pageUrl },
         ],
       },
     ],
   };
 }
 
-export default function SeoServicePage({ data }: { data: ServicePageData }) {
+export default async function SeoServicePage({ data }: { data: ServicePageData }) {
   const structuredData = createStructuredData(data);
+  const showcase = serviceShowcase[data.slug];
+  const projects = showcase ? relatedProjectsFor(await getProjects(), showcase.related) : [];
+  const catalogHref = showcase ? `/realizacje?kategoria=${showcase.catalog}` : "/realizacje";
 
   return (
     <PublicPageShell>
-      <main id="main-content" className="portfolio-subpage">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }}
-        />
-
+      <main id="main-content" className="portfolio-subpage svc-page">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }} />
         <article>
-          <header className="relative overflow-hidden border-b border-[var(--p-border)] bg-[var(--p-surface)] px-4 pb-20 pt-32 text-white sm:px-6 lg:px-8 lg:pb-24 lg:pt-40">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px)",
-                backgroundSize: "76px 76px",
-                maskImage: "radial-gradient(circle at 72% 38%, black, transparent 72%)",
-              }}
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -right-36 top-20 size-[34rem] rounded-[var(--p-radius)] bg-[var(--p-surface)] blur-[150px]"
-            />
-
-            <div className="relative mx-auto max-w-[1280px]">
-              <nav aria-label="Okruszki" className="text-xs text-[var(--p-muted)]">
-                <ol className="flex flex-wrap items-center gap-2">
-                  <li><Link href="/" className="hover:text-[var(--p-accent)]">Strona główna</Link></li>
-                  <li aria-hidden="true">/</li>
-                  <li><Link href="/uslugi" className="hover:text-[var(--p-accent)]">Usługi</Link></li>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="text-[var(--p-muted)]">{data.shortName}</li>
-                </ol>
+          <header className="svc-hero">
+            <div className="portfolio-container">
+              <nav aria-label="Okruszki" className="svc-crumbs">
+                <ol><li><Link href="/">Strona główna</Link></li><li><Link href="/uslugi">Usługi</Link></li><li aria-current="page">{data.shortName}</li></ol>
               </nav>
-
-              <div className="mt-12 grid gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-end lg:gap-20">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--p-accent)] sm:text-xs">
-                    {data.eyebrow}
-                  </p>
-                  <h1 className="mt-5 max-w-4xl text-[clamp(2.8rem,5.4vw,5.7rem)] font-medium leading-[0.92] tracking-[-0.055em]">
-                    {data.title}
-                  </h1>
-                  <p className="mt-7 max-w-3xl text-base leading-relaxed text-[var(--p-muted)] sm:text-lg">
-                    {data.lead}
-                  </p>
-                  <div className="mt-8 flex flex-wrap gap-3">
-                    <Link
-                      href="/#kontakt"
-                      className="portfolio-button"
-                    >
-                      Omów projekt <ArrowRight className="size-4" />
-                    </Link>
-                    <Link
-                      href="/#projekty"
-                      className="portfolio-button portfolio-button--secondary"
-                    >
-                      Zobacz realizacje
-                    </Link>
+              <div className="svc-hero-grid">
+                <div className="svc-hero-copy">
+                  <h1>{data.title}</h1>
+                  <p className="svc-lead">{data.lead}</p>
+                  <div className="portfolio-actions">
+                    <Link href="/#kontakt" className="portfolio-button">Omów projekt <IconArrowUpRight size={17} /></Link>
+                    {showcase?.demo && <Link href="/demo/panel" className="portfolio-text-link">Wypróbuj demo panelu <IconArrowUpRight size={15} /></Link>}
+                    <Link href={catalogHref} className="portfolio-text-link">Zobacz realizacje <IconArrowUpRight size={15} /></Link>
                   </div>
+                  <ul className="svc-areas" aria-label="Obszar działania">{data.areas.map((area) => <li key={area}><IconPin size={14} />{area}</li>)}</ul>
                 </div>
-
-                <aside className="rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 backdrop-blur-xl sm:p-7">
-                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--p-accent)]">
-                    <Sparkles className="size-3.5" /> Krótka odpowiedź
-                  </div>
-                  <p className="mt-5 text-sm leading-7 text-[var(--p-muted)] sm:text-base">
-                    {data.directAnswer}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {data.areas.map((area) => (
-                      <span key={area} className="portfolio-tag">
-                        <MapPin className="size-3 text-[var(--p-accent)]" /> {area}
-                      </span>
-                    ))}
-                  </div>
-                </aside>
+                {showcase && <div className="svc-hero-visual" aria-hidden="true">
+                  <ScreenFrame frame={showcase.back} className="stage-frame--back" sizes="(max-width: 1023px) 70vw, 32vw" />
+                  <ScreenFrame frame={showcase.front} className="stage-frame--front" eager sizes="(max-width: 1023px) 86vw, 40vw" />
+                </div>}
               </div>
             </div>
           </header>
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24" aria-labelledby="benefits-heading">
-            <div className="mx-auto max-w-[1280px]">
-              <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr] lg:gap-16">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">
-                    Zakres i rezultat
-                  </p>
-                  <h2 id="benefits-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">
-                    Co zyskujesz?
-                  </h2>
-                  <p className="mt-5 text-sm leading-relaxed text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-base">
-                    Zobacz, co ułatwi Twoim klientom kontakt i Tobie codzienną pracę.
-                  </p>
-                </div>
-                <div className="grid gap-px overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:grid-cols-2">
-                  {data.benefits.map((benefit, index) => {
-                    const Icon = benefitIcons[index] ?? Sparkles;
-
-                    return (
-                    <section key={benefit.title} className="min-h-48 bg-[var(--p-surface)] p-6 dark:bg-[var(--p-surface)] sm:p-7">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-[10px] text-[var(--p-muted)] dark:text-[var(--p-muted)]">0{index + 1}</span>
-                        <Icon className="size-4 text-[var(--p-accent)] dark:text-[var(--p-accent)]" />
-                      </div>
-                      <h3 className="mt-7 text-lg font-semibold">{benefit.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--p-muted)] dark:text-[var(--p-muted)]">{benefit.description}</p>
-                    </section>
-                    );
-                  })}
-                </div>
-              </div>
+          <section className="svc-answer" aria-labelledby="answer-heading">
+            <div className="portfolio-container svc-answer-grid">
+              <h2 id="answer-heading">W skrócie</h2>
+              <p>{data.directAnswer}</p>
             </div>
           </section>
 
-          <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8 lg:py-24">
-            <div className="mx-auto grid max-w-[1280px] gap-14 lg:grid-cols-2 lg:gap-20">
-              <section aria-labelledby="deliverables-heading">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Elementy realizacji</p>
-                <h2 id="deliverables-heading" className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Co otrzymujesz</h2>
-                <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {data.deliverables.map((item) => (
-                    <li key={item} className="flex items-start gap-3 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-4 text-sm dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]">
-                      <Check className="mt-0.5 size-4 shrink-0 text-[var(--p-accent)] dark:text-[var(--p-accent)]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-10 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]">
-                  <h3 className="text-sm font-semibold">Czy to rozwiązanie dla Ciebie?</h3>
-                  <ul className="mt-4 space-y-2 text-sm text-[var(--p-muted)] dark:text-[var(--p-muted)]">
-                    {data.idealFor.map((item) => <li key={item}>• {item}</li>)}
-                  </ul>
-                </div>
-              </section>
-
-              <section aria-labelledby="process-heading">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Przebieg współpracy</p>
-                <h2 id="process-heading" className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Jak będziemy pracować?</h2>
-                <ol className="mt-8 space-y-3">
-                  {data.process.map((step, index) => (
-                    <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4 rounded-[var(--p-radius)] border border-[var(--p-border)] p-5 dark:border-[var(--p-border)]">
-                      <span className="portfolio-tag">0{index + 1}</span>
-                      <div>
-                        <h3 className="font-semibold">{step.title}</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-[var(--p-muted)] dark:text-[var(--p-muted)]">{step.description}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            </div>
+          <section className="svc-section portfolio-container" aria-labelledby="benefits-heading">
+            <header className="svc-heading"><h2 id="benefits-heading">Co zyskujesz?</h2><p>Co zmieni się dla Ciebie, Twojego zespołu i Twoich klientów.</p></header>
+            <ul className="svc-benefits" data-stagger>
+              {data.benefits.map((benefit) => <li key={benefit.title}><h3>{benefit.title}</h3><p>{benefit.description}</p></li>)}
+            </ul>
           </section>
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-24" aria-labelledby="examples-heading">
-            <div className="mx-auto max-w-[1280px]">
-              <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Zobacz moje realizacje</p>
-                  <h2 id="examples-heading" className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">Powiązane realizacje</h2>
-                </div>
-                <Link href="/#projekty" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--p-accent)] dark:text-[var(--p-accent)]">Wszystkie projekty <ArrowRight className="size-4" /></Link>
-              </div>
-              <div className="mt-8 grid gap-3 md:grid-cols-3">
-                {featuredCaseStudies.map((item, index) => (
-                  <Link key={item.href} href={item.href} className="group rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-6 transition-transform hover:-translate-y-1 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)]">
-                    <span className="font-mono text-[10px] text-[var(--p-muted)] dark:text-[var(--p-muted)]">0{index + 1}</span>
-                    <h3 className="mt-6 text-lg font-semibold group-hover:text-[var(--p-accent)] dark:group-hover:text-[var(--p-accent)]">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--p-muted)] dark:text-[var(--p-muted)]">{item.description}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
+          {projects.length > 0 && <section className="svc-section svc-work portfolio-container" aria-labelledby="examples-heading">
+            <header className="svc-heading"><h2 id="examples-heading">Podobne realizacje</h2><Link href={catalogHref} className="portfolio-text-link">Wszystkie z tej kategorii <IconArrowUpRight size={15} /></Link></header>
+            <ul className="svc-work-grid" data-stagger>
+              {projects.map((project) => {
+                const image = project.images.find((src) => src.startsWith("/projects/")) ?? project.preview_poster ?? project.images[0];
+                return <li key={project.id}><Link href={getProjectPath(project)} className="svc-work-card">
+                  <span className="svc-work-thumb">{image && <Image src={image} alt="" fill sizes="(max-width: 767px) 92vw, 30vw" />}</span>
+                  <span className="svc-work-meta">{projectLabel(project.project_type || project.category)}{project.project_status === "in-development" ? " · wersja testowa" : ""}</span>
+                  <strong>{project.title}</strong>
+                  <span className="svc-work-desc">{project.short_description}</span>
+                </Link></li>;
+              })}
+            </ul>
+          </section>}
 
-          <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8 lg:py-24" aria-labelledby="faq-heading">
-            <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.55fr_1.45fr] lg:gap-20">
+          <section className="svc-band" aria-labelledby="deliverables-heading">
+            <div className="portfolio-container svc-band-grid">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Konkretne odpowiedzi</p>
-                <h2 id="faq-heading" className="mt-4 text-4xl font-semibold tracking-[-0.045em] sm:text-5xl">Najczęstsze pytania</h2>
-                <p className="mt-5 text-sm leading-relaxed text-[var(--p-muted)] dark:text-[var(--p-muted)]">Zastanawiasz się nad ceną, terminem lub obsługą strony? Znajdziesz tu odpowiedzi. Jeśli chcesz dopytać o swój projekt, napisz do mnie.</p>
+                <h2 id="deliverables-heading">Co otrzymujesz</h2>
+                <ul className="svc-checklist">{data.deliverables.map((item) => <li key={item}><IconCheck size={18} /><span>{item}</span></li>)}</ul>
               </div>
-              <div className="divide-y divide-slate-200 overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] dark:divide-white/9 dark:border-[var(--p-border)]">
-                {data.faq.map((item, index) => (
-                  <details key={item.question} className="group bg-[var(--p-surface)] open:bg-[var(--p-surface)] dark:bg-[var(--p-surface)] dark:open:bg-[var(--p-surface)]">
-                    <summary className="flex cursor-pointer list-none items-center gap-4 p-5 sm:p-6">
-                      <span className="font-mono text-[10px] text-[var(--p-muted)] dark:text-[var(--p-muted)]">0{index + 1}</span>
-                      <h3 className="flex-1 text-sm font-semibold sm:text-base">{item.question}</h3>
-                      <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" />
-                    </summary>
-                    <p className="px-5 pb-6 pl-[4.25rem] text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:pr-8">{item.answer}</p>
-                  </details>
-                ))}
-              </div>
+              <aside className="svc-fit" aria-labelledby="fit-heading">
+                <h3 id="fit-heading">To rozwiązanie dla Ciebie, jeśli…</h3>
+                <ul>{data.idealFor.map((item) => <li key={item}>{item}</li>)}</ul>
+              </aside>
+            </div>
+            <div className="portfolio-container">
+              <h2 id="process-heading" className="svc-process-heading">Jak będziemy pracować?</h2>
+              <ol className="svc-process" aria-labelledby="process-heading" data-stagger>
+                {data.process.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{step.title}</h3><p>{step.description}</p></li>)}
+              </ol>
             </div>
           </section>
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-[1280px] overflow-hidden rounded-[var(--p-radius)] bg-[var(--p-surface)] p-7 text-white sm:p-10 lg:flex lg:items-end lg:justify-between lg:gap-12">
+          <section className="svc-section svc-faq portfolio-container" aria-labelledby="faq-heading">
+            <header className="svc-heading"><h2 id="faq-heading">Najczęstsze pytania</h2><p>Nie ma tu Twojego pytania? Napisz — odpowiem na nie przy wycenie.</p></header>
+            <div className="svc-faq-list">
+              {data.faq.map((item) => <details key={item.question}><summary><h3>{item.question}</h3><span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}
+            </div>
+          </section>
+
+          <section className="svc-close portfolio-container" aria-labelledby="close-heading">
+            <div className="svc-close-card">
+              <Image src="/emanuel_wloch.jpg" alt="" width={88} height={88} className="svc-close-photo" />
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Następny krok</p>
-                <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] sm:text-5xl">W czym strona lub aplikacja ma Ci pomóc?</h2>
-                <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--p-muted)]">
-                  {data.related.map((item) => <Link key={item.href} href={item.href} className="hover:text-[var(--p-accent)]">{item.label}</Link>)}
-                </div>
+                <h2 id="close-heading">Opisz, co chcesz usprawnić.</h2>
+                <p>Porozmawiasz bezpośrednio ze mną. Po rozmowie dostaniesz zakres, termin i wycenę netto.</p>
+                <nav aria-label="Powiązane usługi" className="svc-related">{data.related.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</nav>
               </div>
-              <Link href="/#kontakt" className="portfolio-button mt-8 shrink-0 lg:mt-0">Omów projekt <ArrowRight className="size-4" /></Link>
+              <Link href="/#kontakt" className="portfolio-button">Omów projekt <IconArrowUpRight size={17} /></Link>
             </div>
           </section>
         </article>

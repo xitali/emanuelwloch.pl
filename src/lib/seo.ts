@@ -58,7 +58,7 @@ export function createPageMetadata({ title, description, path, image = SOCIAL_IM
     title, description, alternates: { canonical: path },
     openGraph: {
       title, description, url: new URL(path, SITE_URL).href,
-      siteName: "Emanuel Włoch — strony i aplikacje dla firm", locale: "pl_PL", type,
+      siteName: "Emanuel Włoch — strony, aplikacje i programy", locale: "pl_PL", type,
       images: [{ url: imageUrl, alt: title, ...(imageUrl === SOCIAL_IMAGE_URL ? { width: 1200, height: 630, type: "image/jpeg" } : {}) }],
     },
     twitter: { card: "summary_large_image", title, description, images: [imageUrl] },

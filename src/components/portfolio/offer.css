@@ -1,0 +1,62 @@
+/* Offer by client problem, the "Zaplecze" section and the project catalog filters. */
+
+/* —— Ścieżki oferty: wiersze problem → zakres, z prawdziwym ekranem —— */
+.service-path-list { list-style: none; margin: 56px 0 0; padding: 0; border-top: 1px solid var(--p-border); }
+.service-path-row { display: grid; grid-template-columns: clamp(180px, 17vw, 260px) minmax(0, 1.05fr) minmax(0, 1fr) auto; gap: clamp(24px, 3vw, 48px); align-items: center; padding: 26px 0; border-bottom: 1px solid var(--p-border); }
+.service-path-thumb { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid #ffffff17; border-radius: 8px; background: #0d1114; }
+.service-path-thumb img { object-fit: cover; object-position: top center; transition: transform .9s var(--ease-out), filter .6s; filter: saturate(.85); }
+.service-path-row:hover .service-path-thumb img { transform: scale(1.04); filter: none; }
+.service-path-thumb > span { position: absolute; left: 8px; bottom: 8px; padding: 3px 7px; border-radius: 4px; background: #0b0d0fd9; font: 10px/1.4 var(--font-geist-mono), monospace; color: #c3d2db; }
+.service-path-main h3 { font-size: clamp(22px, 2vw, 30px); line-height: 1.15; }
+.service-path-main h3 a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .7s var(--ease-out), color .3s; }
+.service-path-row:hover .service-path-main h3 a { background-size: 100% 1px; color: var(--p-accent); }
+.service-path-problem { margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--p-text); opacity: .86; }
+.service-path-row > .service-path-scope { margin: 0; padding: 0; border: 0; font-size: 15px; line-height: 1.7; color: var(--p-muted); }
+.service-path-row > .service-path-scope p { margin: 0; }
+.service-path-row > .service-path-scope .service-path-price { margin-top: 10px; font: 13px/1.4 var(--font-geist-mono), monospace; color: var(--p-accent); }
+.service-path-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.service-path-actions .portfolio-button { white-space: nowrap; }
+
+@media (max-width: 1180px) {
+  .service-path-row { grid-template-columns: clamp(170px, 24vw, 240px) minmax(0, 1fr); row-gap: 14px; }
+  .service-path-thumb { grid-row: span 3; align-self: start; }
+  .service-path-actions { flex-direction: row; align-items: center; justify-content: flex-start; gap: 22px; }
+}
+@media (max-width: 640px) {
+  .service-path-list { margin-top: 32px; }
+  .service-path-row { grid-template-columns: 112px minmax(0, 1fr); column-gap: 16px; row-gap: 12px; padding: 22px 0 24px; }
+  .service-path-thumb { grid-row: auto; }
+  .service-path-thumb > span { display: none; }
+  .service-path-main h3 { font-size: 21px; }
+  .service-path-problem { margin-top: 6px; font-size: 15px; }
+  .service-path-row > .service-path-scope, .service-path-actions { grid-column: 1 / -1; }
+  .service-path-actions { flex-wrap: wrap; gap: 18px; }
+}
+
+/* —— Karty realizacji: rodzaj i status pod tytułem, nie nad nim —— */
+.showcase-caption .showcase-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 12px; font: 12px/1.4 var(--font-geist-mono), monospace; color: #b7c4cb; }
+.showcase-meta > span { padding: 4px 9px; border: 1px solid #ffffff1f; border-radius: 4px; }
+.showcase-meta > .showcase-status { border-color: #e6c88a55; color: #e6d3a6; }
+
+/* —— Zaplecze: panel i dane, które klient dostaje razem z produktem —— */
+.backoffice { padding-block: 110px; scroll-margin-top: 90px; }
+.backoffice-layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(32px, 5vw, 88px); align-items: start; margin-top: 56px; }
+.backoffice-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--p-border); }
+.backoffice-points li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--p-border); }
+.backoffice-points .ew-icon { color: var(--p-accent); margin-top: 3px; }
+.backoffice-points strong { display: block; font-size: 18px; font-weight: 520; letter-spacing: -.02em; }
+.backoffice-points p { margin-top: 6px; font-size: 15px; line-height: 1.7; color: var(--p-muted); }
+.backoffice-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 32px; }
+.backoffice-screen { position: relative; margin: 0; }
+.backoffice-screen .stage-frame { position: relative; inset: auto; width: 100%; opacity: 1; filter: none; transform: none; }
+.backoffice-screen .stage-frame-bar { height: 34px; font-size: 11px; }
+.backoffice-screen figcaption.backoffice-caption { margin-top: 14px; font-size: 13px; line-height: 1.6; color: var(--p-muted); }
+.backoffice-callouts { position: absolute; inset: 34px 0 auto 0; aspect-ratio: 16 / 9; pointer-events: none; }
+.backoffice-callouts span { position: absolute; display: flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid #acd1e866; border-radius: 999px; background: #0b0d0fee; font: 11px/1.3 var(--font-geist-mono), monospace; color: #d6e6ef; box-shadow: 0 14px 30px -12px #000; white-space: nowrap; }
+.backoffice-callouts span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--p-accent); box-shadow: 0 0 0 4px #acd1e826; }
+@media (max-width: 1023px) {
+  .backoffice { padding-block: 75px; }
+  .backoffice-layout { grid-template-columns: 1fr; margin-top: 36px; }
+  .backoffice-screen { order: -1; }
+}
+@media (max-width: 640px) { .backoffice-callouts { display: none; } }

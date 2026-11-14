@@ -714,6 +714,236 @@ export const servicePages: ServicePageData[] = [
       { href: "/o-mnie", label: "O Emanuelu Włochu" },
     ],
   },
+  {
+    slug: "bazy-danych-i-panele",
+    path: "/bazy-danych-i-panele",
+    shortName: "Bazy danych i panele",
+    metaTitle: "Bazy danych i panele zarządzania dla firm",
+    metaDescription:
+      "Przeniosę dane Twojej firmy z arkuszy i maili do uporządkowanej bazy danych z panelem: klienci, zamówienia, produkty, zgłoszenia i raporty.",
+    eyebrow: "Dane firmy w jednym miejscu",
+    title: "Baza danych i panel zamiast arkuszy i maili",
+    lead:
+      "Klienci w jednym arkuszu, zamówienia w mailach, ceny w zeszycie? Zbuduję bazę danych i panel, w którym Ty i Twój zespół znajdziecie wszystko w kilka sekund.",
+    directAnswer:
+      "Baza danych przechowuje informacje Twojej firmy w uporządkowany sposób, a panel pozwala je dodawać, wyszukiwać i zmieniać bez znajomości programowania. Najpierw sprawdzę, jakie dane dziś zbierasz i kto z nich korzysta. Potem zaprojektuję strukturę, przeniosę istniejące dane i przygotuję panel z dostępem dla odpowiednich osób.",
+    serviceType: "Projektowanie baz danych i paneli administracyjnych",
+    areas: ["Jarosław", "Rzeszów", "Podkarpackie", "Polska"],
+    idealFor: [
+      "Te same dane wpisujesz w kilku miejscach i łatwo o pomyłkę.",
+      "Szukanie zamówienia, klienta lub produktu zajmuje Ci za dużo czasu.",
+      "Chcesz, żeby pracownicy widzieli tylko te dane, których potrzebują.",
+    ],
+    benefits: [
+      {
+        title: "Jedno źródło danych",
+        description:
+          "Klienci, zamówienia, produkty czy zgłoszenia trafiają do jednej bazy. Nie musisz porównywać kilku arkuszy.",
+      },
+      {
+        title: "Panel do codziennej pracy",
+        description:
+          "Wyszukujesz, filtrujesz i edytujesz dane w przeglądarce. Panel projektuję pod zadania, które wykonujesz najczęściej.",
+      },
+      {
+        title: "Dostęp według ról",
+        description:
+          "Ustalimy, kto może przeglądać, a kto zmieniać dane. Logowanie zabezpieczę, a uprawnienia sprawdzę przed uruchomieniem.",
+      },
+      {
+        title: "Przeniesienie obecnych danych",
+        description:
+          "Zaimportuję Twoje arkusze lub eksporty z innych programów i sprawdzę, czy nic nie zginęło po drodze.",
+      },
+    ],
+    deliverables: [
+      "mapa danych: co przechowujemy, skąd to pochodzi i kto z tego korzysta",
+      "baza danych z kopiami zapasowymi",
+      "panel do przeglądania, wyszukiwania i edycji danych",
+      "role użytkowników i zabezpieczone logowanie",
+      "import danych z arkuszy lub innych systemów",
+      "eksport danych i krótka instrukcja obsługi",
+    ],
+    process: [
+      {
+        title: "Przegląd obecnych danych",
+        description:
+          "Pokażesz mi arkusze, formularze i maile, z których dziś korzystasz. Ustalimy, czego brakuje i co się powtarza.",
+      },
+      {
+        title: "Struktura i panel",
+        description:
+          "Zaprojektuję bazę i ekrany panelu. Zobaczysz je, zanim zacznę programować.",
+      },
+      {
+        title: "Import i testy",
+        description:
+          "Przeniosę dane, a Ty sprawdzisz panel na prawdziwych przykładach ze swojej firmy.",
+      },
+      {
+        title: "Uruchomienie",
+        description:
+          "Uruchomię panel, nadam dostępy Tobie i zespołowi oraz pokażę, jak z niego korzystać.",
+      },
+    ],
+    faq: [
+      {
+        question: "Czy muszę rezygnować z Excela?",
+        answer:
+          "Nie od razu. Panel może eksportować dane do arkusza, a istniejące pliki mogę zaimportować do bazy. Arkusz zostaje narzędziem do analizy, a nie jedynym miejscem przechowywania danych.",
+      },
+      {
+        question: "Gdzie będą przechowywane moje dane?",
+        answer:
+          "Wybierzemy to razem: w chmurze, jeśli panel ma działać z różnych miejsc, albo lokalnie na komputerze, jeśli dane nie mogą opuszczać firmy. Przed startem wyjaśnię koszty utrzymania każdej opcji.",
+      },
+      {
+        question: "Czy panel może łączyć się ze stroną lub sklepem?",
+        answer:
+          "Tak. Zamówienia ze sklepu, zapytania z formularza czy rezerwacje mogą trafiać bezpośrednio do tej samej bazy.",
+      },
+      {
+        question: "Ile kosztuje baza danych z panelem?",
+        answer:
+          "Cena zależy od liczby rodzajów danych, ról użytkowników, importów i integracji. Po rozmowie dostaniesz zakres i dokładną wycenę netto.",
+      },
+      {
+        question: "Czy pracownicy mogą mieć różne uprawnienia?",
+        answer:
+          "Tak. Każda rola widzi tylko potrzebne dane i funkcje, na przykład sprzedawca dodaje zamówienia, a właściciel widzi także raporty i ceny zakupu.",
+      },
+      {
+        question: "Co z kopiami zapasowymi?",
+        answer:
+          "Ustalimy, jak często i gdzie powstają kopie bazy. Przed uruchomieniem sprawdzę, że kopię da się odtworzyć.",
+      },
+      {
+        question: "Czy mogę zacząć od jednego rodzaju danych?",
+        answer:
+          "Tak. Często zaczynamy od jednej listy, na przykład klientów albo zamówień, a kolejne dodajemy, gdy panel sprawdzi się w codziennej pracy.",
+      },
+    ],
+    related: [
+      { href: "/tworzenie-aplikacji-webowych", label: "Aplikacje webowe" },
+      { href: "/programy-na-windows", label: "Programy na Windows" },
+      { href: "/poradniki/arkusz-czy-wlasna-aplikacja", label: "Poradnik: arkusz czy aplikacja?" },
+    ],
+  },
+  {
+    slug: "programy-na-windows",
+    path: "/programy-na-windows",
+    shortName: "Programy na Windows",
+    metaTitle: "Programy na Windows na zamówienie",
+    metaDescription:
+      "Tworzę programy na Windows do konkretnych zadań w firmie: analiza danych, ewidencja, raporty i eksport. C#, .NET i lokalna baza danych.",
+    eyebrow: "Aplikacje na komputer",
+    title: "Program na Windows do konkretnego zadania w Twojej firmie",
+    lead:
+      "Potrzebujesz narzędzia, które działa na komputerze, także bez internetu? Napiszę program na Windows dopasowany do tego, jak pracujesz.",
+    directAnswer:
+      "Program instalujesz na komputerze i uruchamiasz jak każdą inną aplikację. Sprawdza się tam, gdzie dane mają zostać na miejscu, gdzie potrzebna jest praca bez internetu albo połączenie z urządzeniem lub plikami na dysku. Piszę w C# i .NET, z lokalną bazą danych, eksportem do plików i czytelnym interfejsem.",
+    serviceType: "Tworzenie oprogramowania na Windows",
+    areas: ["Jarosław", "Rzeszów", "Podkarpackie", "Polska"],
+    idealFor: [
+      "Dane mają zostać na komputerze w firmie.",
+      "Program ma działać bez stałego dostępu do internetu.",
+      "Potrzebujesz narzędzia do analizy, ewidencji lub raportów zamiast ręcznego liczenia.",
+    ],
+    benefits: [
+      {
+        title: "Praca na miejscu",
+        description:
+          "Program działa na Twoim komputerze. Dane zapisuje w lokalnej bazie, więc nie zależysz od połączenia z internetem.",
+      },
+      {
+        title: "Czytelne zestawienia",
+        description:
+          "Zamiast surowych liczb zobaczysz wykresy, podsumowania i historię zmian, które łatwo porównać.",
+      },
+      {
+        title: "Eksport i kopie",
+        description:
+          "Dane wyeksportujesz do pliku CSV i przeniesiesz do arkusza lub innego programu.",
+      },
+      {
+        title: "Dopasowany do zadania",
+        description:
+          "Program robi to, czego potrzebujesz, bez funkcji, za które nie chcesz płacić.",
+      },
+    ],
+    deliverables: [
+      "opis zadań, które program ma wykonywać",
+      "projekt ekranów przed programowaniem",
+      "program na Windows z lokalną bazą danych",
+      "eksport danych do plików",
+      "instalator i instrukcja obsługi",
+      "poprawki po pierwszych tygodniach używania",
+    ],
+    process: [
+      {
+        title: "Opis zadania",
+        description:
+          "Pokażesz mi, jak dziś wykonujesz zadanie i gdzie tracisz najwięcej czasu.",
+      },
+      {
+        title: "Projekt ekranów",
+        description:
+          "Zaprojektuję ekrany programu. Zatwierdzisz je, zanim zacznę pisać kod.",
+      },
+      {
+        title: "Wersje testowe",
+        description:
+          "Dostaniesz kolejne wersje do sprawdzenia na swoim komputerze i zgłosisz uwagi.",
+      },
+      {
+        title: "Instalacja",
+        description:
+          "Przygotuję instalator, pomogę uruchomić program i pokażę, jak z niego korzystać.",
+      },
+    ],
+    faq: [
+      {
+        question: "Kiedy lepszy jest program na Windows, a kiedy aplikacja w przeglądarce?",
+        answer:
+          "Program na Windows wybierz, gdy dane mają zostać na komputerze, potrzebujesz pracy bez internetu albo dostępu do plików i urządzeń. Aplikacja w przeglądarce sprawdzi się, gdy z danych korzysta kilka osób w różnych miejscach.",
+      },
+      {
+        question: "W jakiej technologii piszesz programy?",
+        answer:
+          "Najczęściej w C# i .NET z interfejsem WPF oraz lokalną bazą SQLite. Dobieram technologię do zadania i komputerów, na których program ma działać.",
+      },
+      {
+        question: "Czy program może łączyć się z internetem?",
+        answer:
+          "Tak, jeśli to potrzebne: może pobierać dane z serwisu, synchronizować je z bazą w chmurze albo wysyłać raporty.",
+      },
+      {
+        question: "Ile kosztuje program na Windows?",
+        answer:
+          "Cena zależy od liczby ekranów, rodzajów danych i połączeń z innymi systemami. Po rozmowie dostaniesz zakres i dokładną wycenę netto.",
+      },
+      {
+        question: "Na jakich komputerach zadziała program?",
+        answer:
+          "Na aktualnych wersjach Windows 10 i 11. Przed startem sprawdzimy komputery, na których program ma działać, i ewentualne wymagania sprzętowe.",
+      },
+      {
+        question: "Jak instalować aktualizacje programu?",
+        answer:
+          "Dostaniesz nową wersję instalatora albo, jeśli to potrzebne, program będzie sam sprawdzał dostępność aktualizacji.",
+      },
+      {
+        question: "Czy mogę przenieść dane z obecnego programu lub arkusza?",
+        answer:
+          "Tak, jeśli dane da się wyeksportować do pliku, na przykład CSV lub Excel. Przed importem sprawdzę ich strukturę i poprawność.",
+      },
+    ],
+    related: [
+      { href: "/bazy-danych-i-panele", label: "Bazy danych i panele" },
+      { href: "/tworzenie-aplikacji-webowych", label: "Aplikacje webowe" },
+      { href: "/poradniki/program-na-windows-czy-aplikacja-webowa", label: "Poradnik: program czy aplikacja webowa?" },
+    ],
+  },
 ];
 
 export function getServicePage(slug: string) {

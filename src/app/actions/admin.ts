@@ -6,6 +6,7 @@ import {
   updateProject,
   deleteProject,
   deleteContactMessage,
+  updateContactMessageStatus,
   updateServicePrice,
   addTestimonial,
   deleteTestimonial,
@@ -29,6 +30,7 @@ import { revalidatePath, updateTag } from "next/cache";
 import { headers } from "next/headers";
 
 import { caseTextFields, caseListFields } from "@/lib/project-case-fields";
+import { messageStatusSchema } from "@/lib/message-status";
 
 async function requireAdmin() {
   if (!(await verifyAdminSession())) {
@@ -149,6 +151,13 @@ export async function deleteProjectAction(id: string) {
 export async function deleteMessageAction(id: string) {
   await requireAdmin();
   await deleteContactMessage(idSchema.parse(id));
+  revalidatePath("/admin");
+  return { success: true };
+}
+
+export async function updateMessageStatusAction(id: string, status: string) {
+  await requireAdmin();
+  await updateContactMessageStatus(idSchema.parse(id), messageStatusSchema.parse(status));
   revalidatePath("/admin");
   return { success: true };
 }

@@ -6,6 +6,8 @@ import "@/components/portfolio/portfolio.css";
 import "@/components/portfolio/premium.css";
 import "@/components/portfolio/hero-scenes.css";
 import "@/components/portfolio/readability.css";
+import "@/components/portfolio/offer.css";
+import "@/components/portfolio/service-page.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavigationScroll from "@/components/NavigationScroll";
 
@@ -34,12 +36,12 @@ const motionBootstrap = `(function(){try{var d=document.documentElement;if(match
 export const metadata: Metadata = {
   metadataBase: new URL("https://emanuelwloch.pl"),
   title: {
-    default: "Emanuel Włoch – Strony internetowe i aplikacje | Jarosław",
+    default: "Emanuel Włoch – strony, sklepy, aplikacje i programy | Jarosław",
     template: "%s | Emanuel Włoch",
   },
   description:
-    "Projektuję szybkie strony internetowe, sklepy i aplikacje webowe dla firm z Jarosławia, Podkarpacia i całej Polski. Od ustalenia celu po projekt, realizację i wdrożenie. Omów swój projekt.",
-  applicationName: "Emanuel Włoch — strony dla firm",
+    "Projektuję i programuję strony internetowe, sklepy, aplikacje z bazą danych i programy na Windows dla firm z Jarosławia, Podkarpacia i całej Polski. Od ustalenia celu po wdrożenie. Omów swój projekt.",
+  applicationName: "Emanuel Włoch — oprogramowanie dla firm",
   category: "technology",
   authors: [{ name: "Emanuel Włoch", url: "https://emanuelwloch.pl" }],
   creator: "Emanuel Włoch",
@@ -53,11 +55,11 @@ export const metadata: Metadata = {
 
   },
   openGraph: {
-    title: "Emanuel Włoch – Strony internetowe i aplikacje | Jarosław",
+    title: "Emanuel Włoch – strony, sklepy, aplikacje i programy | Jarosław",
     description:
-      "Szybkie strony internetowe, sklepy i aplikacje webowe dla firm z Jarosławia, Podkarpacia i całej Polski.",
+      "Strony, sklepy, aplikacje z bazą danych i programy na Windows dla firm z Jarosławia, Podkarpacia i całej Polski.",
     url: "https://emanuelwloch.pl",
-    siteName: "Emanuel Włoch — strony dla firm",
+    siteName: "Emanuel Włoch — strony, aplikacje i programy",
     locale: "pl_PL",
     type: "website",
     images: [
@@ -67,15 +69,15 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/jpeg",
-        alt: "Emanuel Włoch — strony internetowe dla firm",
+        alt: "Emanuel Włoch — strony, aplikacje i programy dla firm",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emanuel Włoch – Strony internetowe i aplikacje",
+    title: "Emanuel Włoch – strony, aplikacje i programy dla firm",
     description:
-      "Szybkie strony internetowe, sklepy i aplikacje webowe dla firm z Jarosławia, Podkarpacia i całej Polski.",
+      "Strony, sklepy, aplikacje z bazą danych i programy na Windows dla firm z Jarosławia, Podkarpacia i całej Polski.",
     images: [SOCIAL_IMAGE_URL],
   },
   robots: {

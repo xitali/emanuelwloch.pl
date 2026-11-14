@@ -2,7 +2,8 @@ import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check, ChevronDown, Clock3 } from "lucide-react";
+import Image from "next/image";
+import { IconArrowUpRight, IconCheck } from "@/components/portfolio/icons";
 import { getGuidePage, guidePages } from "@/lib/guide-pages";
 import { serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
 
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
       url: `${SITE_URL}${guide.path}`,
       type: "article",
       publishedTime: "2026-08-01",
-      modifiedTime: "2026-08-01",
+      modifiedTime: guide.updated,
       authors: ["Emanuel Włoch"],
       images: [{ url: SOCIAL_IMAGE_URL, alt: guide.title }],
     },
@@ -51,7 +52,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         headline: guide.title,
         description: guide.metaDescription,
         datePublished: "2026-08-01",
-        dateModified: "2026-08-01",
+        dateModified: guide.updated,
         inLanguage: "pl-PL",
         author: { "@id": `${SITE_URL}/#emanuel-wloch` },
         publisher: { "@id": `${SITE_URL}/#emanuel-wloch` },
@@ -82,51 +83,55 @@ export default async function GuidePage({ params }: GuidePageProps) {
     ],
   };
 
+  const updated = new Date(`${guide.updated}T12:00:00Z`).toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" });
+
   return (
     <PublicPageShell>
-      <main id="main-content" className="portfolio-subpage">
+      <main id="main-content" className="portfolio-subpage svc-page">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(structuredData) }} />
         <article>
-          <header className="border-b border-[var(--p-border)] bg-[var(--p-surface)] px-4 pb-20 pt-36 text-white sm:px-6 lg:px-8 lg:pb-24 lg:pt-44">
-            <div className="mx-auto max-w-[1120px]">
-              <nav aria-label="Okruszki" className="text-xs text-[var(--p-muted)]"><Link href="/" className="hover:text-[var(--p-accent)]">Strona główna</Link> / <Link href="/poradniki" className="hover:text-[var(--p-accent)]">Poradniki</Link> / <span aria-current="page">{guide.metaTitle}</span></nav>
-              <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--p-accent)]">{guide.eyebrow}</p>
-              <h1 className="mt-5 max-w-5xl text-[clamp(2.8rem,6vw,6rem)] font-medium leading-[0.92] tracking-[-0.055em]">{guide.title}</h1>
-              <p className="mt-7 max-w-3xl text-base leading-8 text-[var(--p-muted)] sm:text-lg">{guide.lead}</p>
-              <div className="mt-7 flex items-center gap-2 text-xs text-[var(--p-muted)]"><Clock3 className="size-3.5" /> Aktualizacja: 1 sierpnia 2026 · autor: <Link href="/o-mnie" rel="author" className="text-[var(--p-accent)] hover:text-[var(--p-accent)]">Emanuel Włoch</Link></div>
+          <header className="svc-hero">
+            <div className="portfolio-container">
+              <nav aria-label="Okruszki" className="svc-crumbs"><ol><li><Link href="/">Strona główna</Link></li><li><Link href="/poradniki">Poradniki</Link></li><li aria-current="page">{guide.metaTitle}</li></ol></nav>
+              <div className="guide-hero-copy">
+                <h1>{guide.title}</h1>
+                <p className="svc-lead">{guide.lead}</p>
+                <p className="guide-byline"><time dateTime={guide.updated}>Aktualizacja: {updated}</time> · autor: <Link href="/o-mnie" rel="author">Emanuel Włoch</Link></p>
+              </div>
             </div>
           </header>
 
-          <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-18" aria-labelledby="answer-heading">
-            <div className="mx-auto max-w-[1120px] rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-7 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:p-9">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Odpowiedź w skrócie</p>
-              <h2 id="answer-heading" className="sr-only">Krótka odpowiedź</h2>
-              <p className="mt-5 text-base leading-8 text-[var(--p-muted)] dark:text-[var(--p-muted)] sm:text-lg">{guide.directAnswer}</p>
+          <section className="svc-answer" aria-labelledby="answer-heading">
+            <div className="portfolio-container svc-answer-grid">
+              <h2 id="answer-heading">W skrócie</h2>
+              <p>{guide.directAnswer}</p>
             </div>
           </section>
 
-          <div className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
-            <div className="mx-auto max-w-[1120px] space-y-16">
-              {guide.sections.map((section, index) => (
-                <section key={section.title} aria-labelledby={`guide-section-${index}`} className="grid gap-8 border-t border-[var(--p-border)] pt-12 dark:border-[var(--p-border)] lg:grid-cols-[0.38fr_0.62fr] lg:gap-16">
-                  <div><p className="font-mono text-[10px] text-[var(--p-accent)] dark:text-[var(--p-accent)]">0{index + 1}</p><h2 id={`guide-section-${index}`} className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{section.title}</h2></div>
-                  <div className="space-y-5 text-base leading-8 text-[var(--p-muted)] dark:text-[var(--p-muted)]">
-                    {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                    {section.points && <ul className="mt-7 grid gap-3 sm:grid-cols-2">{section.points.map((point) => <li key={point} className="flex items-start gap-3 rounded-[var(--p-radius)] border border-[var(--p-border)] bg-[var(--p-surface)] p-4 text-sm leading-6 text-[var(--p-muted)] dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] dark:text-[var(--p-muted)]"><Check className="mt-0.5 size-4 shrink-0 text-[var(--p-accent)] dark:text-[var(--p-accent)]" /> {point}</li>)}</ul>}
-                  </div>
-                </section>
-              ))}
-            </div>
+          <div className="svc-section portfolio-container guide-body">
+            {guide.sections.map((section, index) => (
+              <section key={section.title} aria-labelledby={`guide-section-${index}`} className="guide-section">
+                <h2 id={`guide-section-${index}`}>{section.title}</h2>
+                <div>
+                  {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  {section.points && <ul className="svc-checklist">{section.points.map((point) => <li key={point}><IconCheck size={18} /><span>{point}</span></li>)}</ul>}
+                </div>
+              </section>
+            ))}
           </div>
 
-          <section className="border-y border-[var(--p-border)] bg-[var(--p-surface)] px-4 py-20 dark:border-[var(--p-border)] dark:bg-[var(--p-surface)] sm:px-6 lg:px-8" aria-labelledby="guide-faq">
-            <div className="mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-[0.45fr_0.55fr] lg:gap-16">
-              <div><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)] dark:text-[var(--p-accent)]">Dalsze pytania</p><h2 id="guide-faq" className="mt-4 text-4xl font-semibold tracking-[-0.045em]">Najczęstsze odpowiedzi</h2></div>
-              <div className="divide-y divide-slate-200 overflow-hidden rounded-[var(--p-radius)] border border-[var(--p-border)] dark:divide-white/9 dark:border-[var(--p-border)]">{guide.faq.map((item) => <details key={item.question} className="group"><summary className="flex cursor-pointer list-none items-center gap-4 p-5 font-semibold"><span className="flex-1">{item.question}</span><ChevronDown className="size-4 transition-transform group-open:rotate-180" /></summary><p className="px-5 pb-6 text-sm leading-7 text-[var(--p-muted)] dark:text-[var(--p-muted)]">{item.answer}</p></details>)}</div>
-            </div>
+          <section className="svc-section svc-faq portfolio-container" aria-labelledby="guide-faq">
+            <header className="svc-heading"><h2 id="guide-faq">Najczęstsze pytania</h2></header>
+            <div className="svc-faq-list">{guide.faq.map((item) => <details key={item.question}><summary><h3>{item.question}</h3><span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div>
           </section>
 
-          <section className="px-4 py-20 sm:px-6 lg:px-8"><div className="mx-auto max-w-[1120px] rounded-[var(--p-radius)] bg-[var(--p-surface)] p-8 text-white sm:p-10"><p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--p-accent)]">Czytaj dalej</p><div className="mt-5 flex flex-wrap gap-3">{guide.related.map((item) => <Link key={item.href} href={item.href} className="portfolio-button portfolio-button--secondary">{item.label} <ArrowRight className="size-3.5" /></Link>)}</div></div></section>
+          <section className="svc-close portfolio-container" aria-labelledby="close-heading">
+            <div className="svc-close-card">
+              <Image src="/emanuel_wloch.jpg" alt="" width={88} height={88} className="svc-close-photo" />
+              <div><h2 id="close-heading">Masz pytanie o swój projekt?</h2><p>Napisz kilka zdań — odpowiem osobiście.</p><nav aria-label="Czytaj dalej" className="svc-related">{guide.related.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</nav></div>
+              <Link href="/#kontakt" className="portfolio-button">Napisz do mnie <IconArrowUpRight size={17} /></Link>
+            </div>
+          </section>
         </article>
       </main>
     </PublicPageShell>
