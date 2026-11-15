@@ -195,3 +195,9 @@
  .admin-upload-row { flex-wrap:wrap; }
  .admin-upload-row > input { flex:1 1 100%; }
 }
+.admin-message > p.admin-delivery { margin-top:12px;font-size:13px;color:var(--p-muted); }
+.admin-delivery::before { content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:#a7a8a6;vertical-align:1px; }
+.admin-delivery--ok::before { background:#7fc99a; }
+.admin-delivery--bad { color:#f0b4a0 !important; }
+.admin-delivery--bad::before { background:#e08a5b; }
+.admin-review-note { font-size:13px;color:var(--p-muted); }

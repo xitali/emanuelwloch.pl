@@ -244,6 +244,7 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
       message: String(row.message),
       status: String(row.status || 'unread'),
       created_at: String(row.created_at || ''),
+      review_requested_at: row.review_requested_at ? String(row.review_requested_at) : undefined,
     }));
   } catch (err) {
     console.error("Error fetching contact messages:", err);

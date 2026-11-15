@@ -9,9 +9,11 @@ import "@/components/portfolio/readability.css";
 import "@/components/portfolio/offer.css";
 import "@/components/portfolio/service-page.css";
 import "@/components/world/world.css";
+import "@/components/palette/palettes.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavigationScroll from "@/components/NavigationScroll";
 import Morph from "@/components/motion/Morph";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +29,7 @@ const displayFont = Bricolage_Grotesque({ variable: "--font-display", subsets: [
 const serifFont = Instrument_Serif({ variable: "--font-serif", weight: "400", style: "italic", subsets: ["latin", "latin-ext"], display: "swap" });
 
 export const viewport: Viewport = {
-  themeColor: "#0b0d0f",
+  themeColor: "#0c0d0e",
   colorScheme: "dark",
 };
 

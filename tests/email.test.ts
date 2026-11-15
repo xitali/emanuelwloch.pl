@@ -11,7 +11,8 @@ async function setup(configured = true) {
   state.db = createClient({ url: "file::memory:" });
   await state.db.executeMultiple(await readFile("migrations/000_baseline.sql", "utf8"));
   await state.db.executeMultiple(await readFile("migrations/007_email_outbox.sql", "utf8"));
-  await state.db.execute("INSERT INTO contact_messages (id,name,email,subject,message) VALUES ('test','Jan','test@example.com','Projekt','Treść zapytania')");
+  await state.db.executeMultiple(await readFile("migrations/011_email_delivery.sql", "utf8"));
+  await state.db.execute("INSERT INTO contact_messages (id,name,email,subject,message) VALUES ('test','Jan <b>Kowalski</b>','test@example.com','Projekt','Treść zapytania\n<script>alert(1)</script>')");
   await state.db.execute("INSERT INTO email_outbox (message_id,created_at) VALUES ('test','2026-11-02')");
   for (const key of ["RESEND_API_KEY", "EMAIL_FROM", "LEAD_NOTIFY_TO"]) vi.stubEnv(key, configured ? "test@example.com" : "");
   vi.stubGlobal("fetch", state.send);
@@ -37,5 +38,29 @@ describe("kolejka powiadomień", () => {
     expect(state.send.mock.calls[2][1].headers["Idempotency-Key"]).toBe("lead/test/sender");
     expect((await state.db!.execute("SELECT sender_sent FROM email_outbox")).rows[0].sender_sent).toBe(1);
     log.mockRestore();
+  });
+  it("wysyła maile HTML oznaczone zapytaniem i zapisuje je jako wysłane", async () => {
+    await setup();
+    state.send.mockResolvedValueOnce({ ok: true, json: async () => ({ id: "re_owner" }) }).mockResolvedValueOnce({ ok: true, json: async () => ({ id: "re_sender" }) });
+    await deliverLeadEmails();
+    const [owner, sender] = state.send.mock.calls.map(call => JSON.parse(call[1].body));
+    expect(owner.tags).toEqual([{ name: "message_id", value: "test" }, { name: "kind", value: "owner" }]);
+    expect(sender.tags).toEqual([{ name: "message_id", value: "test" }, { name: "kind", value: "sender" }]);
+    expect(owner.html).toContain("Treść zapytania");
+    expect(owner.text).toContain("Treść zapytania");
+    const rows = (await state.db!.execute("SELECT resend_id, kind, status FROM email_deliveries ORDER BY kind")).rows;
+    expect(rows.map(r => [r.resend_id, r.kind, r.status])).toEqual([["re_owner", "owner", "sent"], ["re_sender", "sender", "sent"]]);
+  });
+
+  it("treść z formularza nie wstrzykuje HTML do maili", async () => {
+    await setup();
+    state.send.mockResolvedValue({ ok: true, json: async () => ({ id: "re_x" }) });
+    await deliverLeadEmails();
+    for (const call of state.send.mock.calls) {
+      const { html } = JSON.parse(call[1].body);
+      expect(html).not.toContain("<script>");
+      expect(html).not.toContain("<b>Kowalski</b>");
+    }
+    expect(JSON.parse(state.send.mock.calls[0][1].body).html).toContain("&lt;script&gt;");
   });
 });

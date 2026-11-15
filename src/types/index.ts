@@ -80,6 +80,10 @@ export interface ContactMessage {
   message: string;
   status?: string;
   created_at?: string;
+  /** When the 7-day review request was scheduled in Resend. */
+  review_requested_at?: string;
+  /** Latest Resend delivery status of the owner notification and the client's confirmation. */
+  delivery?: { owner?: string; sender?: string };
 }
 
 export interface PushSubscriptionRecord {

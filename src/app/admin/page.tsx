@@ -4,6 +4,7 @@ import AdminAppManager from "@/components/AdminAppManager";
 import AdminDashboard, { type AdminTab } from "@/components/admin/AdminDashboard";
 import { verifyAdminSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { deliveriesFor } from "@/lib/email-deliveries";
 import { getContactMessages, getPageVisitsCount, getAdminProjects, getServices, getTestimonials, getPageVisitsStats } from "@/lib/turso";
 
 export const revalidate = 0; // Dynamic route for admin panel
@@ -24,7 +25,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   }
   const params = await searchParams;
 
-  const [messages, visitsCount, projects, services, testimonials, analytics] = await Promise.all([
+  const [rawMessages, visitsCount, projects, services, testimonials, analytics] = await Promise.all([
     getContactMessages(),
     getPageVisitsCount(),
     getAdminProjects(),
@@ -32,6 +33,10 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     getTestimonials(),
     getPageVisitsStats(),
   ]);
+
+  // Delivery status from Resend webhooks; the table may not exist before migration 011.
+  const deliveries = await deliveriesFor(rawMessages.map(m => m.id)).catch(() => ({} as Awaited<ReturnType<typeof deliveriesFor>>));
+  const messages = rawMessages.map(m => ({ ...m, delivery: deliveries[m.id] }));
 
   // Push notifications open a message with ?tab=messages&message=<id>.
   const initialTab = TABS.find(tab => tab === params.tab) ?? (params.message ? "messages" : "overview");

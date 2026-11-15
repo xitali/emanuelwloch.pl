@@ -31,6 +31,9 @@ import { headers } from "next/headers";
 
 import { caseTextFields, caseListFields } from "@/lib/project-case-fields";
 import { messageStatusSchema } from "@/lib/message-status";
+import { after } from "next/server";
+import { messageStatusChanged, requestReview } from "@/lib/lead-automation";
+import { leadAnsweredEvent } from "@/lib/email";
 
 async function requireAdmin() {
   if (!(await verifyAdminSession())) {
@@ -150,16 +153,29 @@ export async function deleteProjectAction(id: string) {
 
 export async function deleteMessageAction(id: string) {
   await requireAdmin();
-  await deleteContactMessage(idSchema.parse(id));
+  const messageId = idSchema.parse(id);
+  await deleteContactMessage(messageId);
+  after(() => leadAnsweredEvent(messageId));
   revalidatePath("/admin");
   return { success: true };
 }
 
 export async function updateMessageStatusAction(id: string, status: string) {
   await requireAdmin();
-  await updateContactMessageStatus(idSchema.parse(id), messageStatusSchema.parse(status));
+  const messageId = idSchema.parse(id);
+  const nextStatus = messageStatusSchema.parse(status);
+  await updateContactMessageStatus(messageId, nextStatus);
+  after(() => messageStatusChanged(messageId, nextStatus));
   revalidatePath("/admin");
   return { success: true };
+}
+
+/** Schedules the Resend automation that asks the client for a review 7 days from now. */
+export async function requestReviewAction(id: string) {
+  await requireAdmin();
+  const result = await requestReview(idSchema.parse(id));
+  if (result.success) revalidatePath("/admin");
+  return result;
 }
 
 export async function updateServicePriceAction(id: string, priceFrom: number) {
