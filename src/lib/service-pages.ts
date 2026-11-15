@@ -416,7 +416,7 @@ export const servicePages: ServicePageData[] = [
       "aplikacja Next.js z TypeScript",
       "Server Components i Route Handlers",
       "integracja bazy danych oraz walidacji",
-      "optymalizacja Wygodne korzystanie na telefonie",
+      "optymalizacja Core Web Vitals (szybkość i stabilność na telefonie)",
       "testy, CI i wdrożenie produkcyjne",
     ],
     process: [
@@ -463,7 +463,7 @@ export const servicePages: ServicePageData[] = [
           "Tak. Next.js wspiera renderowanie serwerowe, statyczne strony, metadane, sitemapę i dane strukturalne. O wyniku SEO nadal decydują także treść, intencja, linki i konkurencja.",
       },
       {
-        question: "Czy optymalizujesz Wygodne korzystanie na telefonie?",
+        question: "Czy optymalizujesz Core Web Vitals?",
         answer:
           "Tak. Analizuję obrazy, fonty, JavaScript, stabilność layoutu, sposób renderowania oraz rzeczywiste wąskie gardła zamiast optymalizować wynik bez kontekstu.",
       },
@@ -605,7 +605,7 @@ export const servicePages: ServicePageData[] = [
     shortName: "Strony internetowe Rzeszów",
     metaTitle: "Tworzenie stron internetowych Rzeszów",
     metaDescription:
-      "Tworzenie stron internetowych dla firm z Rzeszowa. Responsywność, SEO techniczne, Wygodne korzystanie na telefonie, formularze i wdrożenie.",
+      "Tworzenie stron internetowych dla firm z Rzeszowa. Wygodna na telefonie, z SEO technicznym, formularzem kontaktowym i wdrożeniem.",
     eyebrow: "Rzeszów i Podkarpacie",
     title: "Tworzenie stron internetowych dla firm z Rzeszowa",
     lead:

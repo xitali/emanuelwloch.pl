@@ -30,3 +30,7 @@ export const easeOut = (v: number) => 1 - Math.pow(1 - clamp01(v), 4);
 export const easeIn = (v: number) => Math.pow(clamp01(v), 3);
 /** 0→1 over [start, start + length]. */
 export const span = (t: number, start: number, length: number) => clamp01((t - start) / length);
+
+/** One reel per service path (index into servicePaths). Kept here, not in the client file, so the server page can read it. */
+export const REELS = { site: 0, shop: 1, app: 2, data: 3, program: 4 } as const;
+export type ReelId = keyof typeof REELS;

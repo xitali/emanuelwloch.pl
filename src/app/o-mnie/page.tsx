@@ -9,9 +9,9 @@ import { getProjects } from "@/lib/turso";
 const USEME_URL = "https://useme.com/pl/roles/contractor/emanuel-wloch%2C525723/";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "O mnie — Emanuel Włoch, strony, aplikacje i programy dla firm",
+  title: "O mnie — wykonawca stron, aplikacji i programów",
   description: "Poznaj wykonawcę swojego projektu. Emanuel Włoch z Jarosławia projektuje i programuje strony, sklepy, aplikacje z bazą danych i programy na Windows.",
-  path: "/o-mnie", image: "/emanuel_wloch.jpg", type: "profile",
+  path: "/o-mnie", image: "/og/o-mnie.jpg", type: "profile",
 });
 
 const areas = [

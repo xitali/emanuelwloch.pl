@@ -10,6 +10,7 @@ export const metadata: Metadata = createPageMetadata({
   title: "Poradniki o stronach, aplikacjach i bazach danych",
   description: "Konkretne odpowiedzi o kosztach, terminach i wyborze rozwiązania: strona, aplikacja webowa, baza danych czy program na Windows.",
   path: "/poradniki",
+  image: "/og/poradniki.jpg",
 });
 
 export default function GuidesPage() {

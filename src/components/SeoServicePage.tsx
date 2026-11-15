@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { ServicePageData } from "@/lib/service-pages";
-import { getProjectPath, serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
+import { getProjectPath, serializeJsonLd, serviceOgImage, SITE_URL } from "@/lib/seo";
 import { relatedProjectsFor, serviceShowcase } from "@/lib/service-showcase";
 import { projectLabel } from "@/lib/project-labels";
 import { projectMockup } from "@/lib/project-mockups";
@@ -25,13 +25,13 @@ export function createServiceMetadata(data: ServicePageData): Metadata {
       siteName: "Emanuel Włoch — strony, aplikacje i programy",
       locale: "pl_PL",
       type: "website",
-      images: [{ url: SOCIAL_IMAGE_URL, width: 1200, height: 630, alt: `${data.shortName} — Emanuel Włoch` }],
+      images: [{ url: serviceOgImage(data.slug), width: 1200, height: 630, alt: `${data.shortName} — Emanuel Włoch` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${data.metaTitle} | Emanuel Włoch`,
       description: data.metaDescription,
-      images: [SOCIAL_IMAGE_URL],
+      images: [serviceOgImage(data.slug)],
     },
   };
 }

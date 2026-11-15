@@ -40,10 +40,10 @@ const heroProgress = { current: 0 };
 const offerProgress = { current: 0.4 };
 const officeProgress = { current: 0 };
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /** Applies the scene's framing to whatever camera the scene made default. */
-function Framing({ frame }: { frame: Frame }) {
+export function Framing({ frame }: { frame: Frame }) {
   useFrame(state => {
     const camera = state.camera as PerspectiveCamera;
     const { width, height } = state.size;
@@ -54,14 +54,14 @@ function Framing({ frame }: { frame: Frame }) {
   return null;
 }
 
-function Driver() {
+export function Driver() {
   const advance = useThree(state => state.advance);
   useEffect(() => { window.__filmAdvance = (t: number) => advance(t); }, [advance]);
   return null;
 }
 
 /** Mounts only once its Suspense boundary resolved: the scene's textures are in. */
-function Mark({ id }: { id: SceneId }) {
+export function Mark({ id }: { id: SceneId }) {
   useEffect(() => {
     window.__filmMounted = id;
     return () => { if (window.__filmMounted === id) window.__filmMounted = null; };
@@ -70,7 +70,7 @@ function Mark({ id }: { id: SceneId }) {
 }
 
 /** A line that rises out of a mask, and leaves upward before the cut. */
-function Line({ t, at, out, children, style, length = 0.75 }: { t: number; at: number; out?: number; children: ReactNode; style?: CSSProperties; length?: number }) {
+export function Line({ t, at, out, children, style, length = 0.75 }: { t: number; at: number; out?: number; children: ReactNode; style?: CSSProperties; length?: number }) {
   const enter = easeOut(span(t, at, length));
   const leave = out === undefined ? 0 : easeIn(span(t, out - 0.3, 0.3));
   return <div style={{ overflow: "hidden", paddingBottom: "0.16em", marginBottom: "-0.16em" }}>
@@ -78,7 +78,7 @@ function Line({ t, at, out, children, style, length = 0.75 }: { t: number; at: n
   </div>;
 }
 
-function Arrow({ size }: { size: number }) {
+export function Arrow({ size }: { size: number }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17L17 7" /><path d="M8.5 7H17v8.5" /></svg>;
 }
 

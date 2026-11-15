@@ -209,6 +209,93 @@ export const guidePages: GuidePageData[] = [
     ],
     updated: "2026-11-14",
   },
+  {
+    slug: "ile-kosztuje-sklep-internetowy-2026",
+    path: "/poradniki/ile-kosztuje-sklep-internetowy-2026",
+    metaTitle: "Ile kosztuje sklep internetowy w 2026 roku?",
+    metaDescription: "Od czego zależy cena sklepu internetowego: katalog, koszyk, płatności, dostawa i panel zamówień. Co obejmuje wycena i jakie są koszty po starcie.",
+    eyebrow: "Sklep bez ukrytych kosztów",
+    title: "Ile kosztuje sklep internetowy w 2026 roku?",
+    lead: "Cena sklepu wynika z tego, ile produktów sprzedajesz, jak klient płaci i odbiera zamówienie oraz jak chcesz obsługiwać zamówienia na co dzień.",
+    directAnswer: "Prosty sklep z katalogiem produktów, koszykiem i panelem zamówień zaczyna się w moim kalkulatorze od 1800 zł netto. To punkt startowy dla niewielkiego katalogu i jednej, prostej ścieżki zakupu. Więcej kosztują między innymi integracje z hurtownią lub programem magazynowym, warianty produktów, kilka metod dostawy z różnymi zasadami, rabaty i import dużej liczby produktów.",
+    sections: [
+      {
+        title: "Co składa się na sklep internetowy?",
+        paragraphs: ["Klient widzi katalog, kartę produktu, koszyk i formularz zamówienia. Ty pracujesz w panelu: dodajesz produkty, zmieniasz ceny i stany, sprawdzasz zamówienia i odpowiadasz klientom.", "Obie strony są równie ważne. Ładny katalog nie pomoże, jeśli obsługa zamówień zajmuje Ci więcej czasu niż wcześniej."],
+        points: ["katalog z wyszukiwaniem i filtrami", "karta produktu ze zdjęciami, opisem i wariantami", "koszyk i zamówienie bez zbędnych kroków", "płatności online i wybrane metody dostawy", "panel produktów, zamówień i klientów", "wiadomości do klienta po złożeniu zamówienia"],
+      },
+      {
+        title: "Co najbardziej wpływa na cenę?",
+        paragraphs: ["Najwięcej pracy zwykle nie wymaga sam wygląd, tylko zasady: jak liczy się koszt dostawy, kiedy produkt jest niedostępny, jak działają rabaty i skąd biorą się dane o produktach.", "Dlatego przed wyceną pytam o liczbę produktów, warianty (rozmiary, kolory, gramatury), metody płatności i dostawy oraz to, czy dane mają przychodzić z innego systemu."],
+        points: ["liczba produktów i wariantów", "import produktów z pliku lub z hurtowni", "integracje z płatnościami, kurierem lub programem magazynowym", "rabaty, kody promocyjne i ceny dla firm", "kilka języków lub walut", "przeniesienie danych i adresów ze starego sklepu"],
+      },
+      {
+        title: "Koszty po uruchomieniu",
+        paragraphs: ["Poza jednorazowym wykonaniem sklep ma koszty stałe: domenę, hosting z bazą danych, pocztę oraz prowizje operatora płatności i firm kurierskich. Ich wysokość zależy od wybranych usług i liczby zamówień, dlatego przed startem rozpisuję, które koszty są jednorazowe, a które miesięczne.", "Warto też zaplanować czas na pierwsze tygodnie: poprawki po pierwszych zamówieniach i drobne zmiany, które wychodzą dopiero przy prawdziwym ruchu."],
+      },
+      {
+        title: "Jak zacząć taniej?",
+        paragraphs: ["Najrozsądniej jest uruchomić sklep z tym, co naprawdę sprzedajesz najczęściej, i z jedną lub dwiema metodami płatności i dostawy. Kolejne funkcje dodasz, gdy zobaczysz, czego potrzebują klienci.", "Dobrze zaprojektowana pierwsza wersja nie wymaga przebudowy przy rozwoju. Integracje, rabaty czy nowe kategorie można dołożyć później."],
+      },
+    ],
+    faq: [
+      { question: "Czy 1800 zł netto to cena końcowa każdego sklepu?", answer: "Nie. To punkt startowy najprostszego zakresu w kalkulatorze. Dokładną cenę dostaniesz po ustaleniu liczby produktów, płatności, dostaw i integracji." },
+      { question: "Czy mogę sam dodawać produkty?", answer: "Tak. Sklep ma panel, w którym dodajesz i edytujesz produkty, ceny, stany i zdjęcia bez pisania do programisty." },
+      { question: "Jakie płatności można podłączyć?", answer: "Popularne bramki płatności online, BLIK, przelew tradycyjny i płatność przy odbiorze. Wybór zależy od Twoich klientów i kosztów prowizji, dlatego ustalamy go razem." },
+      { question: "Czy przeniesiesz produkty ze starego sklepu?", answer: "Tak, jeśli da się je wyeksportować (np. do pliku CSV). Przeniesienie danych i przekierowanie starych adresów wyceniam osobno, bo zależy od ich jakości i liczby." },
+      { question: "Czy sklep będzie działał na telefonie?", answer: "Tak. Katalog, koszyk i zamówienie projektuję najpierw z myślą o telefonie, bo tam klienci najczęściej przeglądają produkty." },
+      { question: "Ile trwa zrobienie sklepu?", answer: "Termin zależy głównie od gotowości zdjęć i opisów produktów oraz od liczby integracji. Dokładny harmonogram dostaniesz razem z wyceną." },
+    ],
+    related: [
+      { href: "/sklepy-internetowe", label: "Sklepy internetowe" },
+      { href: "/poradniki/jak-przygotowac-sie-do-wyceny", label: "Jak przygotować się do wyceny?" },
+      { href: "/#kontakt", label: "Poproś o wycenę sklepu" },
+    ],
+    updated: "2026-11-15",
+  },
+  {
+    slug: "jak-przygotowac-sie-do-wyceny",
+    path: "/poradniki/jak-przygotowac-sie-do-wyceny",
+    metaTitle: "Jak przygotować się do wyceny strony lub aplikacji?",
+    metaDescription: "Siedem rzeczy, które warto napisać w pierwszej wiadomości, żeby szybko dostać konkretną wycenę strony, sklepu, aplikacji lub programu.",
+    eyebrow: "Pierwsza wiadomość",
+    title: "Jak przygotować się do wyceny strony lub aplikacji?",
+    lead: "Nie musisz znać technologii ani pisać specyfikacji. Wystarczy kilka konkretnych zdań o Twojej firmie i o tym, co chcesz usprawnić.",
+    directAnswer: "Do pierwszej wyceny wystarczy: czym zajmuje się firma, kto ma korzystać z projektu, co ma się dzięki niemu zmienić, jakie funkcje są niezbędne na start, jakie materiały już masz, jaki jest termin i orientacyjny budżet. Resztę ustalimy w krótkiej rozmowie, a potem dostaniesz zakres, cenę i harmonogram.",
+    sections: [
+      {
+        title: "Co napisać w pierwszej wiadomości?",
+        paragraphs: ["Najwięcej daje opis problemu, a nie gotowe rozwiązanie. Zdanie „klienci dzwonią z tymi samymi pytaniami” mówi więcej niż „potrzebuję strony z pięcioma podstronami”."],
+        points: ["czym zajmuje się Twoja firma i dla kogo pracujesz", "co ma się zmienić po uruchomieniu (więcej zapytań, mniej telefonów, porządek w danych)", "kto będzie korzystał: klienci, pracownicy, tylko Ty", "funkcje niezbędne na start, a które mogą poczekać", "materiały, które już są: teksty, zdjęcia, logo, arkusze z danymi", "termin, na który projekt jest potrzebny", "orientacyjny budżet, nawet przedziałem"],
+      },
+      {
+        title: "Dlaczego warto podać budżet?",
+        paragraphs: ["Ten sam cel można osiągnąć na kilka sposobów. Znając budżet, mogę zaproponować wersję, która mieści się w kwocie, i powiedzieć wprost, co zostawić na później. Bez niego obie strony zgadują.", "Podanie budżetu nie oznacza, że wycena go „wypełni”. Jeśli zakres da się zrobić taniej, dostaniesz niższą cenę."],
+      },
+      {
+        title: "Co będzie po wysłaniu wiadomości?",
+        paragraphs: ["Najpierw krótka rozmowa, w której dopytam o szczegóły. Potem dostaniesz propozycję zakresu, cenę i termin. Decyzję podejmujesz dopiero wtedy, a do tego momentu nie płacisz za nic.", "Jeśli lepszym rozwiązaniem okaże się coś innego niż to, o co pytasz, na przykład arkusz zamiast aplikacji, powiem Ci o tym."],
+      },
+      {
+        title: "Przykład dobrej pierwszej wiadomości",
+        paragraphs: ["„Prowadzę warsztat samochodowy w Jarosławiu. Klienci dzwonią, żeby zapytać o wolne terminy, a grafik mamy w zeszycie. Chciałbym, żeby mogli sami zarezerwować wizytę, a my widzieli grafik w telefonie. Na start wystarczy rezerwacja i lista wizyt. Logo i zdjęcia mam. Zależy mi na wiośnie, budżet do kilku tysięcy złotych.”", "Taka wiadomość wystarczy, żeby przygotować sensowną propozycję albo zadać dwa, trzy precyzyjne pytania."],
+      },
+    ],
+    faq: [
+      { question: "Czy muszę wiedzieć, czy potrzebuję strony, czy aplikacji?", answer: "Nie. Opisz problem, a ja zaproponuję rozwiązanie: stronę, sklep, aplikację webową, bazę danych z panelem albo program na Windows." },
+      { question: "Czy wycena jest płatna?", answer: "Nie. Rozmowa i propozycja zakresu z ceną są bezpłatne i do niczego nie zobowiązują." },
+      { question: "Co, jeśli nie mam tekstów ani zdjęć?", answer: "To częsta sytuacja. Pomogę ustalić, czego potrzeba, i uwzględnię przygotowanie treści w zakresie albo wskażę, co przygotować samodzielnie." },
+      { question: "Czy wycenisz projekt na podstawie przykładu innej strony?", answer: "Tak, przykład bardzo pomaga. Napisz, co Ci się w nim podoba i czego potrzebujesz inaczej, bo dwie podobnie wyglądające strony mogą mieć zupełnie inny zakres." },
+      { question: "Czy po wycenie mogę zmienić zakres?", answer: "Tak. Wycena opisuje zakres, więc łatwo zobaczyć, co się zmienia. Przed zmianą ceny lub terminu zawsze dostaniesz informację, ile to kosztuje i jak wpływa na termin." },
+      { question: "Jak szybko dostanę odpowiedź?", answer: "Odpowiadam osobiście, na adres podany w formularzu. Zaraz po wysłaniu dostaniesz mail z potwierdzeniem, że wiadomość dotarła." },
+    ],
+    related: [
+      { href: "/uslugi", label: "Czego potrzebuje Twoja firma?" },
+      { href: "/poradniki/ile-kosztuje-strona-internetowa-2026", label: "Ile kosztuje strona?" },
+      { href: "/#kontakt", label: "Napisz wiadomość" },
+    ],
+    updated: "2026-11-15",
+  },
 ];
 
 export function getGuidePage(slug: string) {
