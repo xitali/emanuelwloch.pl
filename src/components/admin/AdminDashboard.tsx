@@ -8,13 +8,14 @@ import { isOpenMessage } from "@/lib/message-status";
 import type { ContactMessage, Project, Service, Testimonial } from "@/types";
 import { AdminProvider, useAdmin } from "./AdminContext";
 import AnalyticsView from "./AnalyticsView";
+import ContractsView from "./ContractsView";
 import MessagesView from "./MessagesView";
 import OverviewView from "./OverviewView";
 import ProjectsView from "./ProjectsView";
 import ServicesView from "./ServicesView";
 import TestimonialsView from "./TestimonialsView";
 
-export type AdminTab = "overview" | "messages" | "projects" | "services" | "testimonials" | "analytics";
+export type AdminTab = "overview" | "messages" | "projects" | "services" | "testimonials" | "analytics" | "contracts";
 
 export interface AdminDashboardProps {
   messages: ContactMessage[];
@@ -46,6 +47,8 @@ function Dashboard({ messages, visitsCount, projects, services, testimonials, an
     { id: "services", label: "Ceny usług" },
     { id: "testimonials", label: "Opinie", count: testimonials.length },
     { id: "analytics", label: "Ruch" },
+    // Owner tool only: contract template with the 2026 limits.
+    ...(demo ? [] : [{ id: "contracts" as const, label: "Umowy" }]),
   ];
   const openTab = (next: AdminTab, messageId?: string) => { setTab(next); setFocusId(messageId); };
 
@@ -74,6 +77,7 @@ function Dashboard({ messages, visitsCount, projects, services, testimonials, an
     {tab === "services" && <ServicesView services={services} />}
     {tab === "testimonials" && <TestimonialsView testimonials={testimonials} />}
     {tab === "analytics" && <AnalyticsView analytics={analytics} total={visitsCount} />}
+    {tab === "contracts" && !demo && <ContractsView />}
   </main>;
 }
 

@@ -9,7 +9,7 @@ import { getContactMessages, getPageVisitsCount, getAdminProjects, getServices, 
 
 export const revalidate = 0; // Dynamic route for admin panel
 
-const TABS: AdminTab[] = ["overview", "messages", "projects", "services", "testimonials", "analytics"];
+const TABS: AdminTab[] = ["overview", "messages", "projects", "services", "testimonials", "analytics", "contracts"];
 
 interface AdminPageProps {
   searchParams: Promise<{
