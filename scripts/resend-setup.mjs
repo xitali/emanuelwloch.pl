@@ -82,8 +82,15 @@ const automations = [
 const existing = (await api("GET", "/automations")).data ?? [];
 for (const automation of automations) {
   const found = existing.find(a => a.name === automation.name);
-  if (found) await api("PATCH", `/automations/${found.id}`, { ...automation, status: "enabled" });
-  else await api("POST", "/automations", { ...automation, status: "enabled" });
+  if (found) {
+    // A live automation can't be edited: switch it off, update, switch it back on.
+    try { await api("PATCH", `/automations/${found.id}`, { ...automation, status: "enabled" }); }
+    catch {
+      await api("PATCH", `/automations/${found.id}`, { status: "disabled" });
+      await api("PATCH", `/automations/${found.id}`, { ...automation, status: "disabled" });
+      await api("PATCH", `/automations/${found.id}`, { status: "enabled" });
+    }
+  } else await api("POST", "/automations", { ...automation, status: "enabled" });
   ok(`${automation.name} (włączona)`);
 }
 
