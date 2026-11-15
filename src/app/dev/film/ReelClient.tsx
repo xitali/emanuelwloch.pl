@@ -19,6 +19,8 @@ const DISPLAY = "var(--font-display), var(--font-geist-sans), sans-serif";
 const SERIF = "var(--font-serif), Georgia, serif";
 const SANS = "var(--font-geist-sans), system-ui, sans-serif";
 const progress = { current: 0.4 };
+const WARMUP = 5;
+const clock = { warmed: false, time: WARMUP };
 
 export default function ReelClient({ reel }: { reel: ReelId }) {
   const index = REELS[reel];
@@ -36,7 +38,16 @@ export default function ReelClient({ reel }: { reel: ReelId }) {
         setT(next);
         await wait(40);
         for (let i = 0; i < 600 && window.__filmMounted !== "offer"; i++) await wait(25);
-        window.__filmAdvance?.(next);
+        // Warm-up: let the camera and devices settle for 5 simulated seconds before frame 0,
+        // so every reel opens on a framed desk instead of mid-dolly.
+        if (!clock.warmed) {
+          for (let k = 1; k <= WARMUP * FPS; k++) window.__filmAdvance?.(k / FPS);
+          clock.warmed = true;
+        }
+        // The 3D clock only moves forward, one frame per capture (the cover frame is captured
+        // first, out of order, and must not run the scene backwards).
+        clock.time += 1 / FPS;
+        window.__filmAdvance?.(clock.time);
         await wait(8);
       },
     };
