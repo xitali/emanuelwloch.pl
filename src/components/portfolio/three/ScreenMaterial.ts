@@ -17,6 +17,8 @@ export const ScreenMaterialImpl = shaderMaterial(
     uOffsetB: new Vector2(0, 0),
     uMix: 0,
     uPower: 1,
+    /** 0 shows the top of the page, 1 the lowest part that fits; animating it scrolls the page. */
+    uScroll: 0,
     uAccent: new Color("#acd1e8"),
   },
   /* glsl */ `
@@ -35,12 +37,13 @@ export const ScreenMaterialImpl = shaderMaterial(
     uniform vec2 uOffsetB;
     uniform float uMix;
     uniform float uPower;
+    uniform float uScroll;
     uniform vec3 uAccent;
     varying vec2 vUv;
 
     void main() {
-      vec4 a = texture2D(uMapA, vUv * uRepeatA + uOffsetA);
-      vec4 b = texture2D(uMapB, vUv * uRepeatB + uOffsetB);
+      vec4 a = texture2D(uMapA, vUv * uRepeatA + vec2(uOffsetA.x, uOffsetA.y * (1.0 - uScroll)));
+      vec4 b = texture2D(uMapB, vUv * uRepeatB + vec2(uOffsetB.x, uOffsetB.y * (1.0 - uScroll)));
       // Wipe runs from the top edge (vUv.y = 1) down; 0.02 is the soft edge width.
       float edge = 1.04 - uMix * 1.08;
       float t = smoothstep(edge - 0.02, edge + 0.02, vUv.y);

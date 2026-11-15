@@ -8,8 +8,10 @@ import "@/components/portfolio/hero-scenes.css";
 import "@/components/portfolio/readability.css";
 import "@/components/portfolio/offer.css";
 import "@/components/portfolio/service-page.css";
+import "@/components/world/world.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NavigationScroll from "@/components/NavigationScroll";
+import Morph from "@/components/motion/Morph";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -132,7 +134,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NavigationScroll />
-          {children}
+          {/* Route changes crossfade; named elements inside (project mockups) morph between pages. */}
+          <Morph default="page-fade">{children}</Morph>
         </ThemeProvider>
       </body>
     </html>

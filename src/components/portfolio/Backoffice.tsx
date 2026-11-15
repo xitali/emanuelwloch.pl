@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import BackofficeStage from "./BackofficeStage";
 import { IconApi, IconArrowUpRight, IconDatabase, IconFrontend, IconShield } from "./icons";
 
 const points = [
@@ -18,6 +19,7 @@ export default function Backoffice() {
         <div className="backoffice-actions"><Link className="portfolio-button" href="/demo/panel">Wypróbuj demo panelu <IconArrowUpRight size={17} /></Link><Link className="portfolio-text-link" href="/bazy-danych-i-panele">Bazy danych i panele <IconArrowUpRight size={15} /></Link></div>
       </div>
       <figure className="backoffice-screen" data-reveal>
+        <BackofficeStage>
         <div className="stage-frame stage-frame--browser">
           <div className="stage-frame-bar" aria-hidden="true"><span className="stage-frame-dots"><i /><i /><i /></span><span className="stage-frame-label">Panel administratora — produkty</span></div>
           <div className="stage-frame-screen"><Image src="/projects/sklep-internetowy-demo/panel-produktow.webp" alt="Panel administratora sklepu: lista produktów z SKU, kategorią, ceną, stanem magazynowym i przełącznikiem widoczności" fill sizes="(max-width: 1023px) 92vw, 52vw" className="stage-frame-image" /></div>
@@ -27,6 +29,7 @@ export default function Backoffice() {
           <span style={{ left: "1%", top: "44%" }}>Import produktów</span>
           <span style={{ right: "3%", top: "33%" }}>Ceny i stany</span>
         </div>
+        </BackofficeStage>
         <figcaption className="backoffice-caption">Panel z realizacji „Sklep internetowy — demo”: produkty, kategorie i zamówienia w jednej bazie. Dane na zrzucie są przykładowe.</figcaption>
       </figure>
     </div>

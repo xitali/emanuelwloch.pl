@@ -10,12 +10,13 @@ import type { Project } from "@/types";
 import { getProjectPath } from "@/lib/seo";
 import { selectProjectHighlights } from "@/lib/project-highlights";
 import { projectMockup } from "@/lib/project-mockups";
+import { mockupSources } from "@/lib/project-mockup-sources";
 
 const ProjectModal = dynamic(() => import("@/components/ProjectModal"));
 
 export function ProjectCard({ project, index, onOpen, highlighted = false }: { project: Project; index: number; onOpen: () => void; highlighted?: boolean }) {
   return <article data-reveal className={`showcase-card${index === 0 ? " showcase-featured" : ""}`}>
-    {project.images[0] ? <ProjectMedia mockup={projectMockup(project)} alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} fallbackImage={project.images.find(src => src.startsWith("/projects/"))} title={project.title} onOpen={onOpen} /> : <button className="showcase-type-visual" onClick={onOpen}>{project.title}</button>}
+    {project.images[0] ? <ProjectMedia mockup={projectMockup(project)} live={highlighted && projectMockup(project) ? mockupSources([project])[0] : undefined} alt={project.image_alts?.[0]} previewVideo={project.preview_video} previewPoster={project.preview_poster} projectId={project.id} image={project.images[0]} fallbackImage={project.images.find(src => src.startsWith("/projects/"))} title={project.title} onOpen={onOpen} /> : <button className="showcase-type-visual" onClick={onOpen}>{project.title}</button>}
     <div className="showcase-info">
     <div className="showcase-caption"><div><h3><Link href={getProjectPath(project)}>{project.title}</Link></h3><p className="showcase-meta"><span>{projectLabel(project.project_type || project.category)}</span>{project.project_status === "in-development" && <span className="showcase-status">Wersja testowa</span>}</p><p>{project.short_description}</p></div><Link className="showcase-arrow" href={getProjectPath(project)} aria-label={`Opis realizacji: ${project.title}`}><ArrowUpRight /></Link></div>
     {highlighted ? <><dl className="project-outcome">{project.main_challenge && <div><dt>Wyzwanie</dt><dd>{project.main_challenge}</dd></div>}{project.project_result && <div><dt>Rezultat</dt><dd>{project.project_result}</dd></div>}</dl><Link className="portfolio-text-link" href={getProjectPath(project)}>Opis realizacji <ArrowUpRight size={16} /></Link></> : <div className="portfolio-tags">{project.technologies.slice(0, 5).map((tech, i) => <span key={`${tech}-${i}`}>{tech}</span>)}</div>}

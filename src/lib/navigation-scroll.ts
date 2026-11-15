@@ -1,3 +1,5 @@
+import { scrollPageTo } from "@/lib/motion/smooth-scroll";
+
 type Position = { x: number; y: number };
 type Destination = { url: URL; position?: Position; focus?: boolean };
 const STATE_KEY = "ewScrollEntry";
@@ -9,7 +11,7 @@ export function scrollToSection(id: string, smooth = true) {
   const header = document.querySelector(".portfolio-nav")?.getBoundingClientRect().height || 0;
   const top = id === "main-content" ? 0 : Math.max(0, target.getBoundingClientRect().top + window.scrollY - header - 16);
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("motion-paused");
-  window.scrollTo({ top, left: 0, behavior: smooth && !reduced ? "smooth" : "instant" });
+  scrollPageTo(top, smooth && !reduced);
   return true;
 }
 

@@ -124,6 +124,19 @@ export default function MotionLayer() {
           scrollTrigger: { trigger: steps, start: "top 85%", end: "bottom 55%", scrub: 0.6 },
         });
       }
+      // Process steps rise out of depth one after another, tied to the scroll position.
+      gsap.utils.toArray<HTMLElement>("[data-depth] > li", scope).forEach((step, index) => {
+        gsap.fromTo(step, { rotationX: 34, z: -260, yPercent: 18, opacity: 0.08, transformOrigin: "50% 100%" }, {
+          rotationX: 0, z: 0, yPercent: 0, opacity: 1, ease: "none",
+          scrollTrigger: { trigger: step.parentElement, start: `top ${92 - index * 6}%`, end: `top ${58 - index * 6}%`, scrub: 0.7 },
+        });
+      });
+      // Opinions drift at slightly different speeds, which gives the row some depth.
+      gsap.utils.toArray<HTMLElement>(".testimonial-card", scope).forEach((card, index) => {
+        const amount = [-26, 18, -12, 24][index % 4];
+        // A CSS variable on `translate`, so the one-off reveal (which owns `transform`) cannot clear it.
+        gsap.fromTo(card, { "--drift": `${-amount}px` }, { "--drift": `${amount}px`, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true } });
+      });
       if (bar.current) {
         gsap.to(bar.current, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.25 } });
       }

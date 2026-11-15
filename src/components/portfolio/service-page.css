@@ -188,3 +188,7 @@
   .svc-close-card { grid-template-columns: 1fr; }
   .svc-close-photo { width: 64px; height: 64px; }
 }
+
+/* Live desk over the rendered still (same camera as the mockup generator). */
+.svc-hero-world { z-index: 1; }
+.svc-hero-world[data-ready=true] ~ .svc-hero-mockup { opacity: 0; transition: opacity .7s ease .1s; }

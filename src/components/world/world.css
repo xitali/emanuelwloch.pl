@@ -1,0 +1,16 @@
+/* Shared 3D canvas and the placeholders scenes draw into. */
+.world-view { position: absolute; inset: 0; }
+.world-view-port { position: absolute; inset: 0; }
+.world-view-still { position: absolute; inset: 0; transition: opacity .7s ease .1s; }
+.world-view[data-ready=true] .world-view-still { opacity: 0; }
+/* During a page change the canvas is not part of the snapshot: show the stills instead. */
+html:active-view-transition .world-view-still { opacity: 1; transition: none; }
+
+/* Route crossfade: the old page sinks back a little as the new one fades up. */
+::view-transition-old(.page-fade) { animation: page-out .32s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(.page-fade) { animation: page-in .5s cubic-bezier(.16, 1, .3, 1) .06s both; }
+@keyframes page-out { to { opacity: 0; transform: translateY(-10px) scale(.992); filter: blur(2px); } }
+@keyframes page-in { from { opacity: 0; transform: translateY(14px); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
