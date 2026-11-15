@@ -39,7 +39,7 @@ One person designs, programs, connects the data and deploys — from the public 
 ## Brand Commitments
 
 - Name and mark: "Emanuel Włoch", wordmark `ew`, terminal glyph `>_` (favicon, `BrandMark`).
-- Dark graphite palette with a single steel-blue accent; light as glow, never neon (see `docs/PLAN_PREMIUM_REDESIGN.md`).
+- Palette (confirmed 2026-11-15): dark graphite base; steel blue is the colour of technology (screens, 3D, lines); copper is spent only on actions (primary buttons, prices, the active row); the process and opinions sections sit on warm paper. Light as glow, never neon. Tokens: `src/components/palette/palettes.css`.
 - Voice: concrete, calm, second person, no hype.
 
 ## Evidence on Hand

@@ -1,0 +1,42 @@
+/*
+ * Palette: graphite, steel blue, copper and paper.
+ * Steel blue is the colour of technology (screens, 3D, lines). Copper is spent only on
+ * actions: primary buttons, prices, the active row. The process and opinions sections remap
+ * the same tokens to warm paper, so the long dark page gets one bright interlude.
+ * Loaded last, with `html:root` in front, so it wins over the older per-file colours.
+ */
+html:root :is(.portfolio-home, .portfolio-site) {
+  --p-bg: #0c0d0e; --p-surface: #15171a; --p-text: #f1eee8; --p-muted: #a7a8a6;
+  --p-action: #e08a5b; --p-action-hi: #eda37b; --p-action-ink: #1d0f07; --p-warm: #eba27a; --p-action-glow: #e08a5b55;
+}
+html:root body { background: #0c0d0e; }
+
+/* —— Copper, on actions only —— */
+html:root .portfolio-button:not(.portfolio-button--secondary) { background: linear-gradient(180deg, var(--p-action-hi), var(--p-action)); color: var(--p-action-ink); box-shadow: 0 12px 30px -14px var(--p-action-glow), inset 0 1px 0 #ffffff66; }
+html:root .portfolio-button:not(.portfolio-button--secondary):hover { background: linear-gradient(180deg, #fff, var(--p-action-hi)); box-shadow: 0 18px 38px -14px var(--p-action-glow), inset 0 1px 0 #fff; }
+html:root .service-path-row > .service-path-scope .service-path-price { color: var(--p-warm); }
+html:root .service-paths.has-stage .service-path-row::before { background: var(--p-action); }
+html:root .testimonial-rating { color: var(--p-warm); }
+html:root .scroll-progress > i { background: linear-gradient(90deg, var(--p-accent-2), var(--p-accent) 55%, var(--p-action)); box-shadow: 0 0 14px var(--p-action-glow); }
+html:root :is(.portfolio-home, .portfolio-site) ::selection { background: var(--p-action); color: var(--p-action-ink); }
+html:root :is(.portfolio-home, .portfolio-site) :is(input, textarea) { caret-color: var(--p-action); }
+html:root .nav-contact:hover { border-color: var(--p-action); color: var(--p-warm); }
+
+/* —— Paper sections: the same tokens, remapped to a light surface —— */
+html:root :is(.portfolio-testimonials, .delivery-process) {
+  --p-bg: #ece6da; --p-surface: #f7f3ec; --p-text: #171b1e; --p-muted: #545c61; --p-accent: #2a5b78; --p-accent-2: #2a5b78; --p-border: #171b1e24; --p-warm: #9c4519;
+  background-color: var(--p-bg); color: var(--p-text); border-top-color: transparent;
+
+  & ::selection { background: var(--p-accent); color: #fff; }
+  /* The silver sheen is made for dark; on paper the italic line is plain deep steel. */
+  & h2 span { background: none; animation: none; color: var(--p-accent); -webkit-text-fill-color: currentColor; }
+  & .testimonial-card { background: var(--p-surface); box-shadow: 0 1px 0 #fff inset, 0 24px 44px -30px #3d2f1c59; }
+  & .testimonial-card:hover { border-color: #2a5b7859; }
+  & .testimonial-card blockquote { color: #2b3236; }
+  & .service-steps li::before { box-shadow: none; }
+  & .portfolio-text-link { border-bottom-color: #171b1e4d; }
+  & .delivery-film video { background: #d9d2c4; }
+  & .portfolio-button:not(.portfolio-button--secondary) { box-shadow: 0 14px 28px -16px #3d2f1c8c, inset 0 1px 0 #ffffff66; }
+}
+/* The process section is container-width; this carries its paper to the viewport edges. */
+html:root .delivery-process { box-shadow: 0 0 0 100vmax var(--p-bg); clip-path: inset(0 -100vmax); }
