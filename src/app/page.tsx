@@ -24,6 +24,8 @@ import HomeStructuredData from "@/components/HomeStructuredData";
 import MotionLayer from "@/components/portfolio/motion/MotionLayer";
 import DeliveryProcess from "@/components/portfolio/DeliveryProcess";
 import Backoffice from "@/components/portfolio/Backoffice";
+import { WorldProvider } from "@/components/world/World";
+import SmoothScroll from "@/components/motion/SmoothScroll";
 
 // High performance revalidation tag caching
 export const revalidate = 60;
@@ -41,9 +43,10 @@ export default async function HomePage() {
     <>
       <HomeStructuredData services={services} settings={settings} />
     <main id="main-content" className="portfolio-home dark relative min-h-screen overflow-x-clip" tabIndex={-1}>
-      <VisitTracker /><ConversionTracker /><MotionLayer />
+      <VisitTracker /><ConversionTracker /><MotionLayer /><SmoothScroll />
       <Navbar />
       
+      <WorldProvider>
       <div className="relative z-10">
         <ProductStory testimonial={testimonials[0]} />
         <ServicePaths services={services} />
@@ -55,6 +58,7 @@ export default async function HomePage() {
         <details className="technology-disclosure portfolio-container"><summary>Jakich technologii używam? <span aria-hidden="true">+</span></summary><TechnologyDetails /></details>
         <ContactSection settings={settings} />
       </div>
+      </WorldProvider>
 
       <Footer />
     </main>

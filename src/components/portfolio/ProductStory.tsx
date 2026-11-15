@@ -75,7 +75,7 @@ export default function ProductStory({ testimonial }: { testimonial?: Testimonia
       </div>
       <div className="product-visual">
 
-        <StageVisuals phase={phase} state={state} active={active} compact={compact} reduced={reduced} ready={ready} />
+        <StageVisuals phase={phase} state={state} active={active} compact={compact} reduced={reduced} ready={ready} track={section} />
         <div className="delivery-caption"><span>0{phase + 1} / 04 · PRAWDZIWE EKRANY Z REALIZACJI</span><strong>{productKinds[phase].title}</strong><small>{productKinds[phase].detail}</small></div>
         <div className="hero-scene-tabs" aria-label="Wybierz rodzaj projektu">{productKinds.map((kind,index) => <button key={kind.title} type="button" aria-pressed={phase===index} onClick={()=>selectPhase(index)}>{kind.title.split(" ")[0]}</button>)}</div>
       </div>

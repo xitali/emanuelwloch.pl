@@ -10,6 +10,8 @@ import { CHROME_HEIGHT, chromeTexture, type ChromeKind } from "./chrome";
 /* Shared dimensions (scene units ≈ decimetres). Both panels are 16:9, like the screenshots. */
 export const LAPTOP_SCREEN = { width: 3.04, height: 1.71 };
 export const MONITOR_SCREEN = { width: 4.16, height: 2.34 };
+/** Portrait phone panel, the shape of a 390 × 844 mobile screenshot. */
+export const PHONE_SCREEN = { width: 0.74, height: 1.6 };
 
 const ALUMINIUM = { color: "#cdd2d6", metalness: 0.62, roughness: 0.36, envMapIntensity: 1.4 };
 const GRAPHITE = { color: "#2c3237", metalness: 0.85, roughness: 0.34, envMapIntensity: 1.2 };
@@ -70,12 +72,12 @@ export function Screen({ width, height, textureA, textureB, chrome = "browser", 
   const aspect = pageAspect(width, height, chrome);
   const fitA = useMemo(() => coverFit(textureA, aspect), [textureA, aspect]);
   const fitB = useMemo(() => coverFit(textureB ?? textureA, aspect), [textureA, textureB, aspect]);
-  const chromeMap = useMemo(() => chromeTexture(chrome), [chrome]);
+  const chromeMap = useMemo(() => chrome === "none" ? null : chromeTexture(chrome), [chrome]);
   return <group>
-    <mesh position={[0, height / 2 - bar / 2, 0]}>
+    {chromeMap && <mesh position={[0, height / 2 - bar / 2, 0]}>
       <planeGeometry args={[width, bar]} />
       <meshBasicMaterial map={chromeMap} toneMapped={false} />
-    </mesh>
+    </mesh>}
     <mesh position={[0, -bar / 2, 0]}>
       <planeGeometry args={[width, page]} />
       <ScreenMaterial ref={materialRef} key={ScreenMaterialImpl.key} uMapA={textureA} uMapB={textureB ?? textureA} uRepeatA={fitA.repeat} uOffsetA={fitA.offset} uRepeatB={fitB.repeat} uOffsetB={fitB.offset} toneMapped={false} />
@@ -145,5 +147,27 @@ export const Monitor = forwardRef<Group, GroupProps & { screen: Omit<ScreenProps
         <Screen width={width} height={height} {...screen} />
       </group>
     </group>
+  </group>;
+});
+
+const TITANIUM = { color: "#8f979d", metalness: 0.9, roughness: 0.3, envMapIntensity: 1.4 };
+
+/** Modern phone: titanium frame, black glass front, a pill-shaped camera cut-out. */
+export const Phone = forwardRef<Group, GroupProps & { screen: Omit<ScreenProps, "width" | "height" | "chrome"> }>(function Phone({ screen, ...props }, ref) {
+  const { width, height } = PHONE_SCREEN;
+  return <group ref={ref} {...props}>
+    <RoundedBox args={[width + 0.08, height + 0.08, 0.075]} radius={0.034} smoothness={6} position={[0, 0, -0.0375]} castShadow>
+      <meshStandardMaterial {...TITANIUM} />
+    </RoundedBox>
+    <mesh position={[0, 0, 0.001]}>
+      <planeGeometry args={[width + 0.05, height + 0.05]} />
+      <meshStandardMaterial {...BEZEL} />
+    </mesh>
+    <group position={[0, 0, 0.004]}>
+      <Screen width={width} height={height} chrome="none" {...screen} />
+    </group>
+    <RoundedBox args={[0.2, 0.055, 0.004]} radius={0.0275} smoothness={4} position={[0, height / 2 - 0.06, 0.008]}>
+      <meshStandardMaterial color="#000000" roughness={0.3} />
+    </RoundedBox>
   </group>;
 });

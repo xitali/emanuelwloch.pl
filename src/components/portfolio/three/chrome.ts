@@ -1,17 +1,17 @@
 import { CanvasTexture, SRGBColorSpace } from "three";
 
-export type ChromeKind = "browser" | "window";
+export type ChromeKind = "browser" | "window" | "none";
 
 /** Share of the screen height taken by the window chrome. The page below it shows its top part. */
-export const CHROME_HEIGHT: Record<ChromeKind, number> = { browser: 0.115, window: 0.055 };
+export const CHROME_HEIGHT: Record<ChromeKind, number> = { browser: 0.115, window: 0.055, none: 0 };
 
-const cache = new Map<ChromeKind, CanvasTexture>();
+const cache = new Map<Exclude<ChromeKind, "none">, CanvasTexture>();
 
 /**
  * Neutral browser or Windows title bar drawn once into a canvas: tabs, address field and
  * controls, without invented addresses or titles.
  */
-export function chromeTexture(kind: ChromeKind) {
+export function chromeTexture(kind: Exclude<ChromeKind, "none">) {
   const cached = cache.get(kind);
   if (cached) return cached;
   const width = 1600;

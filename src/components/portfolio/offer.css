@@ -67,3 +67,52 @@
   .backoffice-screen { order: -1; }
 }
 @media (max-width: 640px) { .backoffice-callouts { display: none; } }
+
+/* Wide screens: the list on the left, a sticky 3D stage on the right that follows the row being read. */
+.offer-stage { display: none; }
+@media (min-width: 1180px) {
+  .service-paths.has-stage .service-paths-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); gap: clamp(32px, 4vw, 64px); align-items: start; }
+  .service-paths.has-stage .service-path-row { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: 14px 32px; padding: 34px 0 34px 22px; position: relative; transition: background-color .5s; }
+  .service-paths.has-stage .service-path-row::before { content: ""; position: absolute; left: 0; top: 34px; bottom: 34px; width: 2px; border-radius: 2px; background: var(--p-accent); transform: scaleY(0); transform-origin: top; transition: transform .7s var(--ease-out); }
+  .service-paths.has-stage .service-path-row[data-current=true]::before { transform: none; }
+  .service-paths.has-stage .service-path-row:not([data-current=true]) .service-path-main h3 { color: var(--p-muted); }
+  .service-paths.has-stage .service-path-thumb { display: none; }
+  .service-paths.has-stage .service-path-actions { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; gap: 22px; }
+  .offer-stage { display: block; position: sticky; top: max(110px, calc(50vh - 290px)); height: min(580px, 70vh); margin-top: 56px; border: 1px solid var(--p-border); border-radius: 14px; overflow: hidden; background: radial-gradient(ellipse at 50% 35%, #acd1e810, transparent 65%), #0d1013; }
+  .offer-world { position: absolute; inset: 0; }
+  .offer-stage-still { position: absolute; inset: 6% 4% 16%; opacity: 0; transition: opacity .6s ease; }
+  .offer-stage-still[data-current=true] { opacity: 1; }
+  .offer-stage-still img { object-fit: contain; }
+  .offer-stage-caption { position: absolute; left: 22px; bottom: 18px; right: 22px; z-index: 21; display: flex; align-items: baseline; gap: 14px; pointer-events: none; font: 11px/1.4 var(--font-geist-mono), monospace; color: var(--p-muted); }
+  .offer-stage-caption strong { font: 500 18px/1.2 var(--font-display), sans-serif; color: var(--p-text); }
+  .offer-stage-caption small { margin-left: auto; font-size: 11px; }
+}
+
+/* Mockup frame: the still, and the live desk over it when 3D is on (same camera, so they line up). */
+.project-mockup-frame { position: absolute; inset: 0; }
+.project-mockup-world { position: absolute; inset: 7% 7% 5%; z-index: 1; }
+.project-mockup-world .world-view-port { inset: 0; }
+.project-media--live .project-mockup-world[data-ready=true] ~ .project-mockup { opacity: 0; transition: opacity .7s ease .1s; }
+html:active-view-transition .project-media--live .project-mockup { opacity: 1 !important; transition: none; }
+.showcase-card:hover .project-media--live .project-mockup { transform: none; }
+::view-transition-group(.project-morph) { animation-duration: 520ms; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+::view-transition-image-pair(.project-morph) { animation-name: project-morph-blur; }
+@keyframes project-morph-blur { 35% { filter: blur(2px); } }
+
+/* Back office: flat screenshot without 3D; with 3D, a taller stage where the layers come apart. */
+.backoffice-stage { position: relative; }
+.backoffice-stage:not(.is-live) .world-view { position: relative; inset: auto; }
+.backoffice-stage.is-live { aspect-ratio: 1.3; }
+.backoffice-stage.is-live .world-view-still { display: flex; flex-direction: column; justify-content: center; }
+.backoffice-stage.is-live .world-view-still > .stage-frame { position: relative; }
+@media (max-width: 1023px) { .backoffice-stage.is-live { aspect-ratio: 1.15; } }
+
+/* Contact: silk folds on the full 3D tier, a still gradient otherwise; text stays above. */
+.portfolio-contact { position: relative; overflow: hidden; }
+.portfolio-contact > .portfolio-container { position: relative; z-index: 1; }
+.contact-silk { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 70% 60% at 85% 10%, #22323d66, transparent 70%), radial-gradient(ellipse 60% 50% at 0% 100%, #18232b88, transparent 70%); mask-image: linear-gradient(180deg, transparent, #000 18%, #000 75%, transparent); }
+.contact-silk-shader { position: absolute; inset: 0; opacity: .9; }
+
+/* Process: steps come forward out of depth as they scroll in (set up in MotionLayer). */
+.service-steps[data-depth] { perspective: 1100px; }
+.testimonial-card { translate: 0 var(--drift, 0px); }

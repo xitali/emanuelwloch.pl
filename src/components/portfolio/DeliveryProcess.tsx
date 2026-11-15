@@ -4,7 +4,7 @@ import { promoFilm } from "@/lib/promo-film";
 export default function DeliveryProcess() {
   return <section id="wspolpraca" className="delivery-process portfolio-container" aria-labelledby="delivery-heading">
     <header className="portfolio-section-heading"><div><h2 id="delivery-heading">Wiesz, co powstaje.<br />{" "}<span>I co będzie dalej.</span></h2></div><p>Wiesz, za co płacisz i co otrzymasz.<br />{" "}Na każdym etapie masz wpływ na efekt.</p></header>
-    <ol className="service-steps" data-stagger>
+    <ol className="service-steps" data-depth>
       <li><strong>01 / Rozmowa</strong><span>Opowiedz, czym się zajmujesz i co chcesz usprawnić. Razem ustalimy, czy potrzebujesz strony, aplikacji czy programu.</span></li>
       <li><strong>02 / Zakres i wycena</strong><span>Dostaniesz propozycję zakresu, cenę i termin. Zdecydujesz, czy zaczynamy.</span></li>
       <li><strong>03 / Projekt i realizacja</strong><span>Zobaczysz projekt i wersję testową. Powiesz mi, co chcesz dopracować.</span></li>

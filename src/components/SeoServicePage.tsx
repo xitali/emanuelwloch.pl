@@ -1,4 +1,5 @@
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
+import ServiceHeroVisual from "@/components/portfolio/ServiceHeroVisual";
 import { IconArrowUpRight, IconCheck, IconPin } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -109,9 +110,7 @@ export default async function SeoServicePage({ data }: { data: ServicePageData }
                   </div>
                   <ul className="svc-areas" aria-label="Obszar działania">{data.areas.map((area) => <li key={area}><IconPin size={14} />{area}</li>)}</ul>
                 </div>
-                {showcase && <div className="svc-hero-visual svc-hero-visual--mockup" data-reveal>
-                  <Image src={`/mockups/usluga-${data.slug}.webp`} alt={`${showcase.front.label} i ${showcase.back.label} na laptopie i monitorze`} fill priority sizes="(max-width: 1023px) 92vw, 48vw" className="svc-hero-mockup" />
-                </div>}
+                {showcase && <ServiceHeroVisual still={`/mockups/usluga-${data.slug}.webp`} alt={`${showcase.front.label} i ${showcase.back.label} na laptopie i monitorze`} laptop={showcase.front.src} monitor={showcase.back.src} chrome={showcase.front.kind} />}
               </div>
             </div>
           </header>

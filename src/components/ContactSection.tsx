@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import ContactSilk from "@/components/motion/ContactSilk";
 import { sendContactMessageAction } from "@/app/actions/contact";
 import { IconAlert, IconArrowUpRight as ArrowUpRight, IconCheck, IconFacebook, IconGithub, IconInstagram, IconMail, IconPhone, IconPin, IconSend } from "./portfolio/icons";
 import type { PublicSiteSettings } from "@/types";
@@ -59,6 +60,7 @@ export default function ContactSection({ settings }: { settings: PublicSiteSetti
   }
 
   return <section id="kontakt" className="portfolio-contact" aria-labelledby="contact-heading">
+    <ContactSilk />
     <div className="portfolio-container">
       <header className="portfolio-section-heading">
         <div><h2 id="contact-heading">Porozmawiajmy<br />{" "}<span>o Twojej firmie.</span></h2></div>
