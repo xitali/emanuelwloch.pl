@@ -78,10 +78,10 @@ describe("SEO service landing pages", () => {
 });
 
 describe("AEO guide pages", () => {
-  it("provides five distinct expert answers with an update date", () => {
-    expect(guidePages).toHaveLength(5);
-    expect(new Set(guidePages.map((guide) => guide.path)).size).toBe(5);
-    expect(new Set(guidePages.map((guide) => guide.metaTitle)).size).toBe(5);
+  it("provides seven distinct expert answers with an update date", () => {
+    expect(guidePages).toHaveLength(7);
+    expect(new Set(guidePages.map((guide) => guide.path)).size).toBe(7);
+    expect(new Set(guidePages.map((guide) => guide.metaTitle)).size).toBe(7);
     for (const guide of guidePages) expect(guide.updated).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 

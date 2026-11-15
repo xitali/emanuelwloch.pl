@@ -5,7 +5,9 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { IconArrowUpRight, IconCheck } from "@/components/portfolio/icons";
 import { getGuidePage, guidePages } from "@/lib/guide-pages";
-import { serializeJsonLd, SITE_URL, SOCIAL_IMAGE_URL } from "@/lib/seo";
+import { serializeJsonLd, SITE_URL } from "@/lib/seo";
+
+const GUIDE_IMAGE = `${SITE_URL}/og/poradniki.jpg`;
 
 interface GuidePageProps {
   params: Promise<{ slug: string }>;
@@ -31,9 +33,9 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
       publishedTime: "2026-08-01",
       modifiedTime: guide.updated,
       authors: ["Emanuel Włoch"],
-      images: [{ url: SOCIAL_IMAGE_URL, alt: guide.title }],
+      images: [{ url: GUIDE_IMAGE, alt: guide.title }],
     },
-    twitter: { card: "summary_large_image", title: guide.metaTitle, description: guide.metaDescription, images: [SOCIAL_IMAGE_URL] },
+    twitter: { card: "summary_large_image", title: guide.metaTitle, description: guide.metaDescription, images: [GUIDE_IMAGE] },
   };
 }
 
@@ -56,7 +58,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         inLanguage: "pl-PL",
         author: { "@id": `${SITE_URL}/#emanuel-wloch` },
         publisher: { "@id": `${SITE_URL}/#emanuel-wloch` },
-        image: SOCIAL_IMAGE_URL,
+        image: GUIDE_IMAGE,
       },
       {
         "@type": "WebPage",

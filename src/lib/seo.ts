@@ -46,9 +46,17 @@ export function toAbsoluteUrl(value?: string) {
   }
 }
 
-// Content-addressed image avoids stale previews held by social networks.
-export const SOCIAL_IMAGE_PATH = "/og/strony-i-aplikacje-9dac8276.jpg";
+// Link previews (1200 × 630), rendered from /dev/social. New file names keep social networks
+// from serving a cached old preview.
+export const SOCIAL_IMAGE_PATH = "/og/home.jpg";
 export const SOCIAL_IMAGE_URL = `${SITE_URL}${SOCIAL_IMAGE_PATH}`;
+
+/** Preview image for a service page: its own, or the closest one (city pages use the website one). */
+export function serviceOgImage(slug: string) {
+  const own = ["tworzenie-stron-internetowych", "sklepy-internetowe", "tworzenie-aplikacji-webowych", "bazy-danych-i-panele", "programy-na-windows"];
+  const file = own.includes(slug) ? slug : slug.startsWith("tworzenie-stron-internetowych") ? "tworzenie-stron-internetowych" : slug === "nextjs-developer" ? "tworzenie-aplikacji-webowych" : "home";
+  return `${SITE_URL}/og/${file}.jpg`;
+}
 
 export function createPageMetadata({ title, description, path, image = SOCIAL_IMAGE_URL, type = "website" }: {
   title: string; description: string; path: string; image?: string; type?: "website" | "profile" | "article";
@@ -59,7 +67,7 @@ export function createPageMetadata({ title, description, path, image = SOCIAL_IM
     openGraph: {
       title, description, url: new URL(path, SITE_URL).href,
       siteName: "Emanuel Włoch — strony, aplikacje i programy", locale: "pl_PL", type,
-      images: [{ url: imageUrl, alt: title, ...(imageUrl === SOCIAL_IMAGE_URL ? { width: 1200, height: 630, type: "image/jpeg" } : {}) }],
+      images: [{ url: imageUrl, alt: title, ...(imageUrl.startsWith(`${SITE_URL}/og/`) ? { width: 1200, height: 630, type: "image/jpeg" } : {}) }],
     },
     twitter: { card: "summary_large_image", title, description, images: [imageUrl] },
   };
