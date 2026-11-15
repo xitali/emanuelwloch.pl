@@ -250,29 +250,35 @@
 .contract-annex { margin-top:36px;padding-top:24px;border-top:1px dashed #171b1e40;break-before:page; }
 @media (max-width:1023px) { .contracts-layout, .contracts-info-grid { grid-template-columns:1fr; } .contracts-preview { position:static; } .contract-paper { max-height:none;padding:28px 22px; } }
 
-/* Printing: only the contract, on white paper. */
+/* A4 document look */
+.contract-paper { max-width:210mm;margin-inline:auto;text-align:justify;hyphens:auto; }
+.contract-letterhead { display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:26px;padding-bottom:12px;border-bottom:2px solid #171b1e;font-family:Helvetica,Arial,sans-serif;font-size:11px;line-height:1.5;color:#545c61;text-align:left; }
+.contract-letterhead p { margin:0; }
+.contract-letterhead > div:last-child { text-align:right; }
+.contract-letterhead strong { color:#171b1e; }
+.contract-mark { font-size:14px;color:#171b1e; }
+.contract-mark strong { font-size:22px;letter-spacing:-.05em; }
+.contract-paper h1 { text-transform:uppercase;letter-spacing:.04em;font-size:16px; }
+.contract-number { margin:0 0 14px !important;text-align:center;font-size:12.5px;color:#545c61; }
+.contract-paper h2 { font-weight:700;letter-spacing:.02em; }
+.contract-paper li, .contract-signatures, .contract-paper h2 { break-inside:avoid; }
+.contract-paper h2 { break-after:avoid; }
+.contract-signatures p { margin:2px 0;text-align:center; }
+.contract-signatures small { font-size:10.5px;color:#545c61; }
+.contract-signatures span { margin-top:48px; }
+.contract-footnote { margin-top:28px !important;text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:10px;color:#8a9095; }
+.contract-annex p { text-align:left; }
+
+/* Printing: only the contract, on white A4, with the site and page numbers in the footer. */
 @media print {
-  body * { visibility:hidden !important; }
-  .contract-paper, .contract-paper * { visibility:visible !important; }
-  .contract-paper { position:absolute;left:0;top:0;width:100%;max-height:none;overflow:visible;padding:0;box-shadow:none;background:#fff;font-size:11.5pt; }
-  @page { margin:18mm 16mm; }
+  html, body, .admin-site, .admin-dashboard { background:#fff !important;min-height:0 !important;padding:0 !important;margin:0 !important; }
+  .admin-top, .admin-tabs, .admin-demo-note, .admin-toast, .admin-view-head, .contracts-guide, .contracts-info, .contracts-form, .contracts-actions, .contract-footnote, nextjs-portal { display:none !important; }
+  .contracts-layout { display:block; }
+  .contracts-preview { position:static; }
+  .contract-paper { max-width:none;max-height:none;overflow:visible;padding:0;border-radius:0;box-shadow:none;background:#fff;font-size:11pt;line-height:1.5; }
+  @page {
+    size:A4;margin:18mm 18mm 20mm;
+    @bottom-left { content:"Emanuel Włoch · emanuelwloch.pl";font:8pt Helvetica,Arial,sans-serif;color:#6b7378; }
+    @bottom-right { content:"Strona " counter(page) " z " counter(pages);font:8pt Helvetica,Arial,sans-serif;color:#6b7378; }
+  }
 }
-.contracts-guide { margin-bottom:24px;border:1px solid #e08a5b55;border-radius:var(--p-radius);background:#e08a5b0d; }
-.contracts-guide > summary { padding:16px 22px;font-size:16px;font-weight:600;cursor:pointer;list-style:none; }
-.contracts-guide > summary::-webkit-details-marker { display:none; }
-.contracts-guide > summary::before { content:"▸";display:inline-block;margin-right:10px;color:#e08a5b;transition:transform .2s; }
-.contracts-guide[open] > summary::before { transform:rotate(90deg); }
-.contracts-guide-body { display:grid;gap:22px;padding:4px 22px 24px; }
-.contracts-guide h3 { font-size:17px;margin-bottom:8px; }
-.contracts-guide h4 { font-size:15px;margin-bottom:6px; }
-.contracts-guide h4 span { font-weight:400;color:var(--p-muted); }
-.contracts-guide p, .contracts-guide li { font-size:14.5px;line-height:1.65;color:#d3d9dc; }
-.contracts-guide ol { display:grid;gap:8px;padding-left:20px;list-style:decimal; }
-.contracts-guide ul { display:grid;gap:6px;padding-left:18px;list-style:disc; }
-.contracts-guide strong { color:var(--p-text); }
-.contracts-guide-compare { display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0; }
-.contracts-guide-compare > div { padding:16px 18px;border:1px solid var(--p-border);border-radius:8px;background:var(--p-surface); }
-.contracts-guide-tip { margin-top:10px;padding:10px 14px;border-left:2px solid #e08a5b;background:#0b0d0f80; }
-.contracts-payout { font-size:13px;line-height:1.5;color:#c9d0d4; }
-.contracts-payout strong { color:#7fc99a; }
-@media (max-width:1023px) { .contracts-guide-compare { grid-template-columns:1fr; } }

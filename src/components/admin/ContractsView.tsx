@@ -21,7 +21,7 @@ function loadContractor(): ContractInput["contractor"] {
 }
 
 export function contractToText(contract: Contract) {
-  const lines = [contract.title.toUpperCase(), "", ...contract.preamble, ""];
+  const lines = ["Emanuel Włoch · emanuelwloch.pl", "", contract.title.toUpperCase(), "", ...contract.preamble, ""];
   for (const s of contract.sections) lines.push(s.heading, ...s.items.map((item, i) => `${i + 1}. ${item}`), "");
   lines.push("……………………………                    ……………………………", `${contract.signatures[0]}                                        ${contract.signatures[1]}`, "");
   for (const a of contract.annexes) lines.push("", `${a.heading} — ${a.title}`, ...a.items, "");
@@ -40,6 +40,7 @@ export default function ContractsView() {
   const [guideOpen, setGuideOpen] = useState(() => { try { return typeof window === "undefined" || localStorage.getItem(GUIDE_KEY) !== "1"; } catch { return true; } });
   const toggleGuide = (open: boolean) => { setGuideOpen(open); try { if (open) localStorage.removeItem(GUIDE_KEY); else localStorage.setItem(GUIDE_KEY, "1"); } catch { /* private mode */ } };
   const [quarterSoFar, setQuarterSoFar] = useState(0);
+  const [contractNo, setContractNo] = useState(() => { const d = new Date(); return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, "0")}/01`; });
   const [input, setInput] = useState<ContractInput>(() => ({
     mode: "dzielo",
     contractor: loadContractor(),
@@ -140,6 +141,7 @@ export default function ContractsView() {
 
         <fieldset>
           <legend>Dzieło i termin</legend>
+          <Field label="Numer umowy" hint="Kolejny numer w miesiącu, np. 2026/11/02. Ułatwia porządek w dokumentach."><input value={contractNo} onChange={e => setContractNo(e.target.value)} /></Field>
           <Field label="Szybki wybór">
             <select value="" onChange={e => { const path = servicePaths[Number(e.target.value)]; if (path) set("work", { title: path.title, description: path.scope }); }}>
               <option value="">Wybierz usługę, aby wpisać opis…</option>
@@ -201,13 +203,19 @@ export default function ContractsView() {
           <button type="button" className="admin-secondary" onClick={copy}><Copy className="w-4 h-4" /> Kopiuj tekst</button>
         </div>
         <article className="contract-paper" aria-label="Podgląd umowy">
+          <header className="contract-letterhead">
+            <div><p className="contract-mark"><strong>ew</strong> / Emanuel Włoch</p><p>Strony · sklepy · aplikacje · programy</p></div>
+            <div><p><strong>emanuelwloch.pl</strong></p><p>{input.contractor.email}</p>{input.contractor.phone && <p>{input.contractor.phone}</p>}</div>
+          </header>
           <h1>{contract.title}</h1>
+          {contractNo && <p className="contract-number">nr {contractNo}</p>}
           {contract.preamble.map((p, i) => <p key={i} className="contract-preamble">{p}</p>)}
           {contract.sections.map(section => <section key={section.heading}>
             <h2>{section.heading}</h2>
             <ol>{section.items.map((item, i) => <li key={i}>{item}</li>)}</ol>
           </section>)}
-          <div className="contract-signatures">{contract.signatures.map(s => <div key={s}><span /><p>{s}</p></div>)}</div>
+          <div className="contract-signatures">{contract.signatures.map((s, i) => <div key={s}><span /><p><strong>{s}</strong></p><p>{i === 0 ? input.contractor.name : (input.client.kind === "firma" ? input.client.representative || input.client.name : input.client.name) || " "}</p><small>data i czytelny podpis</small></div>)}</div>
+          <p className="contract-footnote">Dokument przygotowany w emanuelwloch.pl</p>
           {contract.annexes.map(annex => <section key={annex.heading} className="contract-annex">
             <h2>{annex.heading}: {annex.title}</h2>
             {annex.items.map((item, i) => <p key={i}>{item}</p>)}
