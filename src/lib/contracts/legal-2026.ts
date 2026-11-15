@@ -35,3 +35,16 @@ export function quarterStatus(alreadyThisQuarter: number, thisContract: number) 
   const remaining = Math.round((LEGAL_2026.unregisteredQuarterLimit - total) * 100) / 100;
   return { total, remaining, exceeded: remaining < 0, share: Math.min(1, total / LEGAL_2026.unregisteredQuarterLimit) };
 }
+
+/**
+ * Contract for specific work with a company: the company withholds a 12% PIT advance from
+ * income (fee minus costs: 50% on the copyright share, 20% on the rest), rounded to full złoty.
+ * The annual return (with the 30 000 zł tax-free amount) may refund part of it.
+ */
+export function workForCompanyPayout(amount: number, copyrightSharePercent: number) {
+  const copyright = amount * copyrightSharePercent / 100;
+  const costs = Math.round((copyright * 0.5 + (amount - copyright) * 0.2) * 100) / 100;
+  const income = Math.round(amount - costs);
+  const advanceTax = Math.round(income * 0.12);
+  return { costs, income, advanceTax, payout: Math.round((amount - advanceTax) * 100) / 100 };
+}

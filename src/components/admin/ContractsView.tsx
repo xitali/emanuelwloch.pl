@@ -3,11 +3,13 @@ import { useMemo, useState, type ReactNode } from "react";
 import { Copy, Info, Printer } from "lucide-react";
 import { buildContract, type Contract, type ContractInput } from "@/lib/contracts/contract";
 import { formatPln } from "@/lib/contracts/amount-words";
-import { LEGAL_2026, quarterStatus } from "@/lib/contracts/legal-2026";
+import { LEGAL_2026, quarterStatus, workForCompanyPayout } from "@/lib/contracts/legal-2026";
+import ContractsGuide from "./ContractsGuide";
 import { servicePaths } from "@/lib/service-paths";
 import { useAdmin } from "./AdminContext";
 
 const STORAGE_KEY = "umowa-wykonawca";
+const GUIDE_KEY = "umowa-instrukcja-zwinieta";
 const today = () => new Date().toISOString().slice(0, 10);
 const inDays = (days: number) => new Date(Date.now() + days * 86400000).toISOString().slice(0, 10);
 
@@ -34,6 +36,9 @@ export default function ContractsView() {
   const { notify } = useAdmin();
   const [remember, setRemember] = useState(() => typeof window !== "undefined" && Boolean(localStorage.getItem(STORAGE_KEY)));
   const [showInfo, setShowInfo] = useState(false);
+  // The guide starts open until it is collapsed once.
+  const [guideOpen, setGuideOpen] = useState(() => { try { return typeof window === "undefined" || localStorage.getItem(GUIDE_KEY) !== "1"; } catch { return true; } });
+  const toggleGuide = (open: boolean) => { setGuideOpen(open); try { if (open) localStorage.removeItem(GUIDE_KEY); else localStorage.setItem(GUIDE_KEY, "1"); } catch { /* private mode */ } };
   const [quarterSoFar, setQuarterSoFar] = useState(0);
   const [input, setInput] = useState<ContractInput>(() => ({
     mode: "dzielo",
@@ -76,6 +81,8 @@ export default function ContractsView() {
       <button type="button" className="admin-secondary" aria-expanded={showInfo} onClick={() => setShowInfo(v => !v)}><Info className="w-4 h-4" /> Do jakiej kwoty i jak rozliczyć</button>
     </header>
 
+    <ContractsGuide open={guideOpen} onToggle={toggleGuide} />
+
     {showInfo && <aside className="contracts-info" aria-label="Limity i rozliczenie w 2026 roku">
       <p className="contracts-info-date">Stan na {new Date(LEGAL_2026.checkedOn).toLocaleDateString("pl-PL")} · to nie jest porada prawna ani podatkowa</p>
       <div className="contracts-info-grid">
@@ -115,7 +122,7 @@ export default function ContractsView() {
             <button type="button" role="radio" aria-checked={input.client.kind === "osoba"} onClick={() => chooseClientKind("osoba")}><strong>Osoba prywatna</strong><span>działalność nierejestrowana, rachunek</span></button>
           </div>
           {input.client.kind === "firma" && <label className="contract-check"><input type="checkbox" checked={input.consumerRights} onChange={e => set("consumerRights", e.target.checked)} /> Jednoosobowa firma, dla której zamówienie nie jest czynnością zawodową (prawa konsumenta)</label>}
-          <label className="contract-check"><input type="checkbox" checked={input.remote} onChange={e => set("remote", e.target.checked)} /> Umowa zawierana na odległość (mail, podpis elektroniczny)</label>
+          <label className="contract-check"><input type="checkbox" checked={input.remote} onChange={e => set("remote", e.target.checked)} /> Nie spotykacie się przy podpisaniu (umowę wysyłacie pocztą lub kurierem)</label>
           <Field label="Rodzaj umowy">
             <select value={input.mode} onChange={e => set("mode", e.target.value as ContractInput["mode"])}>
               <option value="dzielo">Umowa o dzieło z przeniesieniem praw autorskich</option>
@@ -161,6 +168,10 @@ export default function ContractsView() {
             <Field label="Rundy poprawek"><input inputMode="numeric" value={input.revisions} onChange={e => set("revisions", number(e.target.value))} /></Field>
             <Field label="Poprawki błędów (dni)"><input inputMode="numeric" value={input.supportDays} onChange={e => set("supportDays", number(e.target.value))} /></Field>
           </div>
+          {input.mode === "dzielo" && input.client.kind === "firma" && (() => {
+            const payout = workForCompanyPayout(input.price.amount, input.price.copyrightShare);
+            return <p className="contracts-payout" role="status">Na Twoje konto: ok. <strong>{formatPln(payout.payout)}</strong>. Firma wpłaci za Ciebie {formatPln(payout.advanceTax)} zaliczki na podatek. Przy rocznym rozliczeniu część może wrócić.</p>;
+          })()}
           {input.mode === "nierejestrowana" && <div className={`contracts-limit${quarter.exceeded ? " is-over" : ""}`}>
             <Field label="Twoje rachunki w tym kwartale, bez tej umowy (zł)"><input inputMode="decimal" value={quarterSoFar} onChange={e => setQuarterSoFar(number(e.target.value))} /></Field>
             <div className="contracts-limit-bar" aria-hidden="true"><i style={{ width: `${quarter.share * 100}%` }} /></div>

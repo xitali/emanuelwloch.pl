@@ -111,7 +111,7 @@ export function buildContract(input: ContractInput): Contract {
     end.push("Jeżeli Zamawiający wyraźnie zażąda rozpoczęcia prac przed upływem terminu do odstąpienia, a następnie odstąpi od umowy, zapłaci za świadczenia spełnione do chwili odstąpienia (art. 35 ustawy o prawach konsumenta).");
   }
   end.push("Zamawiający może odstąpić od umowy przed ukończeniem Dzieła, płacąc umówione wynagrodzenie pomniejszone o to, co Wykonawca oszczędził z powodu niewykonania Dzieła (art. 644 Kodeksu cywilnego).");
-  end.push("Zmiany umowy wymagają formy dokumentowej (np. e-mail) pod rygorem nieważności.");
+  end.push("Zmiany umowy wymagają formy dokumentowej (np. e-mail) pod rygorem nieważności, a zmiany dotyczące przeniesienia praw autorskich — formy pisemnej (art. 53 ustawy o prawie autorskim i prawach pokrewnych).");
   end.push(consumer ? "Spory rozstrzyga sąd właściwy według przepisów ogólnych." : "Spory rozstrzyga sąd właściwy dla miejsca zamieszkania Wykonawcy.");
   end.push("W sprawach nieuregulowanych stosuje się przepisy Kodeksu cywilnego. Umowę sporządzono w dwóch jednobrzmiących egzemplarzach, po jednym dla każdej ze stron.");
   sections.push({ heading: "§ 10. Postanowienia końcowe", items: end });
@@ -138,7 +138,7 @@ export function buildContract(input: ContractInput): Contract {
   return {
     title: unregistered ? "Umowa o dzieło (działalność nierejestrowana)" : "Umowa o dzieło z przeniesieniem autorskich praw majątkowych",
     preamble: [
-      `zawarta ${input.remote ? "na odległość" : `w miejscowości ${or(input.place, "…………")}`} w dniu ${date(input.dates.signed)} pomiędzy:`,
+      `zawarta ${input.remote ? "na odległość (bez jednoczesnej obecności stron)" : `w miejscowości ${or(input.place, "…………")}`} w dniu ${date(input.dates.signed)} pomiędzy:`,
       `${or(w.name)}, zam. ${or(w.address)}${w.pesel ? `, PESEL ${w.pesel}` : ""}, e-mail: ${or(w.email)}${w.phone ? `, tel. ${w.phone}` : ""} — zwanym dalej „Wykonawcą”,`,
       `a ${clientLine}.`,
     ],

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { amountInWords } from "../src/lib/contracts/amount-words";
-import { quarterStatus, LEGAL_2026 } from "../src/lib/contracts/legal-2026";
+import { quarterStatus, LEGAL_2026, workForCompanyPayout } from "../src/lib/contracts/legal-2026";
 import { buildContract, type ContractInput } from "../src/lib/contracts/contract";
 
 const base: ContractInput = {
@@ -37,6 +37,17 @@ describe("limit działalności nierejestrowanej", () => {
   it("liczy, ile zostało w kwartale i ostrzega przed przekroczeniem", () => {
     expect(quarterStatus(4000, 3000)).toMatchObject({ total: 7000, remaining: 3813.5, exceeded: false });
     expect(quarterStatus(9000, 3000)).toMatchObject({ total: 12000, exceeded: true });
+  });
+});
+
+describe("umowa o dzieło z firmą: ile trafi na konto", () => {
+  it("3000 zł, 80% honorarium autorskie: koszty 50% i 20%, zaliczka 12% od dochodu w pełnych złotych", () => {
+    // 2400 × 50% + 600 × 20% = 1320 zł kosztów; dochód 1680 zł; 12% = 201,60 → 202 zł
+    expect(workForCompanyPayout(3000, 80)).toEqual({ costs: 1320, income: 1680, advanceTax: 202, payout: 2798 });
+  });
+  it("bez honorarium autorskiego: koszty 20%", () => {
+    // 1000 × 20% = 200; dochód 800; 12% = 96
+    expect(workForCompanyPayout(1000, 0)).toEqual({ costs: 200, income: 800, advanceTax: 96, payout: 904 });
   });
 });
 
