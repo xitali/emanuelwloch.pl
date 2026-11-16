@@ -89,4 +89,22 @@ describe("umowa", () => {
   it("konsumentowi nie ogranicza ustawowej odpowiedzialności", () => {
     expect(text({ ...base, client: { ...base.client, kind: "osoba" }, consumerRights: true })).not.toContain("ogranicza się do wysokości wynagrodzenia");
   });
+
+  it("zaczyna się od podsumowania najważniejszych warunków", () => {
+    const contract = buildContract(base);
+    const terms = Object.fromEntries(contract.keyTerms.map(t => [t.label, t.value]));
+    expect(terms["Wynagrodzenie"]).toContain("3000,00 zł brutto");
+    expect(terms["Termin oddania"]).toContain("18 grudnia 2026");
+    expect(terms["Prawa autorskie"]).toContain("po zapłacie całości");
+    expect(terms["Odstąpienie"]).toBeUndefined();
+    const consumer = buildContract({ ...base, client: { ...base.client, kind: "osoba" }, consumerRights: true });
+    expect(Object.fromEntries(consumer.keyTerms.map(t => [t.label, t.value]))["Odstąpienie"]).toContain("14 dni");
+  });
+
+  it("opisuje strony osobno, do kart w nagłówku", () => {
+    const { parties } = buildContract(base);
+    expect(parties[0]).toMatchObject({ role: "Wykonawca", name: "Jan Wykonawca" });
+    expect(parties[1]).toMatchObject({ role: "Zamawiający", name: "Piekarnia Sp. z o.o." });
+    expect(parties[1].details).toContain("NIP 1234567890");
+  });
 });

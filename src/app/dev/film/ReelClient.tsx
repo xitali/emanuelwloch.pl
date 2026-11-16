@@ -64,7 +64,7 @@ export default function ReelClient({ reel }: { reel: ReelId }) {
     <style>{`nextjs-portal, [data-nextjs-toast] { display: none !important; } html, body { background: ${C.bg}; overflow: hidden; }`}</style>
     <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 40% at 50% 66%, #acd1e81a, transparent 70%), radial-gradient(ellipse 60% 30% at 25% 100%, #e08a5b14, transparent 70%)" }} />
     <div style={{ position: "absolute", inset: 0 }}>
-      <Canvas frameloop="never" dpr={1} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }} style={{ width: W, height: H }}>
+      <Canvas frameloop="never" dpr={2} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }} style={{ width: W, height: H }}>
         <Driver />
         <Framing frame={{ x: -0.04, y: -0.13, zoom: 0.9 }} />
         <Suspense fallback={null}>

@@ -29,7 +29,17 @@ export interface ContractInput {
 
 export interface ContractSection { heading: string; items: string[] }
 export interface ContractAnnex extends ContractSection { title: string }
-export interface Contract { title: string; preamble: string[]; sections: ContractSection[]; annexes: ContractAnnex[]; signatures: [string, string] }
+export interface ContractParty { role: "Wykonawca" | "Zamawiający"; name: string; details: string[] }
+export interface Contract {
+  title: string;
+  /** Plain-language summary printed at the top, before the clauses. */
+  keyTerms: Array<{ label: string; value: string }>;
+  parties: [ContractParty, ContractParty];
+  preamble: string[];
+  sections: ContractSection[];
+  annexes: ContractAnnex[];
+  signatures: [string, string];
+}
 
 const date = (iso: string) => iso ? new Date(`${iso}T12:00:00`).toLocaleDateString("pl-PL", { day: "numeric", month: "long", year: "numeric" }) : "…………";
 const or = (value: string | undefined, blank = "…………………………") => value?.trim() || blank;
@@ -135,7 +145,27 @@ export function buildContract(input: ContractInput): Contract {
     ? `${or(z.name)}, ${or(z.address)}${z.nip ? `, NIP ${z.nip}` : ""}, reprezentowaną przez ${or(z.representative)}, e-mail: ${or(z.email)} — zwaną dalej „Zamawiającym”`
     : `${or(z.name)}, zam. ${or(z.address)}, e-mail: ${or(z.email)} — zwanym/-ną dalej „Zamawiającym”`;
 
+  const keyTerms: Contract["keyTerms"] = [
+    { label: "Przedmiot", value: or(input.work.title) },
+    { label: "Wynagrodzenie", value: `${formatPln(price.amount)}${unregistered ? "" : " brutto"}${price.advancePercent > 0 ? `, w tym ${price.advancePercent}% zaliczki` : ""}` },
+    { label: "Płatność", value: price.advancePercent > 0 ? `zaliczka 7 dni od podpisania, reszta ${price.paymentDays} dni od odbioru` : `${price.paymentDays} dni od odbioru` },
+    { label: "Start prac", value: date(input.dates.start) },
+    { label: "Termin oddania", value: date(input.dates.deadline) },
+    { label: "Poprawki", value: `${input.revisions} ${input.revisions === 1 ? "runda" : "rundy"} w cenie, błędy usuwane przez ${input.supportDays} dni od odbioru` },
+    { label: "Prawa autorskie", value: "przechodzą na Zamawiającego po zapłacie całości wynagrodzenia" },
+    ...(consumer && input.remote ? [{ label: "Odstąpienie", value: `${LEGAL_2026.consumerWithdrawalDays} dni od zawarcia umowy, bez podania przyczyny` }] : []),
+    { label: "Rozliczenie", value: unregistered ? "rachunek Wykonawcy, bez VAT" : firmClient ? "Zamawiający jako płatnik pobiera zaliczkę PIT i zgłasza RUD" : "Wykonawca rozlicza podatek samodzielnie" },
+  ];
+  const parties: Contract["parties"] = [
+    { role: "Wykonawca", name: or(w.name), details: [`zam. ${or(w.address)}`, ...(w.pesel ? [`PESEL ${w.pesel}`] : []), `e-mail: ${or(w.email)}`, ...(w.phone ? [`tel. ${w.phone}`] : []), ...(unregistered ? ["działalność nierejestrowana"] : [])] },
+    { role: "Zamawiający", name: or(z.name), details: firmClient
+      ? [or(z.address), ...(z.nip ? [`NIP ${z.nip}`] : []), `reprezentowany przez: ${or(z.representative)}`, `e-mail: ${or(z.email)}`]
+      : [`zam. ${or(z.address)}`, `e-mail: ${or(z.email)}`, ...(consumer ? ["konsument"] : [])] },
+  ];
+
   return {
+    keyTerms,
+    parties,
     title: unregistered ? "Umowa o dzieło (działalność nierejestrowana)" : "Umowa o dzieło z przeniesieniem autorskich praw majątkowych",
     preamble: [
       `zawarta ${input.remote ? "na odległość (bez jednoczesnej obecności stron)" : `w miejscowości ${or(input.place, "…………")}`} w dniu ${date(input.dates.signed)} pomiędzy:`,

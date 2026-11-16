@@ -1,97 +1,121 @@
+import { Archive, Banknote, Building2, CalendarDays, ClipboardCheck, Gauge, Landmark, ListChecks, PenLine, Phone, Printer, Receipt, ShieldCheck, Signature, UserRound, Wallet } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { formatPln } from "@/lib/contracts/amount-words";
 import { LEGAL_2026, workForCompanyPayout } from "@/lib/contracts/legal-2026";
 
+type Kind = "firma" | "osoba";
 const example = workForCompanyPayout(3000, 80);
+const limit = formatPln(LEGAL_2026.unregisteredQuarterLimit);
 
-/** Plain-language walkthrough for someone without a company: what to pick, fill in and do after. */
-export default function ContractsGuide({ open, onToggle }: { open: boolean; onToggle: (open: boolean) => void }) {
+const PATHS: Record<Kind, { icon: LucideIcon; title: string; contract: string; facts: Array<{ icon: LucideIcon; label: string; value: string }> }> = {
+  firma: {
+    icon: Building2, title: "Klient to firma", contract: "Umowa o dzieło",
+    facts: [
+      { icon: Gauge, label: "Limit kwoty", value: "brak" },
+      { icon: ShieldCheck, label: "ZUS", value: "nie płacisz" },
+      { icon: Wallet, label: "Na konto", value: `ok. ${formatPln(example.payout)} z ${formatPln(3000)}` },
+    ],
+  },
+  osoba: {
+    icon: UserRound, title: "Klient to osoba prywatna", contract: "Działalność nierejestrowana",
+    facts: [
+      { icon: Gauge, label: "Limit", value: `${limit} / kwartał` },
+      { icon: ShieldCheck, label: "ZUS", value: "nie płacisz" },
+      { icon: Wallet, label: "Na konto", value: "cała kwota" },
+    ],
+  },
+};
+
+const FILL: Array<{ icon: LucideIcon; title: string; text: string }> = [
+  { icon: UserRound, title: "Dane klienta", text: "Firmę sprawdzisz w CEIDG lub KRS (biznes.gov.pl)." },
+  { icon: ListChecks, title: "Zakres", text: "Konkretnie: podstrony, funkcje, panel, wersja na telefon." },
+  { icon: CalendarDays, title: "Terminy", text: "Spóźnione materiały od klienta przesuwają termin." },
+  { icon: Banknote, title: "Kwota i zaliczka", text: "Np. 30% po podpisaniu, reszta 7 dni po odbiorze." },
+  { icon: PenLine, title: "Poprawki", text: "Np. 2 rundy zmian i 30 dni na darmowe błędy." },
+  { icon: Wallet, title: "Twoje dane", text: "„Zapamiętaj” trzyma je tylko w tej przeglądarce." },
+];
+
+const AFTER: Record<Kind, Array<{ when: string; icon: LucideIcon; text: React.ReactNode }>> = {
+  firma: [
+    { when: "Do 7 dni", icon: Landmark, text: <>Firma zgłasza umowę do ZUS (RUD) i płaci za Ciebie zaliczkę na podatek. <strong>Ty nic nie zanosisz.</strong></> },
+    { when: "Przy zapłacie", icon: Receipt, text: <>Jeśli firma poprosi, dajesz <strong>rachunek do umowy</strong>.</> },
+    { when: "Do końca lutego", icon: Archive, text: <>Dostajesz od firmy <strong>PIT-11</strong>.</> },
+    { when: "Do 30 kwietnia", icon: ClipboardCheck, text: <><strong>PIT-37</strong> w e-Urzędzie Skarbowym. Część podatku często wraca.</> },
+  ],
+  osoba: [
+    { when: "Dzień po sprzedaży", icon: ListChecks, text: <>Wpis do <strong>ewidencji sprzedaży</strong>: data, za co, kwota.</> },
+    { when: "Na prośbę klienta", icon: Receipt, text: <>Wystawiasz <strong>rachunek</strong> (bez VAT).</> },
+    { when: "Co kwartał", icon: Gauge, text: <>Pilnujesz limitu <strong>{limit}</strong>. Po przekroczeniu masz {LEGAL_2026.ceidgDays} dni na rejestrację firmy.</> },
+    { when: "Do 30 kwietnia", icon: ClipboardCheck, text: <><strong>PIT-36</strong> z sekcją „działalność nierejestrowana”.</> },
+  ],
+};
+
+/** Visual, plain-language walkthrough for someone without a company. Shows only the path for the chosen client. */
+export default function ContractsGuide({ open, onToggle, kind, onChooseKind }: { open: boolean; onToggle: (open: boolean) => void; kind: Kind; onChooseKind: (kind: Kind) => void }) {
+  const path = PATHS[kind];
   return <details className="contracts-guide" open={open} onToggle={e => onToggle((e.currentTarget as HTMLDetailsElement).open)}>
-    <summary>Jak to wypełnić — instrukcja krok po kroku</summary>
-    <div className="contracts-guide-body">
-      <section>
-        <h3>Najpierw najważniejsze</h3>
-        <p>Nie musisz zakładać firmy, żeby legalnie zrobić komuś stronę, sklep czy program. Wystarczy dobra umowa, a to, jak ją rozliczyć, zależy tylko od jednego: <strong>czy klient jest firmą, czy osobą prywatną</strong>. Panel sam dobierze właściwą umowę, gdy wybierzesz klienta.</p>
-      </section>
+    <summary>Jak to wypełnić — 4 kroki</summary>
+    <div className="guide">
+      <ol className="guide-steps" aria-label="Kroki">
+        {[[UserRound, "Wybierz klienta"], [ListChecks, "Wypełnij pola"], [Signature, "Podpiszcie"], [CalendarDays, "Rozlicz"]].map(([Icon, label], i) => {
+          const I = Icon as LucideIcon;
+          return <li key={i}><span className="guide-step-icon"><I size={18} aria-hidden /></span><span><small>Krok {i + 1}</small>{label as string}</span></li>;
+        })}
+      </ol>
 
-      <section>
-        <h3>Krok 1. Kim jest klient?</h3>
-        <div className="contracts-guide-compare">
-          <div>
-            <h4>Firma <span>(ma NIP)</span></h4>
-            <p><strong>Umowa o dzieło.</strong> To firma płaci za Ciebie podatek i zgłasza umowę do ZUS. Ty niczego nie zgłaszasz.</p>
-            <ul>
-              <li>Bez limitu kwoty.</li>
-              <li>Bez składek ZUS.</li>
-              <li>Na konto dostajesz kwotę pomniejszoną o zaliczkę na podatek. Przykład: przy {formatPln(3000)} dostaniesz ok. {formatPln(example.payout)}, a {formatPln(example.advanceTax)} firma wpłaci za Ciebie do urzędu.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Osoba prywatna</h4>
-            <p><strong>Działalność nierejestrowana.</strong> Klient płaci Ci pełną kwotę, a podatek rozliczasz sam raz w roku.</p>
-            <ul>
-              <li>Limit: {formatPln(LEGAL_2026.unregisteredQuarterLimit)} na kwartał, liczony ze wszystkich klientów prywatnych razem.</li>
-              <li>Bez składek ZUS i bez rejestracji.</li>
-              <li>Klient ma 14 dni na odstąpienie, jeśli podpisujecie umowę na odległość.</li>
-            </ul>
-          </div>
+      <section className="guide-block">
+        <h3><span>1</span>Kim jest klient?</h3>
+        <div className="guide-paths" role="radiogroup" aria-label="Rodzaj klienta">
+          {(Object.keys(PATHS) as Kind[]).map(k => {
+            const p = PATHS[k];
+            return <button key={k} type="button" role="radio" aria-checked={kind === k} className="guide-path" onClick={() => onChooseKind(k)}>
+              <p.icon size={26} aria-hidden /><strong>{p.title}</strong><span>{p.contract}</span>
+            </button>;
+          })}
         </div>
-        <p className="contracts-guide-tip"><strong>Klient ma jednoosobową firmę</strong> (np. fryzjer, warsztat, sklep)? Wybierz „Firma” i zaznacz pole o prawach konsumenta, jeśli nie zajmuje się zawodowo stronami, IT ani marketingiem. Tak jest bezpieczniej: przysługują mu wtedy te same prawa co osobie prywatnej.</p>
-        <p className="contracts-guide-tip">Która opcja jest lepsza? Żadna nie jest „lepsza”, to klient decyduje, która pasuje. Przy firmie jest wygodniej, bo nie pilnujesz limitu i nie rozliczasz zaliczek. Przy osobie prywatnej dostajesz całą kwotę, ale pilnujesz limitu kwartalnego.</p>
-      </section>
-
-      <section>
-        <h3>Krok 2. Co wpisać</h3>
-        <ol>
-          <li><strong>Dane klienta.</strong> Firma: pełna nazwa, adres, NIP i osoba, która podpisuje (właściciel albo prezes). Dane firmy sprawdzisz w wyszukiwarce CEIDG lub KRS na biznes.gov.pl. Osoba prywatna: imię, nazwisko, adres.</li>
-          <li><strong>Dzieło i zakres.</strong> Wybierz usługę z listy i dopisz konkretnie, co klient dostaje: liczba podstron, funkcje, panel, wersja na telefon. Im dokładniej, tym mniej sporów o to, co było w cenie.</li>
-          <li><strong>Terminy.</strong> Data umowy, start prac, termin oddania. Jeśli klient spóźni się z materiałami, umowa automatycznie przesuwa termin.</li>
-          <li><strong>Kwota.</strong> Przy firmie wpisz kwotę brutto, czyli tę przed podatkiem. Pod polem zobaczysz, ile trafi na Twoje konto. Przy osobie prywatnej wpisz kwotę, którą klient Ci zapłaci.</li>
-          <li><strong>Zaliczka i płatność.</strong> Np. 30% zaliczki po podpisaniu, reszta 7 dni po odbiorze.</li>
-          <li><strong>Honorarium autorskie</strong> (tylko przy firmie). Zostaw 80%. To część kwoty za prawa autorskie, dzięki której firma potrąci Ci mniejszą zaliczkę na podatek.</li>
-          <li><strong>Rundy poprawek i poprawki błędów.</strong> Ile razy klient może prosić o zmiany w cenie (np. 2) i przez ile dni po oddaniu poprawiasz błędy za darmo (np. 30).</li>
-          <li><strong>Twoje dane.</strong> Imię, nazwisko, adres, e-mail, numer konta. PESEL jest potrzebny, gdy klientem jest firma (do formularza PIT-11). Możesz zaznaczyć „Zapamiętaj”, żeby nie wpisywać ich za każdym razem. Zostaną tylko w tej przeglądarce.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h3>Krok 3. Podpisanie</h3>
-        <ol>
-          <li>Kliknij <strong>Drukuj / zapisz PDF</strong> i wydrukuj umowę w 2 egzemplarzach.</li>
-          <li><strong>Podpiszcie obaj odręcznie, na papierze.</strong> Umowa przenosi prawa autorskie, a to wymaga formy pisemnej pod rygorem nieważności. Sama wymiana maili albo skan nie wystarczy. Możecie wysłać sobie egzemplarze pocztą albo kurierem. Zamiast podpisu na papierze można użyć kwalifikowanego podpisu elektronicznego.</li>
-          <li>Po skończeniu pracy podpiszcie <strong>protokół odbioru</strong> (jest w załączniku). To dowód, że klient odebrał dzieło. Od tej daty liczy się termin zapłaty.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h3>Krok 4. Co dalej? Czy muszę coś gdzieś zanosić?</h3>
-        <div className="contracts-guide-compare">
-          <div>
-            <h4>Klient firma</h4>
-            <ul>
-              <li><strong>Nigdzie nic nie zanosisz.</strong> Firma w ciągu {LEGAL_2026.rudDays} dni zgłasza umowę do ZUS (formularz RUD) i odprowadza za Ciebie zaliczkę na podatek.</li>
-              <li>Firma może poprosić o <strong>rachunek do umowy</strong>: prosty dokument z Twoimi danymi, kwotą i odwołaniem do umowy.</li>
-              <li>Do końca lutego następnego roku dostaniesz od firmy <strong>PIT-11</strong>.</li>
-              <li>Do 30 kwietnia składasz zeznanie roczne, np. w e-Urzędzie Skarbowym (podatki.gov.pl). Masz tylko umowy z firmami? To <strong>PIT-37</strong>. Często część podatku wraca dzięki kwocie wolnej 30 000 zł rocznie.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Klient prywatny</h4>
-            <ul>
-              <li><strong>Nigdzie nie zgłaszasz działalności</strong>, nie płacisz ZUS i nie masz miesięcznych rozliczeń.</li>
-              <li>Prowadzisz <strong>prostą ewidencję sprzedaży</strong>, czyli tabelę: data, za co, kwota, suma w kwartale. Wpis robisz najpóźniej następnego dnia po sprzedaży.</li>
-              <li>Jeśli klient poprosi, wystawiasz mu <strong>rachunek</strong> (bez VAT).</li>
-              <li>Pilnuj limitu {formatPln(LEGAL_2026.unregisteredQuarterLimit)} na kwartał. Kalkulator jest pod kwotą w formularzu. Po przekroczeniu masz {LEGAL_2026.ceidgDays} dni na zarejestrowanie firmy.</li>
-              <li>Do 30 kwietnia składasz <strong>PIT-36</strong> z sekcją „działalność nierejestrowana”. Jeśli w tym samym roku masz też umowy z firmami, wpisujesz je w tym samym PIT-36.</li>
-            </ul>
-          </div>
+        <div className="guide-facts">
+          <path.icon size={20} aria-hidden />
+          {path.facts.map(f => <div key={f.label}><f.icon size={15} aria-hidden /><span>{f.label}</span><strong>{f.value}</strong></div>)}
         </div>
-        <p className="contracts-guide-tip">Umowy, protokoły i ewidencję przechowuj przez 5 lat od końca roku, w którym rozliczyłeś podatek.</p>
+        <p className="guide-note">{kind === "firma"
+          ? <>Jednoosobowa firma spoza branży IT (fryzjer, warsztat)? Zaznacz w formularzu <strong>prawa konsumenta</strong>.</>
+          : <>Limit liczy się ze wszystkich klientów prywatnych razem. Umowa na odległość daje klientowi 14 dni na odstąpienie.</>}</p>
       </section>
 
-      <section>
-        <h3>Gdy masz wątpliwości</h3>
-        <p>Zadzwoń do Krajowej Informacji Skarbowej: 22 330 03 30 (z komórki) lub 801 055 055 (z telefonu stacjonarnego). To bezpłatne, a konsultanci odpowiadają na takie pytania. Przy pierwszej umowie warto też pokazać ją księgowemu. Ten panel to wzór, nie porada prawna. Kwoty i limity sprawdzisz pod przyciskiem „Do jakiej kwoty i jak rozliczyć”.</p>
+      <section className="guide-block">
+        <h3><span>2</span>Co wpisać</h3>
+        <div className="guide-fill">
+          {FILL.map(f => <div key={f.title}><f.icon size={18} aria-hidden /><strong>{f.title}</strong><p>{f.text}</p></div>)}
+          {kind === "firma" && <div><Banknote size={18} aria-hidden /><strong>Kwota brutto i 80%</strong><p>Pod polem widać, ile trafi na konto. 80% to honorarium autorskie (niższy podatek).</p></div>}
+        </div>
       </section>
+
+      <section className="guide-block">
+        <h3><span>3</span>Podpisanie</h3>
+        <div className="guide-sign">
+          <figure aria-hidden>
+            <svg viewBox="0 0 120 80" width="120" height="80"><rect x="8" y="10" width="44" height="60" rx="3" fill="#fff" stroke="currentColor" strokeOpacity=".35" /><rect x="30" y="6" width="44" height="60" rx="3" fill="#fff" stroke="currentColor" strokeOpacity=".5" /><path d="M37 18h28M37 25h30M37 32h22" stroke="currentColor" strokeOpacity=".3" strokeWidth="2" strokeLinecap="round" /><path d="M38 54c6-8 9 4 14-2s6-4 10 0" fill="none" stroke="#b5643b" strokeWidth="2" strokeLinecap="round" /><path d="M86 62l22-22 5 5-22 22-7 2z" fill="#b5643b" opacity=".85" /></svg>
+          </figure>
+          <ol>
+            <li><Printer size={16} aria-hidden /><span><strong>Drukuj / zapisz PDF</strong> — 2 egzemplarze.</span></li>
+            <li><Signature size={16} aria-hidden /><span><strong>Podpis odręczny</strong> (albo kwalifikowany e-podpis). Skan ani mail nie wystarczą — prawa autorskie wymagają formy pisemnej.</span></li>
+            <li><ClipboardCheck size={16} aria-hidden /><span>Po oddaniu pracy <strong>protokół odbioru</strong> z załącznika. Od tej daty liczy się termin zapłaty.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <section className="guide-block">
+        <h3><span>4</span>Co dalej</h3>
+        <ol className="guide-timeline">
+          {AFTER[kind].map(step => <li key={step.when}><span className="guide-dot"><step.icon size={15} aria-hidden /></span><small>{step.when}</small><p>{step.text}</p></li>)}
+        </ol>
+        <p className="guide-note">Dokumenty trzymaj 5 lat od końca roku rozliczenia.</p>
+      </section>
+
+      <aside className="guide-help">
+        <Phone size={18} aria-hidden />
+        <p><strong>Wątpliwości?</strong> Krajowa Informacja Skarbowa, bezpłatnie: <a href="tel:+48223300330">22 330 03 30</a> (komórka) · <a href="tel:801055055">801 055 055</a>. Ten panel to wzór, nie porada prawna.</p>
+      </aside>
     </div>
   </details>;
 }

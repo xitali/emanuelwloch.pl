@@ -3,7 +3,7 @@ import { BrandMark, IconArrowUpRight, IconGithub } from "./portfolio/icons";
 const groups = [
   { title: "Usługi", links: [["/tworzenie-stron-internetowych", "Strony internetowe"], ["/sklepy-internetowe", "Sklepy internetowe"], ["/tworzenie-aplikacji-webowych", "Aplikacje webowe"], ["/bazy-danych-i-panele", "Bazy danych i panele"], ["/programy-na-windows", "Programy na Windows"], ["/nextjs-developer", "Next.js developer"]] },
   { title: "Lokalnie", links: [["/tworzenie-stron-internetowych-jaroslaw", "Strony internetowe Jarosław"], ["/tworzenie-stron-internetowych-rzeszow", "Strony internetowe Rzeszów"]] },
-  { title: "Informacje", links: [["/uslugi", "Pełna oferta"], ["/o-mnie", "O mnie"], ["/poradniki", "Poradniki"], ["/realizacje", "Realizacje"], ["/polityka-prywatnosci", "Polityka prywatności"]] },
+  { title: "Informacje", links: [["/uslugi", "Pełna oferta"], ["/o-mnie", "O mnie"], ["/poradniki", "Poradniki"], ["/realizacje", "Realizacje"], ["/polityka-prywatnosci", "Polityka prywatności"], ["/polityka-prywatnosci#licencje", "Licencje"]] },
 ];
 export default function Footer(_props: { visitCount?: number }) {
   void _props;

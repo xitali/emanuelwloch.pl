@@ -5,6 +5,7 @@ import { buildContract, type Contract, type ContractInput } from "@/lib/contract
 import { formatPln } from "@/lib/contracts/amount-words";
 import { LEGAL_2026, quarterStatus, workForCompanyPayout } from "@/lib/contracts/legal-2026";
 import ContractsGuide from "./ContractsGuide";
+import ContractDocument from "./ContractDocument";
 import { servicePaths } from "@/lib/service-paths";
 import { useAdmin } from "./AdminContext";
 
@@ -82,7 +83,7 @@ export default function ContractsView() {
       <button type="button" className="admin-secondary" aria-expanded={showInfo} onClick={() => setShowInfo(v => !v)}><Info className="w-4 h-4" /> Do jakiej kwoty i jak rozliczyć</button>
     </header>
 
-    <ContractsGuide open={guideOpen} onToggle={toggleGuide} />
+    <ContractsGuide open={guideOpen} onToggle={toggleGuide} kind={input.client.kind} onChooseKind={chooseClientKind} />
 
     {showInfo && <aside className="contracts-info" aria-label="Limity i rozliczenie w 2026 roku">
       <p className="contracts-info-date">Stan na {new Date(LEGAL_2026.checkedOn).toLocaleDateString("pl-PL")} · to nie jest porada prawna ani podatkowa</p>
@@ -202,25 +203,11 @@ export default function ContractsView() {
           <button type="button" className="admin-primary" onClick={() => window.print()}><Printer className="w-4 h-4" /> Drukuj / zapisz PDF</button>
           <button type="button" className="admin-secondary" onClick={copy}><Copy className="w-4 h-4" /> Kopiuj tekst</button>
         </div>
-        <article className="contract-paper" aria-label="Podgląd umowy">
-          <header className="contract-letterhead">
-            <div><p className="contract-mark"><strong>ew</strong> / Emanuel Włoch</p><p>Strony · sklepy · aplikacje · programy</p></div>
-            <div><p><strong>emanuelwloch.pl</strong></p><p>{input.contractor.email}</p>{input.contractor.phone && <p>{input.contractor.phone}</p>}</div>
-          </header>
-          <h1>{contract.title}</h1>
-          {contractNo && <p className="contract-number">nr {contractNo}</p>}
-          {contract.preamble.map((p, i) => <p key={i} className="contract-preamble">{p}</p>)}
-          {contract.sections.map(section => <section key={section.heading}>
-            <h2>{section.heading}</h2>
-            <ol>{section.items.map((item, i) => <li key={i}>{item}</li>)}</ol>
-          </section>)}
-          <div className="contract-signatures">{contract.signatures.map((s, i) => <div key={s}><span /><p><strong>{s}</strong></p><p>{i === 0 ? input.contractor.name : (input.client.kind === "firma" ? input.client.representative || input.client.name : input.client.name) || " "}</p><small>data i czytelny podpis</small></div>)}</div>
-          <p className="contract-footnote">Dokument przygotowany w emanuelwloch.pl</p>
-          {contract.annexes.map(annex => <section key={annex.heading} className="contract-annex">
-            <h2>{annex.heading}: {annex.title}</h2>
-            {annex.items.map((item, i) => <p key={i}>{item}</p>)}
-          </section>)}
-        </article>
+        <div className="doc-frame">
+          <ContractDocument contract={contract} number={contractNo} signedOn={new Date(`${input.dates.signed}T12:00:00`).toLocaleDateString("pl-PL")}
+            contact={{ email: input.contractor.email, phone: input.contractor.phone }}
+            signers={[input.contractor.name, input.client.kind === "firma" ? input.client.representative || input.client.name : input.client.name]} />
+        </div>
       </div>
     </div>
   </section>;

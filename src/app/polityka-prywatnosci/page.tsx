@@ -84,6 +84,21 @@ export default function PrivacyPolicyPage() {
           </p>
         </section>
 
+        <section id="licencje" className="space-y-3 scroll-mt-24">
+          <h2 className="text-xl font-bold">Licencje materiałów</h2>
+          <p>
+            Modele 3D laptopa i monitora w grafikach i animacjach na stronie
+            pochodzą z serwisu Sketchfab i są udostępnione na licencji{" "}
+            <a className="underline underline-offset-4" href="https://creativecommons.org/licenses/by/4.0/deed.pl" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+            Modele zostały zmienione: usunięto oznaczenia producenta,
+            zmieniono materiały i zoptymalizowano pliki.
+          </p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li><a className="underline underline-offset-4" href="https://sketchfab.com/3d-models/apple-macbook-pro-2020-dfad155b993b45b593054f8970bd6d70" target="_blank" rel="noopener noreferrer">„Apple MacBook Pro 2020”</a>, autor: CGDELUXE</li>
+            <li><a className="underline underline-offset-4" href="https://sketchfab.com/3d-models/pc-monitor-27-inch-06fb18eec19245d4811c4c3c8c7ea567" target="_blank" rel="noopener noreferrer">„PC Monitor 27 inch”</a>, autor: Annelida</li>
+          </ul>
+        </section>
+
         <Link
           href="/"
           className="inline-flex rounded-[var(--p-radius)] bg-[var(--p-surface)] px-5 py-3 font-semibold text-white hover:bg-[var(--p-surface)]"

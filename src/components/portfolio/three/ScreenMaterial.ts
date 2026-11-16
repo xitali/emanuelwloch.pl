@@ -72,7 +72,8 @@ export function coverFit(texture: Texture, areaAspect: number) {
   const textureAspect = image?.width && image?.height ? image.width / image.height : 16 / 9;
   const repeat = new Vector2(1, textureAspect / areaAspect);
   const offset = new Vector2(0, 1 - repeat.y);
-  if (repeat.y > 1) {
+  if (repeat.y > 1.15) {
+    // Slightly short pages (a 16:9 shot on the 16:10 laptop) keep full width and continue with their last row.
     // A banner-like image shorter than the screen: fill the height and centre it instead of smearing the last row.
     repeat.set(areaAspect / textureAspect, 1);
     offset.set((1 - repeat.x) / 2, 0);
