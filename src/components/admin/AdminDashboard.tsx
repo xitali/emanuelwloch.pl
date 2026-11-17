@@ -2,7 +2,7 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle } from "lucide-react";
-import { logoutAdminAction } from "@/app/actions/admin";
+import { logoutAdminAction } from "@/app/actions/admin/session";
 import { BrandMark } from "@/components/portfolio/icons";
 import { isOpenMessage } from "@/lib/contact/message-status";
 import type { ContactMessage, Project, Service, Testimonial } from "@/types";

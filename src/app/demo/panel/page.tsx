@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "@/app/admin/admin.css";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import { DEMO_NOW, demoAnalytics, demoMessages, demoVisitsTotal } from "@/lib/admin/demo";
-import { getProjects, getServices, getTestimonials } from "@/lib/server/turso";
+import { getProjects } from "@/lib/data/projects";
+import { getServices } from "@/lib/data/services";
+import { getTestimonials } from "@/lib/data/testimonials";
 
 export const metadata: Metadata = {
   title: "Demo panelu administracyjnego",

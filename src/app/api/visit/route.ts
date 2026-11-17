@@ -1,4 +1,4 @@
-import { recordPageVisit } from "@/lib/server/turso";
+import { recordPageVisit } from "@/lib/data/visits";
 import { checkRateLimit } from "@/lib/server/rate-limit";
 import { getClientIp } from "@/lib/server/request";
 import { NextResponse } from "next/server";

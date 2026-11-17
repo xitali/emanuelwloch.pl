@@ -3,7 +3,7 @@ import "server-only";
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import { getJwtSecret } from "@/lib/server/env";
-import { isAdminCredentialCurrent, type AdminCredential } from "@/lib/server/turso";
+import { isAdminCredentialCurrent, type AdminCredential } from "@/lib/data/admin-credentials";
 
 const COOKIE_NAME =
   process.env.NODE_ENV === "production"
@@ -99,4 +99,11 @@ export async function logoutAdminSession() {
 async function credentialIsCurrent(payload: { sub?: string; cv?: unknown }): Promise<boolean> {
   if (!payload.sub || !Number.isSafeInteger(payload.cv) || Number(payload.cv) < 0) return false;
   return isAdminCredentialCurrent(payload.sub, Number(payload.cv));
+}
+
+/** Guards a server action: throws unless the request carries a valid admin session. */
+export async function requireAdmin() {
+  if (!(await verifyAdminSession())) {
+    throw new Error("Brak uprawnień.");
+  }
 }

@@ -1,8 +1,5 @@
 import { verifyMobileAdminToken } from "@/lib/server/auth";
-import {
-  deleteAndroidDevice,
-  upsertAndroidDevice,
-} from "@/lib/server/turso";
+import { deleteAndroidDevice, upsertAndroidDevice } from "@/lib/data/devices";
 import { androidDeviceSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";

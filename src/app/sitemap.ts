@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getProjects } from "@/lib/server/turso";
+import { getProjects } from "@/lib/data/projects";
 import { getProjectPath, SITE_URL, toAbsoluteUrl } from "@/lib/content/seo";
 import { servicePages } from "@/lib/content/service-pages";
 import { guidePages } from "@/lib/content/guide-pages";

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { IconArrowUpRight, IconCheck, IconQuote } from "@/components/portfolio/icons";
-import { getProjectById, getProjects } from "@/lib/server/turso";
+import { getProjectById, getProjects } from "@/lib/data/projects";
 import {
   getProjectIdFromSegment,
   getProjectPath,

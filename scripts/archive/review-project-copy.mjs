@@ -1,6 +1,6 @@
 // Reviewed public copy; backup and guarded atomic transaction. No slugs, prices or publication flags change.
 import {createClient} from '@libsql/client';import {readFile,writeFile,mkdir} from 'node:fs/promises';
-const patches=JSON.parse(await readFile(new URL('./data/project-copy-review-2026-11-07.json',import.meta.url),'utf8'));
+const patches=JSON.parse(await readFile(new URL('../data/project-copy-review-2026-11-07.json',import.meta.url),'utf8'));
 const db=createClient({url:process.env.TURSO_DATABASE_URL,authToken:process.env.TURSO_AUTH_TOKEN});
 const prepared=[];
 for(const patch of patches){const rows=(await db.execute({sql:'SELECT * FROM projects WHERE id = ?',args:[patch.id]})).rows;if(rows.length!==1)throw new Error('Expected project missing.');prepared.push({...patch,before:rows[0]});}

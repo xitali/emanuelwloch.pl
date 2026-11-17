@@ -1,10 +1,7 @@
 import "server-only";
 
 import webpush from "web-push";
-import {
-  deletePushSubscription,
-  getPushSubscriptions,
-} from "@/lib/server/turso";
+import { deletePushSubscription, getPushSubscriptions } from "@/lib/data/devices";
 
 interface AdminPushPayload {
   title: string;
