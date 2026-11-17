@@ -37,7 +37,7 @@ export default function MockupStage({ jobs }: { jobs: MockupJob[] }) {
     setIndex(current => current + 1);
   }, [job]);
   return <div style={{ width: 1600, height: 1000 }}>
-    <Canvas ref={canvas} dpr={1} frameloop="never" camera={{ position: [3.4, 3.4, 8.6], fov: 32 }} gl={{ preserveDrawingBuffer: true, alpha: true, antialias: true }} onCreated={({ camera }) => camera.lookAt(0.05, 1.3, -0.35)}>
+    <Canvas ref={canvas} dpr={2} frameloop="never" camera={{ position: [3.4, 3.4, 8.6], fov: 32 }} gl={{ preserveDrawingBuffer: true, alpha: true, antialias: true }} onCreated={({ camera }) => camera.lookAt(0.05, 1.3, -0.35)}>
       <Suspense fallback={null}>
         <Studio />
         {job && <Desk key={job.out} job={job} onReady={save} />}

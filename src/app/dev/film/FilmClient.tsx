@@ -129,7 +129,7 @@ export default function FilmClient({ format }: { format: Format }) {
       : `radial-gradient(ellipse 50% 70% at 68% 55%, #acd1e814, transparent 70%), radial-gradient(ellipse 40% 50% at 10% 100%, #e08a5b0e, transparent 70%)` }} />
 
     <div style={{ position: "absolute", inset: 0, visibility: scene ? "visible" : "hidden" }}>
-      <Canvas frameloop="never" dpr={1} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }} style={{ width: w, height: h }}>
+      <Canvas frameloop="never" dpr={2} gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }} style={{ width: w, height: h }}>
         <Driver />
         {scene && <Framing frame={FRAMING[format][scene]} />}
         <Suspense fallback={null}>

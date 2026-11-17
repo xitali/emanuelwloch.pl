@@ -5,7 +5,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { MathUtils, Vector3, type Group, type SpotLight } from "three";
 import DeskComposition from "@/components/portfolio/three/DeskComposition";
 import Studio from "@/components/portfolio/three/Studio";
-import { LAPTOP_SCREEN, MONITOR_SCREEN, pageAspect } from "@/components/portfolio/three/Devices";
+import { LAPTOP_SCREEN, LID_CLOSED, LID_OPEN, MONITOR_SCREEN, pageAspect } from "@/components/portfolio/three/Devices";
 import type { ScreenMaterialType } from "@/components/portfolio/three/ScreenMaterial";
 import type { ChromeKind } from "@/components/portfolio/three/chrome";
 import type { SceneProps } from "../WorldView";
@@ -21,8 +21,6 @@ const SHOTS = [
   { turn: 0.05, lift: 0.08, monitor: -0.32, camera: [3.0, 2.9, 8.7] },
 ] as const;
 const LOOK_AT = new Vector3(0.4, 1.3, -0.35);
-const LID_OPEN = -0.28;
-const LID_CLOSED = -Math.PI / 2 - 0.02;
 
 /**
  * Opening sequence: the desk rises out of the dark, a light sweeps across the aluminium,

@@ -1,55 +1,54 @@
 "use client";
-import { forwardRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { RoundedBox } from "@react-three/drei";
+import { forwardRef, useMemo } from "react";
+import { RoundedBox, useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
-import { Matrix4, Quaternion, Vector3, type Group, type InstancedMesh, type Texture } from "three";
+import { Color, type Group, type Mesh, type MeshStandardMaterial, type Object3D, type Texture } from "three";
 import { coverFit, ScreenMaterial, ScreenMaterialImpl, type ScreenMaterialType } from "./ScreenMaterial";
 import { CHROME_HEIGHT, chromeTexture, type ChromeKind } from "./chrome";
 
-/* Shared dimensions (scene units ≈ decimetres). Both panels are 16:9, like the screenshots. */
-export const LAPTOP_SCREEN = { width: 3.04, height: 1.71 };
+/*
+ * The laptop and the monitor are real models (Sketchfab, CC BY 4.0, credited on /polityka-prywatnosci#licencje):
+ * "Apple MacBook Pro 2020" by CGDELUXE and "PC Monitor 27 inch" by Annelida, optimised to WebP + meshopt.
+ * The lit panels are our own Screen meshes laid exactly over the models' displays.
+ */
+const LAPTOP_URL = "/models/laptop.glb";
+const MONITOR_URL = "/models/monitor.glb";
+
+/* Model-space measurements (metres) read from the files. */
+const LAPTOP_MODEL = { screenWidth: 0.3432, screenHeight: 0.2135, screenY: 0.00545, screenZ: -0.1191, hingeY: -0.1147, hingeZ: -0.1157, bottom: -0.1242 };
+const MONITOR_MODEL = { screenWidth: 0.7084, screenHeight: 0.3985, bottom: -0.3107 };
+const LAPTOP_SCALE = 3.04 / LAPTOP_MODEL.screenWidth;
+const MONITOR_SCALE = 4.16 / MONITOR_MODEL.screenWidth;
+
+/* Shared dimensions (scene units ≈ decimetres): the laptop panel is 16:10, the monitor 16:9. */
+export const LAPTOP_SCREEN = { width: 3.04, height: +(LAPTOP_MODEL.screenHeight * LAPTOP_SCALE).toFixed(3) };
 export const MONITOR_SCREEN = { width: 4.16, height: 2.34 };
 /** Portrait phone panel, the shape of a 390 × 844 mobile screenshot. */
 export const PHONE_SCREEN = { width: 0.74, height: 1.6 };
 
-const ALUMINIUM = { color: "#cdd2d6", metalness: 0.62, roughness: 0.36, envMapIntensity: 1.4 };
-const GRAPHITE = { color: "#2c3237", metalness: 0.85, roughness: 0.34, envMapIntensity: 1.2 };
-const BEZEL = { color: "#060708", metalness: 0.1, roughness: 0.45 };
-const KEY = { color: "#1b1f22", metalness: 0.15, roughness: 0.6 };
+const BEZEL = { color: "#050607", metalness: 0.2, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08 };
 
-/** 6 rows of keys with a wide space bar, drawn as one instanced mesh (one draw call). */
-function Keyboard({ width }: { width: number }) {
-  const { keys, depth } = useMemo(() => {
-    const list: Array<{ x: number; z: number; w: number }> = [];
-    const columns = 14, gap = 0.028;
-    const key = (width - 0.34 - gap * (columns - 1)) / columns;
-    for (let row = 0; row < 6; row++) {
-      const z = -0.62 + row * (key * 0.78 + gap);
-      if (row === 5) {
-        const space = key * 5 + gap * 4;
-        list.push({ x: 0, z, w: space });
-        for (let i = 0; i < 4; i++) { const offset = space / 2 + gap + key / 2 + i * (key + gap); list.push({ x: offset, z, w: key }, { x: -offset, z, w: key }); }
-        continue;
-      }
-      for (let c = 0; c < columns; c++) list.push({ x: -(width - 0.34) / 2 + key / 2 + c * (key + gap), z, w: key });
-    }
-    return { keys: list, depth: key * 0.78 };
-  }, [width]);
-  const geometry = useMemo(() => new RoundedBoxGeometry(1, 0.02, depth, 2, 0.008), [depth]);
-  const mesh = useRef<InstancedMesh>(null);
-  useLayoutEffect(() => {
-    if (!mesh.current) return;
-    const matrix = new Matrix4();
-    const rotation = new Quaternion();
-    // The shared geometry is 1 unit wide; each instance scales it to its key width.
-    keys.forEach((k, i) => mesh.current!.setMatrixAt(i, matrix.compose(new Vector3(k.x, 0.006, k.z), rotation, new Vector3(k.w, 1, 1))));
-    mesh.current.instanceMatrix.needsUpdate = true;
-  }, [keys]);
-  useEffect(() => () => geometry.dispose(), [geometry]);
-  return <instancedMesh ref={mesh} args={[geometry, undefined, keys.length]} position={[0, 0.112, 0]}>
-    <meshStandardMaterial {...KEY} />
-  </instancedMesh>;
+/** Copies of a model's meshes with their baked world transforms, so they can be regrouped (e.g. lid vs base). */
+function useMeshes(url: string, adjust?: (mesh: Mesh, material: MeshStandardMaterial) => void) {
+  const { scene } = useGLTF(url);
+  return useMemo(() => {
+    scene.updateMatrixWorld(true);
+    const meshes: Mesh[] = [];
+    scene.traverse((object: Object3D) => {
+      const mesh = object as Mesh;
+      if (!mesh.isMesh) return;
+      const copy = mesh.clone();
+      copy.matrixAutoUpdate = false;
+      copy.matrix.copy(mesh.matrixWorld);
+      copy.castShadow = true;
+      copy.receiveShadow = true;
+      const material = (mesh.material as MeshStandardMaterial).clone();
+      copy.material = material;
+      adjust?.(copy, material);
+      meshes.push(copy);
+    });
+    return meshes;
+  }, [scene, adjust]);
 }
 
 export interface ScreenProps {
@@ -91,64 +90,72 @@ export function Screen({ width, height, textureA, textureB, chrome = "browser", 
 
 type GroupProps = ThreeElements["group"];
 
-/** Thin aluminium laptop. `open` is the lid angle in radians (0 closed, ~1.9 open). */
+/** Lid angles about the hinge: shut on the keyboard, and open at about 105°. */
+export const LID_CLOSED = Math.PI / 2 - 0.004;
+export const LID_OPEN = -0.26;
+
+/** Space-grey aluminium, a subtle keyboard backlight and no brand marks (the lid logo becomes plain metal). */
+function adjustLaptop(mesh: Mesh, material: MeshStandardMaterial) {
+  // The lid logo is its own patch of the shell: give it the same plain aluminium.
+  if (material.name === "aluminium" || material.name === "apple_logo__aluminium") {
+    material.map = null;
+    material.color = new Color("#8e9296");
+    material.metalness = 0.92;
+    material.roughness = 0.34;
+    material.envMapIntensity = 1.3;
+  }
+  // Matte black keys; the source's backlight texture washes them out to white under studio light.
+  if (material.name.includes("keyboard") || material.name === "touchpad") {
+    material.emissiveIntensity = 0;
+    material.map = null;
+    material.color = new Color(material.name === "touchpad" ? "#0c0d0f" : "#16171a");
+    material.roughness = 0.55;
+  }
+}
+
+/** Graphite plastic and metal for the monitor (the source albedo is a light grey). */
+function adjustMonitor(_mesh: Mesh, material: MeshStandardMaterial) {
+  material.color = new Color("#3a3d41");
+  material.envMapIntensity = 1.1;
+}
+
+/** Space-grey unibody laptop; the lid group pivots on the real hinge axis. */
 export const Laptop = forwardRef<Group, GroupProps & { lidRef?: React.Ref<Group>; screen: Omit<ScreenProps, "width" | "height"> }>(function Laptop({ lidRef, screen, ...props }, ref) {
-  const { width, height } = LAPTOP_SCREEN;
-  const depth = 2.3;
+  const meshes = useMeshes(LAPTOP_URL, adjustLaptop);
+  const lid = meshes.filter(mesh => mesh.name.startsWith("Rectangle004"));
+  const base = meshes.filter(mesh => !mesh.name.startsWith("Rectangle004"));
+  const m = LAPTOP_MODEL;
   return <group ref={ref} {...props}>
-    {/* Base */}
-    <RoundedBox args={[width + 0.36, 0.11, depth]} radius={0.05} smoothness={4} position={[0, 0.055, 0]} castShadow receiveShadow>
-      <meshStandardMaterial {...ALUMINIUM} />
-    </RoundedBox>
-    {/* Keyboard and glass trackpad */}
-    <Keyboard width={width} />
-    <RoundedBox args={[1.3, 0.006, 0.78]} radius={0.003} smoothness={2} position={[0, 0.111, 0.7]}>
-      <meshStandardMaterial color="#c9ced2" metalness={0.8} roughness={0.18} envMapIntensity={1.3} />
-    </RoundedBox>
-    {/* Lid hinges at the back edge of the base */}
-    <group ref={lidRef} position={[0, 0.11, -depth / 2 + 0.02]} rotation={[-0.28, 0, 0]}>
-      <group position={[0, (height + 0.2) / 2, 0]}>
-        <RoundedBox args={[width + 0.36, height + 0.26, 0.07]} radius={0.05} smoothness={4} position={[0, 0, -0.035]} castShadow>
-          <meshStandardMaterial {...ALUMINIUM} />
-        </RoundedBox>
-        <mesh position={[0, 0, 0.002]}>
-          <planeGeometry args={[width + 0.24, height + 0.16]} />
-          <meshStandardMaterial {...BEZEL} />
-        </mesh>
-        <group position={[0, 0.02, 0.006]}>
-          <Screen width={width} height={height} {...screen} />
+    <group scale={LAPTOP_SCALE} position={[0, -m.bottom * LAPTOP_SCALE, 0]}>
+      {base.map(mesh => <primitive key={mesh.uuid} object={mesh} />)}
+      {/* Lid: rotation.x = LID_CLOSED shuts it on the keyboard, LID_OPEN opens it */}
+      <group ref={lidRef} position={[0, m.hingeY, m.hingeZ]} rotation={[LID_OPEN, 0, 0]}>
+        <group position={[0, -m.hingeY, -m.hingeZ]}>
+          {lid.map(mesh => <primitive key={mesh.uuid} object={mesh} />)}
+          <group position={[0, m.screenY, m.screenZ + 0.0002]} scale={1 / LAPTOP_SCALE}>
+            <Screen width={LAPTOP_SCREEN.width} height={LAPTOP_SCREEN.height} {...screen} />
+          </group>
         </group>
       </group>
     </group>
   </group>;
 });
 
-/** Studio monitor on a slim stand. */
+/** 27-inch monitor with a thin bezel on its stand. */
 export const Monitor = forwardRef<Group, GroupProps & { screen: Omit<ScreenProps, "width" | "height"> }>(function Monitor({ screen, ...props }, ref) {
-  const { width, height } = MONITOR_SCREEN;
+  const meshes = useMeshes(MONITOR_URL, adjustMonitor);
   return <group ref={ref} {...props}>
-    {/* Foot and neck */}
-    <RoundedBox args={[1.5, 0.06, 0.95]} radius={0.03} smoothness={4} position={[0, 0.03, 0.05]} castShadow receiveShadow>
-      <meshStandardMaterial {...GRAPHITE} />
-    </RoundedBox>
-    <RoundedBox args={[0.32, 1.35, 0.1]} radius={0.04} smoothness={4} position={[0, 0.72, -0.28]} rotation={[0.12, 0, 0]} castShadow>
-      <meshStandardMaterial {...GRAPHITE} />
-    </RoundedBox>
-    {/* Panel */}
-    <group position={[0, 1.92, -0.12]}>
-      <RoundedBox args={[width + 0.16, height + 0.16, 0.09]} radius={0.04} smoothness={4} position={[0, 0, -0.045]} castShadow>
-        <meshStandardMaterial {...GRAPHITE} />
-      </RoundedBox>
-      <mesh position={[0, 0, 0.002]}>
-        <planeGeometry args={[width + 0.08, height + 0.08]} />
-        <meshStandardMaterial {...BEZEL} />
-      </mesh>
-      <group position={[0, 0, 0.006]}>
-        <Screen width={width} height={height} {...screen} />
+    <group scale={MONITOR_SCALE} position={[0, -MONITOR_MODEL.bottom * MONITOR_SCALE, -0.12]}>
+      {meshes.map(mesh => <primitive key={mesh.uuid} object={mesh} />)}
+      <group position={[0, 0, 0.0003]} scale={1 / MONITOR_SCALE}>
+        <Screen width={MONITOR_SCREEN.width} height={MONITOR_SCREEN.height} {...screen} />
       </group>
     </group>
   </group>;
 });
+
+useGLTF.preload(LAPTOP_URL);
+useGLTF.preload(MONITOR_URL);
 
 const TITANIUM = { color: "#8f979d", metalness: 0.9, roughness: 0.3, envMapIntensity: 1.4 };
 

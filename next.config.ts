@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 const scriptSource =
   process.env.NODE_ENV === "development"
     ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-    : "script-src 'self' 'unsafe-inline'";
+    : "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -12,7 +12,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data: https://i.ibb.co https://image2url.com https://*.r2.dev https://*.public.blob.vercel-storage.com",
   "font-src 'self'",
-  "connect-src 'self' https://blob.vercel-storage.com https://*.blob.vercel-storage.com",
+  "connect-src 'self' blob: https://blob.vercel-storage.com https://*.blob.vercel-storage.com",
   "media-src 'self' https://*.public.blob.vercel-storage.com",
   "object-src 'none'",
   "base-uri 'self'",

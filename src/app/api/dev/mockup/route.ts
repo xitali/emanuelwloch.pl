@@ -12,7 +12,8 @@ export async function POST(request: Request) {
   if (!target.startsWith(normalize(join(process.cwd(), "public", "mockups")))) return NextResponse.json({ error: "Nieprawidłowa ścieżka" }, { status: 400 });
   const png = Buffer.from(data.slice("data:image/png;base64,".length), "base64");
   await mkdir(dirname(target), { recursive: true });
-  const image = sharp(png).trim({ threshold: 0 });
+  // Rendered at 2× and scaled down: smooth edges without visible aliasing.
+  const image = sharp(await sharp(png).trim({ threshold: 0 }).toBuffer()).resize({ width: 2000, withoutEnlargement: true });
   await writeFile(target, await image.webp({ quality: 88, alphaQuality: 90, effort: 6 }).toBuffer());
   // Record project stills so cards and pages can use them; hero and service stills are referenced directly.
   if (!out.startsWith("hero-") && !out.startsWith("usluga-")) {
