@@ -1,6 +1,6 @@
 import { createPageMetadata, getProjectPath, serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 import type { Metadata } from "next";
-import { getProjects } from "@/lib/server/turso";
+import { getProjects } from "@/lib/data/projects";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import ProjectCatalog from "@/components/portfolio/ProjectCatalog";
 import { catalogCategoryIds } from "@/lib/projects/filter";

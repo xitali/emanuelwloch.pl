@@ -13,7 +13,10 @@ const actions = vi.hoisted(() => ({
   deleteTestimonialAction: vi.fn(async () => ({ success: true })),
   logoutAdminAction: vi.fn(),
 }));
-vi.mock("@/app/actions/admin", () => actions);
+vi.mock("@/app/actions/admin/session", () => actions);
+vi.mock("@/app/actions/admin/projects", () => actions);
+vi.mock("@/app/actions/admin/messages", () => actions);
+vi.mock("@/app/actions/admin/catalog", () => actions);
 vi.mock("recharts", () => ({ ResponsiveContainer: () => null, LineChart: () => null, Line: () => null, XAxis: () => null, YAxis: () => null, CartesianGrid: () => null, Tooltip: () => null }));
 
 import AdminDashboard from "@/components/admin/AdminDashboard";

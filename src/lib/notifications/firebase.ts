@@ -1,10 +1,7 @@
 import "server-only";
 
 import { SignJWT, importPKCS8 } from "jose";
-import {
-  deleteAndroidDeviceByInstallationId,
-  getAndroidDevices,
-} from "@/lib/server/turso";
+import { deleteAndroidDeviceByInstallationId, getAndroidDevices } from "@/lib/data/devices";
 
 interface NativeNotificationPayload {
   title: string;

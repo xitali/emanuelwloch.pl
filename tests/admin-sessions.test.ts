@@ -3,7 +3,7 @@ import { SignJWT } from "jose";
 const mocks = vi.hoisted(() => ({ current: vi.fn(), get: vi.fn(), set: vi.fn(), delete: vi.fn() }));
 vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({ cookies: async () => ({ get: mocks.get, set: mocks.set, delete: mocks.delete }) }));
-vi.mock("@/lib/server/turso", () => ({ isAdminCredentialCurrent: mocks.current }));
+vi.mock("@/lib/data/admin-credentials", () => ({ isAdminCredentialCurrent: mocks.current }));
 import { createAdminSession, createMobileAdminToken, verifyAdminSession, verifyMobileAdminToken } from "@/lib/server/auth";
 const secret = new TextEncoder().encode("test-secret-at-least-thirty-two-characters-long");
 beforeEach(() => { vi.clearAllMocks(); process.env.JWT_SECRET = new TextDecoder().decode(secret); mocks.current.mockResolvedValue(true); });

@@ -1,8 +1,5 @@
 import { verifyMobileAdminToken } from "@/lib/server/auth";
-import {
-  deleteContactMessage,
-  getContactMessages,
-} from "@/lib/server/turso";
+import { deleteContactMessage, getContactMessages } from "@/lib/data/messages";
 import { mobileMessageDeleteSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";

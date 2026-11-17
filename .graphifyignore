@@ -24,3 +24,7 @@ components.json
 .github/
 .env*
 *.md
+
+# Jednorazowe skrypty i testy: testy łączą wiele modułów naraz i rozmywały grupy w grafie
+scripts/archive/
+tests/

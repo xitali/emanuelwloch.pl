@@ -4,7 +4,7 @@ import {
 } from "@/lib/server/auth";
 import { checkRateLimit } from "@/lib/server/rate-limit";
 import { getClientIp } from "@/lib/server/request";
-import { authenticateAdmin } from "@/lib/server/turso";
+import { authenticateAdmin } from "@/lib/data/admin-credentials";
 import { mobileLoginSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";

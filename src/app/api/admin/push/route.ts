@@ -1,8 +1,5 @@
 import { verifyAdminSession } from "@/lib/server/auth";
-import {
-  deletePushSubscription,
-  upsertPushSubscription,
-} from "@/lib/server/turso";
+import { deletePushSubscription, upsertPushSubscription } from "@/lib/data/devices";
 import {
   isWebPushConfigured,
   sendAdminPushNotification,

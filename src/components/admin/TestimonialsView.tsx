@@ -1,6 +1,6 @@
 "use client";
 import { Star, Trash2 } from "lucide-react";
-import { createTestimonialAction, deleteTestimonialAction } from "@/app/actions/admin";
+import { createTestimonialAction, deleteTestimonialAction } from "@/app/actions/admin/catalog";
 import type { Testimonial } from "@/types";
 import { useAdmin } from "./AdminContext";
 

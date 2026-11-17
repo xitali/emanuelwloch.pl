@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loginAdminAction } from "@/app/actions/admin";
+import { loginAdminAction } from "@/app/actions/admin/session";
 import { ArrowLeft, ArrowUpRight, AlertCircle, LockKeyhole } from "lucide-react";
 import Link from "next/link";
 import { BrandMark } from "@/components/portfolio/icons";

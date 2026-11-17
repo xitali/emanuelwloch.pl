@@ -1,7 +1,7 @@
 "use server";
 
 import { deliverLeadEmails, leadReceivedEvent } from "@/lib/email/send";
-import { submitContactMessage } from "@/lib/server/turso";
+import { submitContactMessage } from "@/lib/data/messages";
 import { checkRateLimit } from "@/lib/server/rate-limit";
 import { getClientIp } from "@/lib/server/request";
 import { contactSchema } from "@/lib/validation";

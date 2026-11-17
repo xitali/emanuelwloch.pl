@@ -5,7 +5,11 @@ import AdminDashboard, { type AdminTab } from "@/components/admin/AdminDashboard
 import { verifyAdminSession } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
 import { deliveriesFor } from "@/lib/email/deliveries";
-import { getContactMessages, getPageVisitsCount, getAdminProjects, getServices, getTestimonials, getPageVisitsStats } from "@/lib/server/turso";
+import { getContactMessages } from "@/lib/data/messages";
+import { getPageVisitsCount, getPageVisitsStats } from "@/lib/data/visits";
+import { getAdminProjects } from "@/lib/data/projects";
+import { getServices } from "@/lib/data/services";
+import { getTestimonials } from "@/lib/data/testimonials";
 
 export const revalidate = 0; // Dynamic route for admin panel
 

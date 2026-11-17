@@ -5,12 +5,9 @@ export const metadata: Metadata = {
   ...createPageMetadata({ path: "/", title: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm", description: "Strony firmowe, sklepy internetowe, aplikacje z bazą danych i panelem oraz programy na Windows. Jeden wykonawca od projektu po wdrożenie — Jarosław i cała Polska." }),
   title: { absolute: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm" },
 };
-import {
-  getProjects,
-  getServices,
-  getPublicSiteSettings,
-  getTestimonials,
-} from "@/lib/server/turso";
+import { getProjects } from "@/lib/data/projects";
+import { getServices, getPublicSiteSettings } from "@/lib/data/services";
+import { getTestimonials } from "@/lib/data/testimonials";
 import Navbar from "@/components/portfolio/PortfolioNav";
 import ProductStory, { TechnologyDetails } from "@/components/portfolio/ProductStory";
 import ProjectsSection from "@/components/portfolio/ProjectShowcase";

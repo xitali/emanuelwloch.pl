@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Save } from "lucide-react";
-import { updateServicePriceAction } from "@/app/actions/admin";
+import { updateServicePriceAction } from "@/app/actions/admin/catalog";
 import type { Service } from "@/types";
 import { useAdmin } from "./AdminContext";
 

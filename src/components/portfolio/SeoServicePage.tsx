@@ -9,7 +9,7 @@ import { getProjectPath, serializeJsonLd, serviceOgImage, SITE_URL } from "@/lib
 import { relatedProjectsFor, serviceShowcase } from "@/lib/content/service-showcase";
 import { projectLabel } from "@/lib/projects/labels";
 import { projectMockup } from "@/lib/projects/mockups";
-import { getProjects } from "@/lib/server/turso";
+import { getProjects } from "@/lib/data/projects";
 
 export function createServiceMetadata(data: ServicePageData): Metadata {
   const url = `${SITE_URL}${data.path}`;
