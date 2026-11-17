@@ -4,8 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { IconArrowUpRight, IconCheck } from "@/components/portfolio/icons";
-import { getGuidePage, guidePages } from "@/lib/guide-pages";
-import { serializeJsonLd, SITE_URL } from "@/lib/seo";
+import { getGuidePage, guidePages } from "@/lib/content/guide-pages";
+import { serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 
 const GUIDE_IMAGE = `${SITE_URL}/og/poradniki.jpg`;
 

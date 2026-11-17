@@ -2,8 +2,8 @@ import {createHash} from 'node:crypto';
 import {readFile,writeFile,stat,rename,unlink} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 const projects=JSON.parse(await readFile('.debug/hyperframes-projects/projects.json','utf8'));
-const previous=JSON.parse(await readFile('src/lib/project-previews.json','utf8'));
-const redirects=new Map(JSON.parse(await readFile('src/lib/project-preview-redirects.json','utf8')).map(r=>[r.source,r.destination]));
+const previous=JSON.parse(await readFile('src/lib/projects/previews.json','utf8'));
+const redirects=new Map(JSON.parse(await readFile('src/lib/projects/preview-redirects.json','utf8')).map(r=>[r.source,r.destination]));
 const manifest=process.argv.includes('--partial') ? {...previous} : {};
 for(const project of projects){
  const output=`public/project-previews/${project.id}`;
@@ -32,5 +32,5 @@ for(const [id,entry] of Object.entries(manifest)) for(const field of ['video','p
   redirects.set(old,entry[field]);
  }
 }
-await writeFile('src/lib/project-preview-redirects.json',JSON.stringify([...redirects].map(([source,destination])=>({source,destination})),null,2)+'\n');
-await writeFile('src/lib/project-previews.json',JSON.stringify(manifest,null,2)+'\n');
+await writeFile('src/lib/projects/preview-redirects.json',JSON.stringify([...redirects].map(([source,destination])=>({source,destination})),null,2)+'\n');
+await writeFile('src/lib/projects/previews.json',JSON.stringify(manifest,null,2)+'\n');

@@ -1,11 +1,11 @@
-import ConversionSummary from "@/components/ConversionSummary";
-import EmailStatus from "@/components/EmailStatus";
-import AdminAppManager from "@/components/AdminAppManager";
+import ConversionSummary from "@/components/admin/ConversionSummary";
+import EmailStatus from "@/components/admin/EmailStatus";
+import AdminAppManager from "@/components/admin/AdminAppManager";
 import AdminDashboard, { type AdminTab } from "@/components/admin/AdminDashboard";
-import { verifyAdminSession } from "@/lib/auth";
+import { verifyAdminSession } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
-import { deliveriesFor } from "@/lib/email-deliveries";
-import { getContactMessages, getPageVisitsCount, getAdminProjects, getServices, getTestimonials, getPageVisitsStats } from "@/lib/turso";
+import { deliveriesFor } from "@/lib/email/deliveries";
+import { getContactMessages, getPageVisitsCount, getAdminProjects, getServices, getTestimonials, getPageVisitsStats } from "@/lib/server/turso";
 
 export const revalidate = 0; // Dynamic route for admin panel
 

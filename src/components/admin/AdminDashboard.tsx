@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { logoutAdminAction } from "@/app/actions/admin";
 import { BrandMark } from "@/components/portfolio/icons";
-import { isOpenMessage } from "@/lib/message-status";
+import { isOpenMessage } from "@/lib/contact/message-status";
 import type { ContactMessage, Project, Service, Testimonial } from "@/types";
 import { AdminProvider, useAdmin } from "./AdminContext";
 import AnalyticsView from "./AnalyticsView";

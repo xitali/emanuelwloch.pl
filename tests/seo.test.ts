@@ -7,9 +7,9 @@ import {
   serializeJsonLd,
   slugify,
   toAbsoluteUrl,
-} from "../src/lib/seo";
-import { servicePages } from "../src/lib/service-pages";
-import { guidePages } from "../src/lib/guide-pages";
+} from "../src/lib/content/seo";
+import { servicePages } from "../src/lib/content/service-pages";
+import { guidePages } from "../src/lib/content/guide-pages";
 
 describe("SEO URL helpers", () => {
   it("creates readable ASCII slugs from Polish titles", () => {

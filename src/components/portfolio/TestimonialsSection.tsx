@@ -1,6 +1,6 @@
 "use client";
 import type { Testimonial } from "@/types";
-import { IconQuote, IconStar } from "./portfolio/icons";
+import { IconQuote, IconStar } from "@/components/portfolio/icons";
 
 export default function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   if (!testimonials?.length) return null;

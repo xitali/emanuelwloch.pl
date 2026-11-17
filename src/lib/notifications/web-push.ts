@@ -4,7 +4,7 @@ import webpush from "web-push";
 import {
   deletePushSubscription,
   getPushSubscriptions,
-} from "@/lib/turso";
+} from "@/lib/server/turso";
 
 interface AdminPushPayload {
   title: string;

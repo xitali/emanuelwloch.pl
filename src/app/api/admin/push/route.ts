@@ -1,12 +1,12 @@
-import { verifyAdminSession } from "@/lib/auth";
+import { verifyAdminSession } from "@/lib/server/auth";
 import {
   deletePushSubscription,
   upsertPushSubscription,
-} from "@/lib/turso";
+} from "@/lib/server/turso";
 import {
   isWebPushConfigured,
   sendAdminPushNotification,
-} from "@/lib/push";
+} from "@/lib/notifications/web-push";
 import { pushActionSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";

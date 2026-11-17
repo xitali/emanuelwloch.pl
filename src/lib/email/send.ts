@@ -1,7 +1,7 @@
 import "server-only";
-import { turso } from "@/lib/turso";
-import { recordDelivery, type DeliveryKind } from "@/lib/email-deliveries";
-import { leadOwnerEmail, leadSenderEmail, RESEND_EVENTS, SITE_URL, templateValue, type Lead } from "@/lib/email-templates";
+import { turso } from "@/lib/server/turso";
+import { recordDelivery, type DeliveryKind } from "@/lib/email/deliveries";
+import { leadOwnerEmail, leadSenderEmail, RESEND_EVENTS, SITE_URL, templateValue, type Lead } from "@/lib/email/templates";
 
 export function emailConfigured() {
   return Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_FROM && process.env.LEAD_NOTIFY_TO);

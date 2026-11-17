@@ -7,7 +7,7 @@ import type { CardPointer } from "@/components/world/scenes/CardScene";
 import type { ChromeKind } from "./three/chrome";
 import { Pause, Play, Plus } from "lucide-react";
 import { useMotionPaused } from "@/lib/motion/preference";
-import previewManifest from "../../lib/project-previews.json";
+import previewManifest from "@/lib/projects/previews.json";
 
 const subscribeMotion = (callback: () => void) => {
   const media = matchMedia("(prefers-reduced-motion: reduce)");

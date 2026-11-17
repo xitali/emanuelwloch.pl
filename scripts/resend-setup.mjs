@@ -4,7 +4,7 @@
 // Creates/updates: 2 templates, 3 custom events, 2 automations, 1 webhook.
 // The webhook signing secret is written to .env.resend-webhook (git-ignored) and never printed.
 import { writeFile } from "node:fs/promises";
-import { automationTemplates, RESEND_EVENTS, SITE_URL } from "../src/lib/email-templates.ts";
+import { automationTemplates, RESEND_EVENTS, SITE_URL } from "../src/lib/email/templates.ts";
 
 const API = "https://api.resend.com";
 const { RESEND_API_KEY: key, EMAIL_FROM, LEAD_NOTIFY_TO } = process.env;

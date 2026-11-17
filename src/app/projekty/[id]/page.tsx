@@ -1,13 +1,13 @@
-import { projectLabel } from "@/lib/project-labels";
+import { projectLabel } from "@/lib/projects/labels";
 import ProjectMedia from "@/components/portfolio/ProjectMedia";
-import { projectMockup } from "@/lib/project-mockups";
+import { projectMockup } from "@/lib/projects/mockups";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { IconArrowUpRight, IconCheck, IconQuote } from "@/components/portfolio/icons";
-import { getProjectById, getProjects } from "@/lib/turso";
+import { getProjectById, getProjects } from "@/lib/server/turso";
 import {
   getProjectIdFromSegment,
   getProjectPath,
@@ -16,7 +16,7 @@ import {
   SITE_URL,
   toAbsoluteUrl,
   SOCIAL_IMAGE_URL,
-} from "@/lib/seo";
+} from "@/lib/content/seo";
 
 interface ProjectPageProps {
   params: Promise<{ id: string }>;

@@ -4,7 +4,7 @@ import {afterEach,beforeEach,describe,expect,it,vi} from "vitest";
 import {act,cleanup,fireEvent,render,screen} from "@testing-library/react";
 import ProjectMedia from "../src/components/portfolio/ProjectMedia";
 import { setMotionPaused } from "../src/lib/motion/preference";
-import previews from "../src/lib/project-previews.json";
+import previews from "../src/lib/projects/previews.json";
 vi.mock("next/image",()=>({default:({src,alt}:{src:string;alt:string})=>React.createElement("img",{src,alt})}));
 let reduced=false;
 let visibility:(entries:Partial<IntersectionObserverEntry>[])=>void;

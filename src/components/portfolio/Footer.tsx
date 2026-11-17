@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BrandMark, IconArrowUpRight, IconGithub } from "./portfolio/icons";
+import { BrandMark, IconArrowUpRight, IconGithub } from "@/components/portfolio/icons";
 const groups = [
   { title: "Usługi", links: [["/tworzenie-stron-internetowych", "Strony internetowe"], ["/sklepy-internetowe", "Sklepy internetowe"], ["/tworzenie-aplikacji-webowych", "Aplikacje webowe"], ["/bazy-danych-i-panele", "Bazy danych i panele"], ["/programy-na-windows", "Programy na Windows"], ["/nextjs-developer", "Next.js developer"]] },
   { title: "Lokalnie", links: [["/tworzenie-stron-internetowych-jaroslaw", "Strony internetowe Jarosław"], ["/tworzenie-stron-internetowych-rzeszow", "Strony internetowe Rzeszów"]] },

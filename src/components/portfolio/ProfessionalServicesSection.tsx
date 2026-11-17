@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ServicesArtwork from "./ServicesArtwork";
+import ServicesArtwork from "@/components/portfolio/ServicesArtwork";
 import Link from "next/link";
 import NumberFlow from "@number-flow/react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -18,7 +18,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { openContactForm } from "@/lib/contact-prefill";
+import { openContactForm } from "@/lib/contact/prefill";
 import type { Service } from "@/types";
 
 interface ServicesSectionProps {

@@ -1,5 +1,5 @@
 import { IconArrowUpRight } from "./icons";
-import { promoFilm } from "@/lib/promo-film";
+import { promoFilm } from "@/lib/content/promo-film";
 
 export default function DeliveryProcess() {
   return <section id="wspolpraca" className="delivery-process portfolio-container" aria-labelledby="delivery-heading">

@@ -4,7 +4,7 @@ import { createHmac } from "node:crypto";
 import { readFile } from "node:fs/promises";
 const state = vi.hoisted(() => ({ db: null as Client | null }));
 vi.mock("server-only", () => ({}));
-vi.mock("@/lib/turso", () => ({ turso: { execute: (...args: Parameters<Client["execute"]>) => state.db!.execute(...args) } }));
+vi.mock("@/lib/server/turso", () => ({ turso: { execute: (...args: Parameters<Client["execute"]>) => state.db!.execute(...args) } }));
 import { POST } from "../src/app/api/webhooks/resend/route";
 
 const key = Buffer.from("route-signing-key-0123456789abcd");

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { orderCatalogProjects, selectProjectHighlights } from "../src/lib/project-highlights";
+import { orderCatalogProjects, selectProjectHighlights } from "../src/lib/projects/highlights";
 import { contactSchema } from "../src/lib/validation";
-import { messageWithSource } from "../src/lib/contact-sources";
+import { messageWithSource } from "../src/lib/contact/sources";
 import type { Project } from "../src/types";
 
 describe("wyróżnione realizacje", () => {

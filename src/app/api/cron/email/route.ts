@@ -1,5 +1,5 @@
 import { timingSafeEqual } from "node:crypto";
-import { deliverLeadEmails } from "@/lib/email";
+import { deliverLeadEmails } from "@/lib/email/send";
 
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;

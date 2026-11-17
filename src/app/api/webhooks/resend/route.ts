@@ -1,5 +1,5 @@
-import { verifyResendWebhook } from "@/lib/resend-webhook";
-import { recordDelivery, type DeliveryKind, type DeliveryStatus } from "@/lib/email-deliveries";
+import { verifyResendWebhook } from "@/lib/email/resend-webhook";
+import { recordDelivery, type DeliveryKind, type DeliveryStatus } from "@/lib/email/deliveries";
 
 const STATUS: Record<string, DeliveryStatus> = {
   "email.sent": "sent", "email.delivered": "delivered", "email.delivery_delayed": "delivery_delayed",

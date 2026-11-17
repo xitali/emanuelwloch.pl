@@ -55,3 +55,6 @@ next-env.d.ts
 
 # Generated local advertisement renders, caches and editable delivery bundles
 /brag-output-*/
+
+# Graphify local code graph (rebuild: graphify update .)
+/graphify-out/

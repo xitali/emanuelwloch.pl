@@ -1,4 +1,4 @@
-import { SOCIAL_IMAGE_URL } from "@/lib/seo";
+import { SOCIAL_IMAGE_URL } from "@/lib/content/seo";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Bricolage_Grotesque, Instrument_Serif } from "next/font/google";
 import "./globals.css";
@@ -10,8 +10,8 @@ import "@/components/portfolio/offer.css";
 import "@/components/portfolio/service-page.css";
 import "@/components/world/world.css";
 import "@/components/palette/palettes.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import NavigationScroll from "@/components/NavigationScroll";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import NavigationScroll from "@/components/portfolio/NavigationScroll";
 import Morph from "@/components/motion/Morph";
 
 

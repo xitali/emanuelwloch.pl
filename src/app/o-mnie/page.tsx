@@ -1,10 +1,10 @@
-import { createPageMetadata, getProjectPath, serializeJsonLd, SITE_URL } from "@/lib/seo";
+import { createPageMetadata, getProjectPath, serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import { IconApp, IconArrowUpRight, IconCart, IconDatabase, IconGithub, IconPin, IconSite } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { getProjects } from "@/lib/turso";
+import { getProjects } from "@/lib/server/turso";
 
 const USEME_URL = "https://useme.com/pl/roles/contractor/emanuel-wloch%2C525723/";
 

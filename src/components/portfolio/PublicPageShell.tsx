@@ -1,7 +1,7 @@
-import ConversionTracker from "@/components/ConversionTracker";
+import ConversionTracker from "@/components/providers/ConversionTracker";
 import type { ReactNode } from "react";
 import PortfolioNav from "./PortfolioNav";
-import Footer from "@/components/Footer";
+import Footer from "@/components/portfolio/Footer";
 import MotionLayer from "./motion/MotionLayer";
 import { WorldProvider } from "@/components/world/World";
 import SmoothScroll from "@/components/motion/SmoothScroll";

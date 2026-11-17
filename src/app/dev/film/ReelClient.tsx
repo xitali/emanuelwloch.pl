@@ -2,7 +2,7 @@
 import { Suspense, useEffect, useState, type CSSProperties } from "react";
 import { Canvas } from "@react-three/fiber";
 import OfferScene, { OFFER_TEXTURES } from "@/components/world/scenes/OfferScene";
-import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
+import { formatPriceFrom, servicePaths } from "@/lib/content/service-paths";
 import { Arrow, Driver, Framing, Line, Mark, wait } from "./FilmClient";
 import { easeOut, REELS, span, type ReelId } from "./timeline";
 

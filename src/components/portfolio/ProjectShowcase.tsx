@@ -1,5 +1,5 @@
 "use client";
-import { projectLabel } from "@/lib/project-labels";
+import { projectLabel } from "@/lib/projects/labels";
 import { useState } from "react";
 import ProjectMedia from "./ProjectMedia";
 import Link from "next/link";
@@ -7,12 +7,12 @@ import dynamic from "next/dynamic";
 import { IconArrowUpRight as ArrowUpRight } from "./icons";
 import type { Project } from "@/types";
 
-import { getProjectPath } from "@/lib/seo";
-import { selectProjectHighlights } from "@/lib/project-highlights";
-import { projectMockup } from "@/lib/project-mockups";
-import { mockupSources } from "@/lib/project-mockup-sources";
+import { getProjectPath } from "@/lib/content/seo";
+import { selectProjectHighlights } from "@/lib/projects/highlights";
+import { projectMockup } from "@/lib/projects/mockups";
+import { mockupSources } from "@/lib/projects/mockup-sources";
 
-const ProjectModal = dynamic(() => import("@/components/ProjectModal"));
+const ProjectModal = dynamic(() => import("@/components/portfolio/ProjectModal"));
 
 export function ProjectCard({ project, index, onOpen, highlighted = false }: { project: Project; index: number; onOpen: () => void; highlighted?: boolean }) {
   return <article data-reveal className={`showcase-card${index === 0 ? " showcase-featured" : ""}`}>

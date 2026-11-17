@@ -10,14 +10,14 @@ import {
   updateServicePrice,
   addTestimonial,
   deleteTestimonial,
-} from "@/lib/turso";
+} from "@/lib/server/turso";
 import {
   createAdminSession,
   logoutAdminSession,
   verifyAdminSession,
-} from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+} from "@/lib/server/auth";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 import {
   idSchema,
   projectSchema,
@@ -29,11 +29,11 @@ import { redirect } from "next/navigation";
 import { revalidatePath, updateTag } from "next/cache";
 import { headers } from "next/headers";
 
-import { caseTextFields, caseListFields } from "@/lib/project-case-fields";
-import { messageStatusSchema } from "@/lib/message-status";
+import { caseTextFields, caseListFields } from "@/lib/projects/case-fields";
+import { messageStatusSchema } from "@/lib/contact/message-status";
 import { after } from "next/server";
-import { messageStatusChanged, requestReview } from "@/lib/lead-automation";
-import { leadAnsweredEvent } from "@/lib/email";
+import { messageStatusChanged, requestReview } from "@/lib/email/lead-automation";
+import { leadAnsweredEvent } from "@/lib/email/send";
 
 async function requireAdmin() {
   if (!(await verifyAdminSession())) {

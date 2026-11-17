@@ -17,8 +17,8 @@ vi.mock("@/app/actions/admin", () => actions);
 vi.mock("recharts", () => ({ ResponsiveContainer: () => null, LineChart: () => null, Line: () => null, XAxis: () => null, YAxis: () => null, CartesianGrid: () => null, Tooltip: () => null }));
 
 import AdminDashboard from "@/components/admin/AdminDashboard";
-import { DEMO_NOW, demoAnalytics, demoMessages } from "@/lib/admin-demo";
-import { isOpenMessage, messageStatusSchema, normalizeMessageStatus } from "@/lib/message-status";
+import { DEMO_NOW, demoAnalytics, demoMessages } from "@/lib/admin/demo";
+import { isOpenMessage, messageStatusSchema, normalizeMessageStatus } from "@/lib/contact/message-status";
 import type { Project } from "@/types";
 
 const project = { id: "p1", title: "Strona testowa", short_description: "Opis", technologies: [], images: [], category: "web", project_status: "active" } as Project;

@@ -1,15 +1,15 @@
 "use client";
 
-import { projectLabel } from "@/lib/project-labels";
+import { projectLabel } from "@/lib/projects/labels";
 import type { Project } from "@/types";
 import Image from "next/image";
-import ProjectMedia from "./portfolio/ProjectMedia";
+import ProjectMedia from "@/components/portfolio/ProjectMedia";
 import { X, ArrowUpRight, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
-import { getProjectPath } from "@/lib/seo";
+import { getProjectPath } from "@/lib/content/seo";
 
 interface ProjectModalProps {
   project: Project | null;

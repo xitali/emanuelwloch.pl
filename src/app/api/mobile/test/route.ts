@@ -1,8 +1,8 @@
-import { verifyMobileAdminToken } from "@/lib/auth";
+import { verifyMobileAdminToken } from "@/lib/server/auth";
 import {
   isFirebaseConfigured,
   sendNativeAndroidNotification,
-} from "@/lib/firebase";
+} from "@/lib/notifications/firebase";
 
 export const runtime = "nodejs";
 

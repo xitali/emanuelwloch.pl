@@ -5,7 +5,7 @@ import sharp from 'sharp';
 const manifestArg=process.argv.find(arg=>arg.startsWith('--manifest='))?.slice('--manifest='.length);
 let rows;
 if(manifestArg){
- const previous=JSON.parse(await readFile('src/lib/project-previews.json','utf8'));
+ const previous=JSON.parse(await readFile('src/lib/projects/previews.json','utf8'));
  const reviewed=JSON.parse(await readFile(manifestArg,'utf8'));
  rows=reviewed.filter(row=>row.images[0]!==previous[row.id]?.source);
 }else{

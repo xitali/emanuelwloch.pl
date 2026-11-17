@@ -1,5 +1,5 @@
-import { slugify } from "@/lib/seo";
-import { caseTextFields, caseListFields } from "@/lib/project-case-fields";
+import { slugify } from "@/lib/content/seo";
+import { caseTextFields, caseListFields } from "@/lib/projects/case-fields";
 import "server-only";
 
 import { createClient } from "@libsql/client";
@@ -14,7 +14,7 @@ import {
 } from "@/types";
 import { unstable_cache, revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
-import { requireServerEnv } from "@/lib/env";
+import { requireServerEnv } from "@/lib/server/env";
 import { createHash } from "node:crypto";
 
 // A local demo and the live catalogue must never reuse each other's cached data.

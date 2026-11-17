@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validMediaSignature } from "../src/lib/media-signature";
+import { validMediaSignature } from "../src/lib/server/media-signature";
 describe("podpisy mediów", () => {
   it("odrzuca HTML i rozbieżny typ", () => {
     expect(validMediaSignature(new TextEncoder().encode("<html>test</html>"), "image/png")).toBe(false);

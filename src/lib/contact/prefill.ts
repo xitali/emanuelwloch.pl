@@ -1,4 +1,4 @@
-import { scrollToSection } from "@/lib/navigation-scroll";
+import { scrollToSection } from "@/lib/motion/navigation-scroll";
 
 export const CONTACT_PREFILL_EVENT = "contact:prefill";
 

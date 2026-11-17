@@ -4,7 +4,7 @@ import { SignJWT, importPKCS8 } from "jose";
 import {
   deleteAndroidDeviceByInstallationId,
   getAndroidDevices,
-} from "@/lib/turso";
+} from "@/lib/server/turso";
 
 interface NativeNotificationPayload {
   title: string;

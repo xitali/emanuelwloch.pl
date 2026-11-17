@@ -2,7 +2,7 @@
 import Image from "next/image";
 import type { RefObject } from "react";
 import type { SceneState } from "./three/layers";
-import { heroKinds } from "@/lib/hero-kinds";
+import { heroKinds } from "@/lib/content/hero-kinds";
 import WorldView, { lazyScene } from "@/components/world/WorldView";
 import type { HeroKind } from "@/components/world/scenes/HeroScene";
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { projectMatchesCategory } from "../src/lib/project-filter";
+import { projectMatchesCategory } from "../src/lib/projects/filter";
 import type { Project } from "../src/types";
 
 const project: Project = {

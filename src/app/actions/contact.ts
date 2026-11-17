@@ -1,16 +1,16 @@
 "use server";
 
-import { deliverLeadEmails, leadReceivedEvent } from "@/lib/email";
-import { submitContactMessage } from "@/lib/turso";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+import { deliverLeadEmails, leadReceivedEvent } from "@/lib/email/send";
+import { submitContactMessage } from "@/lib/server/turso";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 import { contactSchema } from "@/lib/validation";
-import { messageWithSource } from "@/lib/contact-sources";
+import { messageWithSource } from "@/lib/contact/sources";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { after } from "next/server";
-import { notifyAboutContactMessage } from "@/lib/push";
-import { notifyAndroidAboutContactMessage } from "@/lib/firebase";
+import { notifyAboutContactMessage } from "@/lib/notifications/web-push";
+import { notifyAndroidAboutContactMessage } from "@/lib/notifications/firebase";
 
 export async function sendContactMessageAction(formData: FormData) {
   const validation = contactSchema.safeParse({

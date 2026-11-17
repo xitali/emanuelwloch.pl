@@ -1,5 +1,5 @@
 import "server-only";
-import { turso } from "@/lib/turso";
+import { turso } from "@/lib/server/turso";
 
 /** Delivery states of an enquiry email, in the order they can follow each other. */
 const RANK: Record<string, number> = { sent: 1, delivery_delayed: 2, delivered: 3, failed: 4, bounced: 4, complained: 5 };

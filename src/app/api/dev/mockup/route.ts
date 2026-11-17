@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   await writeFile(target, await image.webp({ quality: 88, alphaQuality: 90, effort: 6 }).toBuffer());
   // Record project stills so cards and pages can use them; hero and service stills are referenced directly.
   if (!out.startsWith("hero-") && !out.startsWith("usluga-")) {
-    const manifestPath = join(process.cwd(), "src", "lib", "mockup-manifest.json");
+    const manifestPath = join(process.cwd(), "src", "lib", "projects", "mockup-manifest.json");
     const list = new Set<string>(JSON.parse(await readFile(manifestPath, "utf8").catch(() => "[]")));
     list.add(out);
     await writeFile(manifestPath, JSON.stringify([...list].sort(), null, 2) + "\n");

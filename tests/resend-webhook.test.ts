@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createHmac } from "node:crypto";
-import { verifyResendWebhook } from "../src/lib/resend-webhook";
+import { verifyResendWebhook } from "../src/lib/email/resend-webhook";
 
 // A known secret in Resend's (Svix) format: "whsec_" + base64 key.
 const key = Buffer.from("test-signing-key-0123456789abcdef");

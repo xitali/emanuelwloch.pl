@@ -2,8 +2,8 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
-import { getJwtSecret } from "@/lib/env";
-import { isAdminCredentialCurrent, type AdminCredential } from "@/lib/turso";
+import { getJwtSecret } from "@/lib/server/env";
+import { isAdminCredentialCurrent, type AdminCredential } from "@/lib/server/turso";
 
 const COOKIE_NAME =
   process.env.NODE_ENV === "production"

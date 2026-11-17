@@ -1,5 +1,5 @@
 import type { PublicSiteSettings, Service } from "@/types";
-import { serializeJsonLd, SITE_URL } from "@/lib/seo";
+import { serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 
 const USEME_URL = "https://useme.com/pl/roles/contractor/emanuel-wloch%2C525723/";
 

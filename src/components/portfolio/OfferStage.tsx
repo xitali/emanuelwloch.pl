@@ -2,7 +2,7 @@
 import Image from "next/image";
 import type { RefObject } from "react";
 import WorldView, { lazyScene } from "@/components/world/WorldView";
-import { servicePaths } from "@/lib/service-paths";
+import { servicePaths } from "@/lib/content/service-paths";
 
 const OfferScene = lazyScene<{ active: number }>(() => import("@/components/world/scenes/OfferScene"));
 

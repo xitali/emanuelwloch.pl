@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
-import { turso } from "@/lib/turso";
+import { turso } from "@/lib/server/turso";
 
 interface RateLimitOptions {
   namespace: string;

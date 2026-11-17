@@ -1,10 +1,10 @@
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/content/seo";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { IconArrowUpRight } from "@/components/portfolio/icons";
-import { guidePages } from "@/lib/guide-pages";
-import { serializeJsonLd, SITE_URL } from "@/lib/seo";
+import { guidePages } from "@/lib/content/guide-pages";
+import { serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Poradniki o stronach, aplikacjach i bazach danych",
