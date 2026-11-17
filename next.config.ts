@@ -1,4 +1,4 @@
-import previewRedirects from "./src/lib/project-preview-redirects.json";
+import previewRedirects from "./src/lib/projects/preview-redirects.json";
 import type { NextConfig } from "next";
 
 const scriptSource =

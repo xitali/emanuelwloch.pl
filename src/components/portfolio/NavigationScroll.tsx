@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { createNavigationScroll } from "@/lib/navigation-scroll";
+import { createNavigationScroll } from "@/lib/motion/navigation-scroll";
 
 export default function NavigationScroll() {
   const pathname = usePathname();

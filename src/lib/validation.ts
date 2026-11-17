@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { contactSources } from "./contact-sources";
+import { contactSources } from "@/lib/contact/sources";
 
 const optionalUrl = z
   .string()

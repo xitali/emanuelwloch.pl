@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- captured as a still; plain images keep exact pixel control */
 import type { CSSProperties, ReactNode } from "react";
-import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
+import { formatPriceFrom, servicePaths } from "@/lib/content/service-paths";
 import type { Graphic } from "./content";
 
 export const SIZES = {

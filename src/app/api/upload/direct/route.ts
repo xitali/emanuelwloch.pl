@@ -1,9 +1,9 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
-import { verifyAdminSession } from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+import { verifyAdminSession } from "@/lib/server/auth";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 import { del } from "@vercel/blob";
-import { validMediaSignature } from "@/lib/media-signature";
+import { validMediaSignature } from "@/lib/server/media-signature";
 
 export async function POST(request: Request) {
   try {

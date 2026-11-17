@@ -1,4 +1,4 @@
-import type { FaqItem } from "@/lib/service-pages";
+import type { FaqItem } from "@/lib/content/service-pages";
 
 export interface GuidePageData {
   slug: string;

@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getProjects } from "@/lib/turso";
-import { getProjectPath, SITE_URL, toAbsoluteUrl } from "@/lib/seo";
-import { servicePages } from "@/lib/service-pages";
-import { guidePages } from "@/lib/guide-pages";
+import { getProjects } from "@/lib/server/turso";
+import { getProjectPath, SITE_URL, toAbsoluteUrl } from "@/lib/content/seo";
+import { servicePages } from "@/lib/content/service-pages";
+import { guidePages } from "@/lib/content/guide-pages";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await getProjects();

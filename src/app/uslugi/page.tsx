@@ -1,12 +1,12 @@
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/content/seo";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import { IconArrowUpRight, IconPin } from "@/components/portfolio/icons";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { serializeJsonLd, SITE_URL } from "@/lib/seo";
-import { servicePages } from "@/lib/service-pages";
-import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
+import { serializeJsonLd, SITE_URL } from "@/lib/content/seo";
+import { servicePages } from "@/lib/content/service-pages";
+import { formatPriceFrom, servicePaths } from "@/lib/content/service-paths";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Strony, sklepy, aplikacje i programy — oferta dla firm",

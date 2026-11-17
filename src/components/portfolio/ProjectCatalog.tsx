@@ -4,9 +4,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { Project } from "@/types";
 import { ProjectCard } from "./ProjectShowcase";
-import { catalogCategories, projectMatchesCategory } from "@/lib/project-filter";
+import { catalogCategories, projectMatchesCategory } from "@/lib/projects/filter";
 
-const ProjectModal = dynamic(() => import("@/components/ProjectModal"));
+const ProjectModal = dynamic(() => import("@/components/portfolio/ProjectModal"));
 
 export default function ProjectCatalog({ projects, category }: { projects: Project[]; category: string }) {
   const [selected, setSelected] = useState<Project | null>(null);

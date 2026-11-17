@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { turso } from "@/lib/turso";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+import { turso } from "@/lib/server/turso";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 
 const schema = z.object({ event: z.enum(["contact_cta", "live_project", "project_view"]), path: z.string().regex(/^\/[a-z0-9/_-]*$/i).max(160) });
 export async function POST(request: Request) {

@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { join } from "node:path";
 import sharp from "sharp";
-import { getProjects } from "@/lib/turso";
-import { mockupSources } from "@/lib/project-mockup-sources";
-import { heroKinds as stageKinds } from "@/lib/hero-kinds";
-import { serviceShowcase } from "@/lib/service-showcase";
+import { getProjects } from "@/lib/server/turso";
+import { mockupSources } from "@/lib/projects/mockup-sources";
+import { heroKinds as stageKinds } from "@/lib/content/hero-kinds";
+import { serviceShowcase } from "@/lib/content/service-showcase";
 import MockupClient from "./MockupClient";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };

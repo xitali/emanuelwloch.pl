@@ -4,12 +4,12 @@ import { IconArrowUpRight, IconCheck, IconPin } from "@/components/portfolio/ico
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { ServicePageData } from "@/lib/service-pages";
-import { getProjectPath, serializeJsonLd, serviceOgImage, SITE_URL } from "@/lib/seo";
-import { relatedProjectsFor, serviceShowcase } from "@/lib/service-showcase";
-import { projectLabel } from "@/lib/project-labels";
-import { projectMockup } from "@/lib/project-mockups";
-import { getProjects } from "@/lib/turso";
+import type { ServicePageData } from "@/lib/content/service-pages";
+import { getProjectPath, serializeJsonLd, serviceOgImage, SITE_URL } from "@/lib/content/seo";
+import { relatedProjectsFor, serviceShowcase } from "@/lib/content/service-showcase";
+import { projectLabel } from "@/lib/projects/labels";
+import { projectMockup } from "@/lib/projects/mockups";
+import { getProjects } from "@/lib/server/turso";
 
 export function createServiceMetadata(data: ServicePageData): Metadata {
   const url = `${SITE_URL}${data.path}`;

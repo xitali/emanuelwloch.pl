@@ -6,7 +6,7 @@ import { formatPln } from "@/lib/contracts/amount-words";
 import { LEGAL_2026, quarterStatus, workForCompanyPayout } from "@/lib/contracts/legal-2026";
 import ContractsGuide from "./ContractsGuide";
 import ContractDocument from "./ContractDocument";
-import { servicePaths } from "@/lib/service-paths";
+import { servicePaths } from "@/lib/content/service-paths";
 import { useAdmin } from "./AdminContext";
 
 const STORAGE_KEY = "umowa-wykonawca";

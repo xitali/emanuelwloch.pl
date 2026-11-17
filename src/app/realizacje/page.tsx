@@ -1,10 +1,10 @@
-import { createPageMetadata, getProjectPath, serializeJsonLd, SITE_URL } from "@/lib/seo";
+import { createPageMetadata, getProjectPath, serializeJsonLd, SITE_URL } from "@/lib/content/seo";
 import type { Metadata } from "next";
-import { getProjects } from "@/lib/turso";
+import { getProjects } from "@/lib/server/turso";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import ProjectCatalog from "@/components/portfolio/ProjectCatalog";
-import { catalogCategoryIds } from "@/lib/project-filter";
-import { orderCatalogProjects } from "@/lib/project-highlights";
+import { catalogCategoryIds } from "@/lib/projects/filter";
+import { orderCatalogProjects } from "@/lib/projects/highlights";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Realizacje — strony, sklepy, aplikacje i programy",

@@ -1,6 +1,6 @@
-import { verifyAdminSession } from "@/lib/auth";
-import { turso } from "@/lib/turso";
-import { deliverLeadEmails, emailConfigured } from "@/lib/email";
+import { verifyAdminSession } from "@/lib/server/auth";
+import { turso } from "@/lib/server/turso";
+import { deliverLeadEmails, emailConfigured } from "@/lib/email/send";
 import { revalidatePath } from "next/cache";
 
 async function retry() {

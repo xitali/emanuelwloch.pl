@@ -1,6 +1,6 @@
-import { recordPageVisit } from "@/lib/turso";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+import { recordPageVisit } from "@/lib/server/turso";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

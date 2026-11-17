@@ -5,7 +5,7 @@ import {
   pushActionSchema,
   splitCommaSeparated,
 } from "../src/lib/validation";
-import { PROJECT_QUOTE_PREFILL } from "../src/lib/contact-prefill";
+import { PROJECT_QUOTE_PREFILL } from "../src/lib/contact/prefill";
 
 describe("walidacja formularzy", () => {
   it("akceptuje poprawną wiadomość", () => {

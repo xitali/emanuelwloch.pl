@@ -1,6 +1,6 @@
 import type { Project } from "@/types";
-import { projectMatchesCategory } from "./project-filter";
-import { projectGroup } from "./project-highlights";
+import { projectMatchesCategory } from "@/lib/projects/filter";
+import { projectGroup } from "@/lib/projects/highlights";
 
 /** A real screenshot used on a service page; `kind` describes the device it was taken from. */
 export type Frame = { src: string; label: string; kind: "browser" | "window" };

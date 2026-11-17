@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Upload, X } from "lucide-react";
-import ProjectCaseFields from "@/components/ProjectCaseFields";
+import ProjectCaseFields from "@/components/admin/ProjectCaseFields";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { createProjectAction, updateProjectAction } from "@/app/actions/admin";
 import type { Project } from "@/types";

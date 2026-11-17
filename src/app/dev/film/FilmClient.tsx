@@ -6,8 +6,8 @@ import type { PerspectiveCamera } from "three";
 import HeroScene from "@/components/world/scenes/HeroScene";
 import OfferScene, { OFFER_TEXTURES } from "@/components/world/scenes/OfferScene";
 import StackScene from "@/components/world/scenes/StackScene";
-import { heroKinds } from "@/lib/hero-kinds";
-import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
+import { heroKinds } from "@/lib/content/hero-kinds";
+import { formatPriceFrom, servicePaths } from "@/lib/content/service-paths";
 import { CUT, DURATION, FPS, PATH, POSTER, easeIn, easeOut, pathAt, sceneAt, span, type SceneId } from "./timeline";
 
 type Format = "landscape" | "vertical";

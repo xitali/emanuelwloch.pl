@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import ContactSilk from "@/components/motion/ContactSilk";
 import { sendContactMessageAction } from "@/app/actions/contact";
-import { IconAlert, IconArrowUpRight as ArrowUpRight, IconCheck, IconFacebook, IconGithub, IconInstagram, IconMail, IconPhone, IconPin, IconSend } from "./portfolio/icons";
+import { IconAlert, IconArrowUpRight as ArrowUpRight, IconCheck, IconFacebook, IconGithub, IconInstagram, IconMail, IconPhone, IconPin, IconSend } from "@/components/portfolio/icons";
 import type { PublicSiteSettings } from "@/types";
 import Link from "next/link";
-import { CONTACT_PREFILL_EVENT, type ContactPrefill } from "@/lib/contact-prefill";
-import { contactSources } from "@/lib/contact-sources";
+import { CONTACT_PREFILL_EVENT, type ContactPrefill } from "@/lib/contact/prefill";
+import { contactSources } from "@/lib/contact/sources";
 
 export default function ContactSection({ settings }: { settings: PublicSiteSettings }) {
   const [loading, setLoading] = useState(false);

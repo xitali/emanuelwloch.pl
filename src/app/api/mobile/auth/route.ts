@@ -1,10 +1,10 @@
 import {
   createMobileAdminToken,
   MOBILE_SESSION_SECONDS,
-} from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
-import { authenticateAdmin } from "@/lib/turso";
+} from "@/lib/server/auth";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
+import { authenticateAdmin } from "@/lib/server/turso";
 import { mobileLoginSchema } from "@/lib/validation";
 
 export const runtime = "nodejs";

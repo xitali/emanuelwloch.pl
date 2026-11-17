@@ -1,7 +1,7 @@
 import "server-only";
-import { turso } from "@/lib/turso";
-import { leadAnsweredEvent, reviewRequestedEvent } from "@/lib/email";
-import { normalizeMessageStatus } from "@/lib/message-status";
+import { turso } from "@/lib/server/turso";
+import { leadAnsweredEvent, reviewRequestedEvent } from "@/lib/email/send";
+import { normalizeMessageStatus } from "@/lib/contact/message-status";
 
 /** Any status other than "new" means the owner is on it: the 24 h reminder for it stops. */
 export async function messageStatusChanged(messageId: string, status: string) {

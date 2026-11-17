@@ -1,6 +1,6 @@
 "use client";
 import { ArrowRight } from "lucide-react";
-import { isOpenMessage, messageStatusLabel, normalizeMessageStatus } from "@/lib/message-status";
+import { isOpenMessage, messageStatusLabel, normalizeMessageStatus } from "@/lib/contact/message-status";
 import type { ContactMessage, Project, Testimonial } from "@/types";
 import type { AdminTab } from "./AdminDashboard";
 

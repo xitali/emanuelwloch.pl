@@ -1,6 +1,6 @@
-import ProjectVideoUpload from "./ProjectVideoUpload";
+import ProjectVideoUpload from "@/components/admin/ProjectVideoUpload";
 import type { Project } from "@/types";
-import { caseTextFields, caseListFields } from "@/lib/project-case-fields";
+import { caseTextFields, caseListFields } from "@/lib/projects/case-fields";
 
 const labels: Record<string, string> = {
   image_alts: "Opisy obrazów — jeden wiersz na obraz, w tej samej kolejności", preview_video: "Adres filmu MP4/WebM (wgraj poniżej)", preview_poster: "Obraz podglądu filmu (URL)",

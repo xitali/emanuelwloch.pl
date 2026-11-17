@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { servicePages } from "../src/lib/service-pages";
-import { servicePaths } from "../src/lib/service-paths";
-import { relatedProjectsFor, serviceShowcase } from "../src/lib/service-showcase";
+import { servicePages } from "../src/lib/content/service-pages";
+import { servicePaths } from "../src/lib/content/service-paths";
+import { relatedProjectsFor, serviceShowcase } from "../src/lib/content/service-showcase";
 import type { Project } from "../src/types";
-import { projectMockup } from "../src/lib/project-mockups";
-import mockupManifest from "../src/lib/mockup-manifest.json";
+import { projectMockup } from "../src/lib/projects/mockups";
+import mockupManifest from "../src/lib/projects/mockup-manifest.json";
 
 const make = (id: string, extra: Partial<Project>) => ({ id, title: id, short_description: "", technologies: [], images: [], category: "web", project_status: "active", ...extra }) as Project;
 

@@ -6,10 +6,10 @@ import Link from "next/link";
 import OfferStage from "./OfferStage";
 import { IconArrowUpRight as ArrowUpRight } from "./icons";
 import type { Service } from "@/types";
-import { openContactForm } from "@/lib/contact-prefill";
-import ProfessionalServicesSection from "@/components/ProfessionalServicesSection";
+import { openContactForm } from "@/lib/contact/prefill";
+import ProfessionalServicesSection from "@/components/portfolio/ProfessionalServicesSection";
 
-import { formatPriceFrom, servicePaths } from "@/lib/service-paths";
+import { formatPriceFrom, servicePaths } from "@/lib/content/service-paths";
 
 const WIDE = "(min-width: 1180px)";
 const subscribeWide = (onChange: () => void) => { const query = matchMedia(WIDE); query.addEventListener("change", onChange); return () => query.removeEventListener("change", onChange); };

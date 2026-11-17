@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import { openContactForm, CONTACT_PREFILL_EVENT } from "../src/lib/contact-prefill";
-import { createNavigationScroll, scrollToSection } from "../src/lib/navigation-scroll";
+import { openContactForm, CONTACT_PREFILL_EVENT } from "../src/lib/contact/prefill";
+import { createNavigationScroll, scrollToSection } from "../src/lib/motion/navigation-scroll";
 
 let controller: ReturnType<typeof createNavigationScroll> | undefined;
 let x = 0, y = 0;

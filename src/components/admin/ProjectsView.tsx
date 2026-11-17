@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { Edit3, Plus, Trash2 } from "lucide-react";
 import { deleteProjectAction } from "@/app/actions/admin";
-import { projectLabel } from "@/lib/project-labels";
+import { projectLabel } from "@/lib/projects/labels";
 import type { Project } from "@/types";
 import { useAdmin } from "./AdminContext";
 import ProjectDialog from "./ProjectDialog";

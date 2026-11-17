@@ -1,5 +1,5 @@
 import type { Project } from "@/types";
-import { projectGroup } from "./project-highlights";
+import { projectGroup } from "@/lib/projects/highlights";
 
 /**
  * Which two real screenshots a project's 3D mockup shows: the laptop gets the first, the monitor the second.

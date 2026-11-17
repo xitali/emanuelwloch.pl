@@ -1,4 +1,4 @@
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/content/seo";
 import PublicPageShell from "@/components/portfolio/PublicPageShell";
 import type { Metadata } from "next";
 import Link from "next/link";

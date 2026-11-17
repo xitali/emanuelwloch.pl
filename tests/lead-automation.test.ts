@@ -3,8 +3,8 @@ import { createClient, type Client } from "@libsql/client";
 import { readFile } from "node:fs/promises";
 const state = vi.hoisted(() => ({ db: null as Client | null, fetch: vi.fn() }));
 vi.mock("server-only", () => ({}));
-vi.mock("@/lib/turso", () => ({ turso: { execute: (...args: Parameters<Client["execute"]>) => state.db!.execute(...args) } }));
-import { messageStatusChanged, requestReview } from "../src/lib/lead-automation";
+vi.mock("@/lib/server/turso", () => ({ turso: { execute: (...args: Parameters<Client["execute"]>) => state.db!.execute(...args) } }));
+import { messageStatusChanged, requestReview } from "../src/lib/email/lead-automation";
 
 async function setup(status = "replied") {
   state.db = createClient({ url: "file::memory:" });

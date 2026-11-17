@@ -1,4 +1,4 @@
-import { turso } from "@/lib/turso";
+import { turso } from "@/lib/server/turso";
 
 export default async function ConversionSummary() {
   const result = await turso.execute("SELECT event_name, SUM(event_count) AS count FROM daily_events WHERE event_date >= date('now','-30 days') GROUP BY event_name");

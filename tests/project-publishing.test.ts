@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { upgradePublishing } from "../scripts/upgrade-project-publishing.mjs";
 import { upgradePortfolio } from "../scripts/upgrade-portfolio.mjs";
-import { getProjectPath } from "../src/lib/seo";
+import { getProjectPath } from "../src/lib/content/seo";
 
 describe("publikacja i trwałe adresy", () => {
   it("zachowuje dane, rozwiązuje kolizje i jest idempotentna", async () => {

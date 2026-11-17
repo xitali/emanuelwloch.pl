@@ -1,0 +1,26 @@
+# Graphify: katalogi pomijane przy budowie grafu kodu
+node_modules/
+.next/
+out/
+build/
+coverage/
+graphify-out/
+brag-output-*/
+android-admin/.gradle/
+android-admin/**/build/
+.tools/
+.debug/
+public/
+*.tsbuildinfo
+next-env.d.ts
+
+# Konfiguracja i CI: zależności, klucze tsconfig i kroki workflow zaśmiecały graf kodu
+package.json
+package-lock.json
+tsconfig.json
+components.json
+*.yml
+*.yaml
+.github/
+.env*
+*.md

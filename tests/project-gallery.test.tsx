@@ -2,11 +2,11 @@
 import React from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import ProjectModal from "../src/components/ProjectModal";
+import ProjectModal from "../src/components/portfolio/ProjectModal";
 import type { Project } from "../src/types";
 
-vi.mock("@/lib/project-labels", () => ({ projectLabel: () => "Realizacja" }));
-vi.mock("@/lib/seo", () => ({ getProjectPath: () => "/projekty/test" }));
+vi.mock("@/lib/projects/labels", () => ({ projectLabel: () => "Realizacja" }));
+vi.mock("@/lib/content/seo", () => ({ getProjectPath: () => "/projekty/test" }));
 vi.mock("@/hooks/useBodyScrollLock", () => ({ useBodyScrollLock: vi.fn() }));
 vi.mock("next/image", () => ({ default: ({ src, alt }: { src: string; alt: string }) => React.createElement("img", { src, alt }) }));
 vi.mock("next/link", () => ({ default: ({ children, href }: { children: React.ReactNode; href: string }) => <a href={href}>{children}</a> }));

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Mail, MessageSquareHeart, Trash2 } from "lucide-react";
 import { deleteMessageAction, requestReviewAction, updateMessageStatusAction } from "@/app/actions/admin";
-import { messageStatuses, normalizeMessageStatus, type MessageStatus } from "@/lib/message-status";
+import { messageStatuses, normalizeMessageStatus, type MessageStatus } from "@/lib/contact/message-status";
 import type { ContactMessage } from "@/types";
 import { useAdmin } from "./AdminContext";
 

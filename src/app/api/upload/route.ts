@@ -1,8 +1,8 @@
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
-import { verifyAdminSession } from "@/lib/auth";
-import { checkRateLimit } from "@/lib/rate-limit";
-import { getClientIp } from "@/lib/request";
+import { verifyAdminSession } from "@/lib/server/auth";
+import { checkRateLimit } from "@/lib/server/rate-limit";
+import { getClientIp } from "@/lib/server/request";
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024;
 const ALLOWED_TYPES = new Map([

@@ -1,6 +1,6 @@
-import ConversionTracker from "@/components/ConversionTracker";
+import ConversionTracker from "@/components/providers/ConversionTracker";
 import type { Metadata } from "next";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata } from "@/lib/content/seo";
 export const metadata: Metadata = {
   ...createPageMetadata({ path: "/", title: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm", description: "Strony firmowe, sklepy internetowe, aplikacje z bazą danych i panelem oraz programy na Windows. Jeden wykonawca od projektu po wdrożenie — Jarosław i cała Polska." }),
   title: { absolute: "Emanuel Włoch — strony, sklepy, aplikacje i programy dla firm" },
@@ -10,17 +10,17 @@ import {
   getServices,
   getPublicSiteSettings,
   getTestimonials,
-} from "@/lib/turso";
+} from "@/lib/server/turso";
 import Navbar from "@/components/portfolio/PortfolioNav";
 import ProductStory, { TechnologyDetails } from "@/components/portfolio/ProductStory";
 import ProjectsSection from "@/components/portfolio/ProjectShowcase";
 import AboutSection from "@/components/portfolio/AboutSection";
 import ServicePaths from "@/components/portfolio/ServicePaths";
-import ContactSection from "@/components/ContactSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import Footer from "@/components/Footer";
-import VisitTracker from "@/components/VisitTracker";
-import HomeStructuredData from "@/components/HomeStructuredData";
+import ContactSection from "@/components/portfolio/ContactSection";
+import TestimonialsSection from "@/components/portfolio/TestimonialsSection";
+import Footer from "@/components/portfolio/Footer";
+import VisitTracker from "@/components/providers/VisitTracker";
+import HomeStructuredData from "@/components/portfolio/HomeStructuredData";
 import MotionLayer from "@/components/portfolio/motion/MotionLayer";
 import DeliveryProcess from "@/components/portfolio/DeliveryProcess";
 import Backoffice from "@/components/portfolio/Backoffice";
